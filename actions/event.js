@@ -1,0 +1,1 @@
+require('../entry.js').buildNewAction('Event', exports);

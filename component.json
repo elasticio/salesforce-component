@@ -1,0 +1,128 @@
+{
+    "title":"Salesforce",
+    "description" : "Customer relationship management (CRM) software & cloud computing from the leader in CRM solutions for businesses large & small.",
+    "url" : "http://www.salesforce.com/",
+    "credentials" : {
+        "fields":{
+            "prodEnv" : {
+				"label":"Environment",
+				"viewClass":"SelectView",
+            	"required":true,
+	            "model":{
+                	"test":"Sandbox",
+	                "login":"Production"
+	            },
+	            "prompt":"Select environment"
+			},
+            "oauth":{
+                "label":"Authentication",
+                "viewClass":"OAuthFieldView",
+                "required": true
+            }
+        },
+        "oauth2":{
+            "client_id":"{{SALESFORCE_KEY}}",
+            "client_secret":"{{SALESFORCE_SECRET}}",
+            "auth_uri":"https://{{prodEnv}}.salesforce.com//services/oauth2/authorize",
+            "token_uri":"https://{{prodEnv}}.salesforce.com/services/oauth2/token"
+        }
+    },
+    "triggers":{
+        "newCase":{
+            "title":"New Case",
+            "main":"./triggers/case.js",
+            "type":"polling",
+            "dynamicMetadata":true
+        },
+        "newLead":{
+            "title":"New Lead",
+            "main":"./triggers/lead.js",
+            "type":"polling",
+            "dynamicMetadata":true
+        },
+        "newContact":{
+            "title":"New Contact",
+            "main":"./triggers/contact.js",
+            "type":"polling",
+            "dynamicMetadata":true
+        },
+        "newAccount":{
+            "title":"New Account",
+            "main":"./triggers/account.js",
+            "type":"polling",
+            "dynamicMetadata":true
+        },
+        "newTask":{
+            "title":"New Task",
+            "main":"./triggers/task.js",
+            "type":"polling",
+            "dynamicMetadata":true
+        },
+        "entry":{
+            "title":"New Other Object",
+            "main":"./entry.js",
+            "type":"polling",
+            "dynamicMetadata":true,
+            "fields":{
+                "object":{
+                    "viewClass":"SelectView",
+                    "label":"Object",
+                    "required":true,
+                    "model":"objectTypes",
+                    "prompt":"Please select a Salesforce Object"
+                }
+            }
+        }
+    },
+    "actions":{
+        "account":{
+            "title":"New Account",
+            "main":"./actions/account.js",
+            "dynamicMetadata":true
+        },
+        "case":{
+            "title":"New Case",
+            "main":"./actions/case.js",
+            "dynamicMetadata":true
+        },
+        "contact":{
+            "title":"New Contact",
+            "main":"./actions/contact.js",
+            "dynamicMetadata":true
+        },
+        "event":{
+            "title":"New Event",
+            "main":"./actions/event.js",
+            "dynamicMetadata":true
+        },
+        "lead":{
+            "title":"New Lead",
+            "main":"./actions/lead.js",
+            "dynamicMetadata":true
+        },
+        "note":{
+            "title":"New Note",
+            "main":"./actions/note.js",
+            "dynamicMetadata":true
+        },
+        "task":{
+            "title":"New Task",
+            "main":"./actions/task.js",
+            "dynamicMetadata":true
+        },
+        "other":{
+            "title":"Other Object",
+            "main":"./actions/other.js",
+            "dynamicMetadata":true,
+            "fields":{
+                "object":{
+                    "viewClass":"SelectView",
+                    "label":"Object",
+                    "required":true,
+                    "model":"objectTypes",
+                    "prompt":"Please select a Salesforce Object"
+                }
+            }
+        }
+    }
+}

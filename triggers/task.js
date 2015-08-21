@@ -1,0 +1,1 @@
+require('../entry.js').buildTrigger('Task', exports);

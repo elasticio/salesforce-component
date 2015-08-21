@@ -1,0 +1,14 @@
+{
+    "fixtures": {
+        "lead-metamodel": {
+            "cfg": {
+                "object": "Lead",
+                "oauth" : {
+                    "access_token" : "{{salesforce_access_token}}",
+                    "refresh_token" : "{{salesforce_refresh_token}}",
+                    "instance_url" : "https://na9.salesforce.com"
+                }
+            }
+        }
+    }
+}
