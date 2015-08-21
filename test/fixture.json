@@ -3,6 +3,7 @@
         "lead-metamodel": {
             "cfg": {
                 "object": "Lead",
+                "prodEnv" : "test",
                 "oauth" : {
                     "access_token" : "{{salesforce_access_token}}",
                     "refresh_token" : "{{salesforce_refresh_token}}",
