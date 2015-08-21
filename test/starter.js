@@ -37,17 +37,17 @@ var fns = [];
 
 fns.push(function(callback) {
     'use strict';
-    require('../actions/case.js').getMetaModel( _.clone(conf), newCallback(callback));
+    require('../lib/actions/case').getMetaModel( _.clone(conf), newCallback(callback));
 });
 
 fns.push(function(callback) {
     'use strict';
-    require('../actions/case.js').process(null, _.clone(conf), newCallback(callback), snapshot);
+    require('../lib/actions/case').process(null, _.clone(conf), newCallback(callback), snapshot);
 });
 
 fns.push(function(callback) {
     'use strict';
-    require('../entry.js').process(null, _.clone(conf), newCallback(callback), snapshot);
+    require('../lib/entry').process(null, _.clone(conf), newCallback(callback), snapshot);
 });
 
 
