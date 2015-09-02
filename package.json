@@ -27,7 +27,8 @@
     "node-uuid": "^1.4.3",
     "q": "^1.4.1",
     "request": "^2.61.0",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "elasticio-node": "^0.0.5"
   },
   "devDependencies": {
     "async": "^1.4.2"
