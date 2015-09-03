@@ -41,6 +41,7 @@
     "grunt-istanbul": "0.3.0",
     "grunt-jasmine-node": "0.2.1",
     "grunt-jscs": "^0.7.0",
+    "async": "^1.4.2",
     "nock": "0.27.2"
   }
 }
