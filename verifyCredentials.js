@@ -1,6 +1,6 @@
 var request = require('request');
 var NOT_ENABLED_ERROR = 'Salesforce respond with this error: "The REST API is not enabled for this Organization."';
-var VERSION = "v32.0"
+var VERSION = "v32.0";
 var debug = require('debug')('verifyCredentials');
 
 module.exports = verify;
