@@ -30,37 +30,37 @@
     "triggers":{
         "newCase":{
             "title":"New Case",
-            "main":"./triggers/case.js",
+            "main":"./lib/triggers/case.js",
             "type":"polling",
             "dynamicMetadata":true
         },
         "newLead":{
             "title":"New Lead",
-            "main":"./triggers/lead.js",
+            "main":"./lib/triggers/lead.js",
             "type":"polling",
             "dynamicMetadata":true
         },
         "newContact":{
             "title":"New Contact",
-            "main":"./triggers/contact.js",
+            "main":"./lib/triggers/contact.js",
             "type":"polling",
             "dynamicMetadata":true
         },
         "newAccount":{
             "title":"New Account",
-            "main":"./triggers/account.js",
+            "main":"./lib/triggers/account.js",
             "type":"polling",
             "dynamicMetadata":true
         },
         "newTask":{
             "title":"New Task",
-            "main":"./triggers/task.js",
+            "main":"./lib/triggers/task.js",
             "type":"polling",
             "dynamicMetadata":true
         },
         "entry":{
             "title":"New Other Object",
-            "main":"./entry.js",
+            "main":"./lib/entry.js",
             "type":"polling",
             "dynamicMetadata":true,
             "fields":{
@@ -77,42 +77,42 @@
     "actions":{
         "account":{
             "title":"New Account",
-            "main":"./actions/account.js",
+            "main":"./lib/actions/account.js",
             "dynamicMetadata":true
         },
         "case":{
             "title":"New Case",
-            "main":"./actions/case.js",
+            "main":"./lib/actions/case.js",
             "dynamicMetadata":true
         },
         "contact":{
             "title":"New Contact",
-            "main":"./actions/contact.js",
+            "main":"./lib/actions/contact.js",
             "dynamicMetadata":true
         },
         "event":{
             "title":"New Event",
-            "main":"./actions/event.js",
+            "main":"./lib/actions/event.js",
             "dynamicMetadata":true
         },
         "lead":{
             "title":"New Lead",
-            "main":"./actions/lead.js",
+            "main":"./lib/actions/lead.js",
             "dynamicMetadata":true
         },
         "note":{
             "title":"New Note",
-            "main":"./actions/note.js",
+            "main":"./lib/actions/note.js",
             "dynamicMetadata":true
         },
         "task":{
             "title":"New Task",
-            "main":"./actions/task.js",
+            "main":"./lib/actions/task.js",
             "dynamicMetadata":true
         },
         "other":{
             "title":"Other Object",
-            "main":"./actions/other.js",
+            "main":"./lib/actions/other.js",
             "dynamicMetadata":true,
             "fields":{
                 "object":{
