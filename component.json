@@ -5,15 +5,15 @@
     "credentials" : {
         "fields":{
             "prodEnv" : {
-				"label":"Environment",
-				"viewClass":"SelectView",
-            	"required":true,
-	            "model":{
-                	"test":"Sandbox",
-	                "login":"Production"
-	            },
-	            "prompt":"Select environment"
-			},
+                "label":"Environment",
+                "viewClass":"SelectView",
+                "required":true,
+                "model":{
+                    "test":"Sandbox",
+                    "login":"Production"
+                },
+                "prompt":"Select environment"
+            },
             "oauth":{
                 "label":"Authentication",
                 "viewClass":"OAuthFieldView",
