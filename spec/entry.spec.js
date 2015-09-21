@@ -19,7 +19,7 @@ describe('Salesforce Entry', function () {
         spyOn(sfEntry, "refreshToken").andCallThrough();
         spyOn(oAuthUtils, "refreshAppToken").andCallFake(function (component, conf, next) {
             var refreshedCfg = _.clone(conf);
-            refreshedCfg.oauth.access_token = "aVeryFreshToken";
+            refreshedCfg.oauth.access_token = "aRefreshedToken";
             next(null, refreshedCfg);
         });
         spyOn(callScope, "emit").andCallFake(function(){});
@@ -72,7 +72,7 @@ describe('Salesforce Entry', function () {
             });
 
             waitsFor(function () {
-                return callScope.emit.callCount > 0;
+                return callScope.emit.callCount >= 2;
             });
 
 
@@ -81,9 +81,10 @@ describe('Salesforce Entry', function () {
                 expect(sfEntry.refreshToken).toHaveBeenCalledWith(cfg, jasmine.any(Function));
 
                 expect(callScope.emit).toHaveBeenCalled();
-                expect(callScope.emit.calls[0].args[0]).toEqual('error');
+                expect(callScope.emit.calls[0].args[0]).toEqual('updateKeys');
 
-                var error = callScope.emit.calls[0].args[1];
+                expect(callScope.emit.calls[1].args[0]).toEqual('error');
+                var error = callScope.emit.calls[1].args[1];
                 expect(error).toBeDefined();
                 expect(error.statusCode).toEqual(403);
                 expect(error.view.textKey).toEqual('salesforce_API_DISABLED_FOR_ORG');
@@ -97,7 +98,7 @@ describe('Salesforce Entry', function () {
                 .get('/services/data/v25.0/sobjects/Contact/describe')
                 .reply(200, JSON.stringify(require('./objectDescription.json')))
                 .get('/services/data/v25.0/query?q=select%20Id%2CLastName%2CFirstName%2CSalutation%2COtherStreet%2COtherCity%2COtherState%2COtherPostalCode%2COtherCountry%2CMailingStreet%2CMailingCity%2CMailingState%2CMailingPostalCode%2CMailingCountry%2CPhone%2CFax%2CMobilePhone%2CHomePhone%2COtherPhone%2CAssistantPhone%2CEmail%2CTitle%2CDepartment%2CAssistantName%2CLeadSource%2CBirthdate%2CDescription%2CEmailBouncedReason%2CEmailBouncedDate%2CJigsaw%2CLevel__c%2CLanguages__c%20from%20Contact%20where%20SystemModstamp%20%3E%201978-04-06T11%3A00%3A00.000Z')
-                .matchHeader('Authorization', 'Bearer aToken')
+                .matchHeader('Authorization', 'Bearer aRefreshedToken')
                 .reply(200, JSON.stringify({ totalSize: 0 }));
 
             var cfg = {
@@ -115,16 +116,16 @@ describe('Salesforce Entry', function () {
             });
 
             waitsFor(function () {
-                return callScope.emit.callCount > 0;
+                return callScope.emit.callCount >= 2;
             });
 
 
             runs(function () {
                 expect(callScope.emit).toHaveBeenCalled();
-                expect(callScope.emit.calls[0].args[0]).toEqual('end');
+                expect(callScope.emit.calls[0].args[0]).toEqual('updateKeys');
 
+                expect(callScope.emit.calls[1].args[0]).toEqual('end');
                 expect(sfEntry.refreshToken).toHaveBeenCalledWith(cfg, jasmine.any(Function));
-                //expect(callScope.emit).toHaveBeenCalled();
             });
         });
 
@@ -135,10 +136,10 @@ describe('Salesforce Entry', function () {
                 .get('/services/data/v25.0/sobjects/Contact/describe')
                 .reply(200, JSON.stringify(require('./objectDescription.json')))
                 .get('/services/data/v25.0/query?q=select%20Id%2CLastName%2CFirstName%2CSalutation%2COtherStreet%2COtherCity%2COtherState%2COtherPostalCode%2COtherCountry%2CMailingStreet%2CMailingCity%2CMailingState%2CMailingPostalCode%2CMailingCountry%2CPhone%2CFax%2CMobilePhone%2CHomePhone%2COtherPhone%2CAssistantPhone%2CEmail%2CTitle%2CDepartment%2CAssistantName%2CLeadSource%2CBirthdate%2CDescription%2CEmailBouncedReason%2CEmailBouncedDate%2CJigsaw%2CLevel__c%2CLanguages__c%20from%20Contact%20where%20SystemModstamp%20%3E%201978-04-06T11%3A00%3A00.000Z')
-                .matchHeader('Authorization', 'Bearer aToken')
+                .matchHeader('Authorization', 'Bearer aRefreshedToken')
                 .reply(200, JSON.stringify(queryContactsResponse))
                 .get('/services/data/v25.0/sobjects/Contact/003E000000ks8ctIAA')
-                .matchHeader('Authorization', 'Bearer aToken')
+                .matchHeader('Authorization', 'Bearer aRefreshedToken')
                 .reply(200, JSON.stringify(retrieveContactsResponse));
 
 
@@ -157,7 +158,7 @@ describe('Salesforce Entry', function () {
             });
 
             waitsFor(function () {
-                return callScope.emit.callCount > 0;
+                return callScope.emit.callCount>= 2;
             });
 
 
@@ -166,9 +167,10 @@ describe('Salesforce Entry', function () {
                 //expect(callScope.emit).toHaveBeenCalled();
 
                 expect(callScope.emit).toHaveBeenCalled();
-                expect(callScope.emit.calls[0].args[0]).toEqual('data');
-                var result = callScope.emit.calls[0].args[1];
+                expect(callScope.emit.calls[0].args[0]).toEqual('updateKeys');
 
+                expect(callScope.emit.calls[1].args[0]).toEqual('data');
+                var result = callScope.emit.calls[1].args[1];
                 expect(result.body).toEqual(require('./expectedMessage.json').body);
                 expect(result.headers).toEqual(require('./expectedMessage.json').headers);
                 expect(result.metadata).toEqual(require('./expectedMessage.json').metadata);
@@ -183,10 +185,10 @@ describe('Salesforce Entry', function () {
                 .get('/services/data/v25.0/sobjects/Event/describe')
                 .reply(200, JSON.stringify(require('./objectDescription.json')))
                 .get('/services/data/v25.0/query?q=select%20Id%2CLastName%2CFirstName%2CSalutation%2COtherStreet%2COtherCity%2COtherState%2COtherPostalCode%2COtherCountry%2CMailingStreet%2CMailingCity%2CMailingState%2CMailingPostalCode%2CMailingCountry%2CPhone%2CFax%2CMobilePhone%2CHomePhone%2COtherPhone%2CAssistantPhone%2CEmail%2CTitle%2CDepartment%2CAssistantName%2CLeadSource%2CBirthdate%2CDescription%2CEmailBouncedReason%2CEmailBouncedDate%2CJigsaw%2CLevel__c%2CLanguages__c%20from%20Event%20where%20SystemModstamp%20%3E%201978-04-06T11%3A00%3A00.000Z')
-                .matchHeader('Authorization', 'Bearer aToken')
+                .matchHeader('Authorization', 'Bearer aRefreshedToken')
                 .reply(200, JSON.stringify(queryContactsResponse))
                 .get('/services/data/v25.0/sobjects/Event/003E000000ks8ctIAA')
-                .matchHeader('Authorization', 'Bearer aToken')
+                .matchHeader('Authorization', 'Bearer aRefreshedToken')
                 .reply(200, JSON.stringify(retrieveContactsResponse));
 
 
@@ -211,9 +213,10 @@ describe('Salesforce Entry', function () {
             runs(function () {
 
                 expect(callScope.emit).toHaveBeenCalled();
-                expect(callScope.emit.calls[0].args[0]).toEqual('data');
-                var result = callScope.emit.calls[0].args[1];
+                expect(callScope.emit.calls[0].args[0]).toEqual('updateKeys');
 
+                expect(callScope.emit.calls[1].args[0]).toEqual('data');
+                var result = callScope.emit.calls[1].args[1];
                 expect(result.body).toEqual(require('./expectedMessage.json').body);
                 expect(result.headers).toEqual(require('./expectedMessage.json').headers);
                 expect(result.metadata).toEqual(require('./expectedMessage.json').metadata);
@@ -227,7 +230,7 @@ describe('Salesforce Entry', function () {
 
             nock('http://localhost:1234')
                 .post('/services/data/v25.0/sobjects/Contact')
-                .matchHeader('Authorization', 'Bearer aToken')
+                .matchHeader('Authorization', 'Bearer aRefreshedToken')
                 .reply(201, JSON.stringify({ message : "ok"}));
 
             var cfg = {
@@ -250,15 +253,16 @@ describe('Salesforce Entry', function () {
             });
 
             waitsFor(function () {
-                return callScope.emit.callCount > 0;
+                return callScope.emit.callCount >= 2;
             });
 
             runs(function () {
 
                 expect(callScope.emit).toHaveBeenCalled();
-                expect(callScope.emit.calls[0].args[0]).toEqual('data');
-                var result = callScope.emit.calls[0].args[1];
+                expect(callScope.emit.calls[0].args[0]).toEqual('updateKeys');
 
+                expect(callScope.emit.calls[1].args[0]).toEqual('data');
+                var result = callScope.emit.calls[1].args[1];
                 expect(result).toEqual({
                     id : '3a5b5180-b657-11e3-9a8d-490f40cd5e5b',
                     attachments : {},
@@ -272,7 +276,7 @@ describe('Salesforce Entry', function () {
         it('Get In Metadata', function () {
 
             nock('http://localhost:1234')
-                .matchHeader('Authorization', 'Bearer aToken')
+                .matchHeader('Authorization', 'Bearer aRefreshedToken')
                 .get('/services/data/v25.0/sobjects/Contact/describe')
                 .reply(200, JSON.stringify(require('./objectDescription.json')));
 
@@ -322,7 +326,7 @@ describe('Salesforce Entry', function () {
         it('Get Out Metadata', function () {
 
             nock('http://localhost:1234')
-                .matchHeader('Authorization', 'Bearer aToken')
+                .matchHeader('Authorization', 'Bearer aRefreshedToken')
                 .get('/services/data/v25.0/sobjects/Contact/describe')
                 .reply(200, JSON.stringify(require('./objectDescription.json')));
 
@@ -374,7 +378,7 @@ describe('Salesforce Entry', function () {
             spyOn(entry, 'SalesforceEntity').andReturn(sfEntry);
 
             nock('http://localhost:1234')
-                .matchHeader('Authorization', 'Bearer aToken')
+                .matchHeader('Authorization', 'Bearer aRefreshedToken')
                 .get('/services/data/v25.0/sobjects/Event/describe')
                 .reply(200, JSON.stringify(require('./objectDescription.json')));
 
@@ -421,7 +425,7 @@ describe('Salesforce Entry', function () {
             spyOn(entry, 'SalesforceEntity').andReturn(sfEntry);
 
             nock('http://localhost:1234')
-                .matchHeader('Authorization', 'Bearer aToken')
+                .matchHeader('Authorization', 'Bearer aRefreshedToken')
                 .get('/services/data/v25.0/sobjects')
                 .reply(200, JSON.stringify(require('./objectsList.json')));
 
