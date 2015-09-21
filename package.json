@@ -1,7 +1,7 @@
 {
   "name": "salesforce-component",
   "version": "1.0.0",
-  "description": "elastic.io component that connects to Salesforce API (node.js)",
+  "description": "elastic.io component that connects to Salesforce API (node.js) ",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/grunt test"
