@@ -3,7 +3,7 @@ describe('Salesforce Entry', function () {
     var elasticio = require('elasticio-node');
     var messages = elasticio.messages;
     var nock = require('nock');
-    var _ = require('underscore');
+    var _ = require('lodash');
     var RequestEmulation = require('./requestEmulation.js').RequestEmulation;
     var oAuthUtils = require('../lib/helpers/oauth-utils.js');
 
