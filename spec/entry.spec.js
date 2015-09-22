@@ -1,17 +1,16 @@
-var entry = require('../lib/entry.js');
-var elasticio = require('elasticio-node');
-var messages = elasticio.messages;
-var nock = require('nock');
-var _ = require('underscore');
-var RequestEmulation = require('./requestEmulation.js').RequestEmulation;
-var oAuthUtils = require('../lib/helpers/oauth-utils.js');
-
-var callScope = {
-    request: new RequestEmulation(),
-    emit: function(){}
-};
-
 describe('Salesforce Entry', function () {
+    var entry = require('../lib/entry.js');
+    var elasticio = require('elasticio-node');
+    var messages = elasticio.messages;
+    var nock = require('nock');
+    var _ = require('lodash');
+    var RequestEmulation = require('./requestEmulation.js').RequestEmulation;
+    var oAuthUtils = require('../lib/helpers/oauth-utils.js');
+
+    var callScope = {
+        request: new RequestEmulation(),
+        emit: function(){}
+    };
 
     var sfEntry = new entry.SalesforceEntity(callScope);
 
@@ -68,7 +67,7 @@ describe('Salesforce Entry', function () {
             var msg = messages.newEmptyMessage();
 
             runs(function () {
-                sfEntry.process(msg, cfg, '1978-04-06T11:00:00.000Z');
+                sfEntry.processTrigger(msg, cfg, '1978-04-06T11:00:00.000Z');
             });
 
             waitsFor(function () {
@@ -112,7 +111,7 @@ describe('Salesforce Entry', function () {
             var msg = messages.newEmptyMessage();
 
             runs(function () {
-                sfEntry.process(msg, cfg, '1978-04-06T11:00:00.000Z');
+                sfEntry.processTrigger(msg, cfg, '1978-04-06T11:00:00.000Z');
             });
 
             waitsFor(function () {
@@ -154,7 +153,7 @@ describe('Salesforce Entry', function () {
             var msg = messages.newEmptyMessage();
 
             runs(function () {
-                sfEntry.process(msg, cfg, '1978-04-06T11:00:00.000Z');
+                sfEntry.processTrigger(msg, cfg, '1978-04-06T11:00:00.000Z');
             });
 
             waitsFor(function () {
@@ -247,7 +246,7 @@ describe('Salesforce Entry', function () {
 
                 var action = {};
 
-                entry.buildNewAction("Contact", action);
+                entry.buildAction("Contact", action);
 
                 action.process.call(callScope, msg, cfg, '1978-04-06T11:00:00.000Z');
             });
@@ -297,7 +296,7 @@ describe('Salesforce Entry', function () {
 
                 var action = {};
 
-                entry.buildNewAction("Contact", action);
+                entry.buildAction("Contact", action);
 
                 action.getMetaModel.call(callScope, cfg, function(err, meta) {
                     error = err;
@@ -443,7 +442,6 @@ describe('Salesforce Entry', function () {
             var error;
 
             runs(function () {
-
                 entry.objectTypes.call(callScope, cfg, function(err, meta) {
                     error = err;
                     result = meta;

@@ -1,8 +1,7 @@
-var nock = require('nock');
-var fetchObjects = require('../../lib/helpers/objectFetcher');
-
-
 describe('Fetching objects', function () {
+
+    var nock = require('nock');
+    var fetchObjects = require('../../lib/helpers/objectFetcher');
 
     var params = {};
 

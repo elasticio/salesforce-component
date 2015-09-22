@@ -1,36 +1,12 @@
-var salesforceDescribe = require('../../lib/helpers/describe');
-var nock = require('nock');
-
 describe('Saleforce Describe', function () {
 
-    var description;
-    var params = {};
+    var salesforceDescribe = require('../../lib/helpers/describe').describeObject;
+    var nock = require('nock');
+    var description = require('../objectDescription.json');
 
     it('should fetch a description for the specified object type', function () {
-        nock('https://na9.salesforce.com').get('/services/data/v25.0/sobjects/Contact/describe').reply(200, JSON.stringify(description));
 
-        var descriptionPromise = salesforceDescribe(params);
-
-        var result;
-        runs(function () {
-            descriptionPromise.then(function (params) {
-                result = params.description;
-            });
-        });
-
-        waitsFor(function () {
-            return result;
-        });
-
-        runs(function () {
-            expect(result).toEqual(JSON.parse(JSON.stringify(description)));
-        });
-
-
-    });
-
-    beforeEach(function () {
-
+        var params = {};
         params.cfg = {
             oauth: {
                 access_token: "00DE0000000dwKc!ARcAQEgJMHustyszwbrh06CGCuYPn2aI..bAV4T8aA8aDXRpAWeveWq7jhUlGl7d2e7T8itqCX1F0f_LeuMDiGzZrdOIIVnE",
@@ -46,8 +22,22 @@ describe('Saleforce Describe', function () {
             apiVersion: "v25.0"
         };
 
+        var result;
 
+        nock('https://na9.salesforce.com').get('/services/data/v25.0/sobjects/Contact/describe').reply(200, JSON.stringify(description));
+
+        runs(function () {
+            salesforceDescribe(params).then(function (description) {
+                result = description;
+            });
+        });
+
+        waitsFor(function () {
+            return result;
+        });
+
+        runs(function () {
+            expect(result).toEqual(JSON.parse(JSON.stringify(description)));
+        });
     });
-
-    description = require('../objectDescription.json');
 });

@@ -23,12 +23,12 @@
   "homepage": "https://github.com/elasticio/salesforce-component#readme",
   "dependencies": {
     "debug": "^2.2.0",
+    "elasticio-node": "^0.0.5",
     "hbs": "^3.1.0",
+    "lodash": "^3.10.1",
     "node-uuid": "^1.4.3",
     "q": "^1.4.1",
-    "request": "^2.61.0",
-    "underscore": "^1.8.3",
-    "elasticio-node": "^0.0.5"
+    "request": "^2.61.0"
   },
   "devDependencies": {
     "grunt": "~0.4.5",
