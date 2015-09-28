@@ -2,9 +2,9 @@
 
 elastic.io component that connects to Salesforce API (node.js)
 
-# How to use it
+# How to provision it
 
-## Deploy it
+## Push the code
 
 You need a new repository in your elastic.io workspace:
 
@@ -28,7 +28,7 @@ https://app.elastic.io/callback/oauth2
 More information you can find [here](https://help.salesforce.com/apex/HTViewHelpDoc?id=connected_app_create.htm)
 
 
-## Set OAuth Client key/secret
+## Configure OAuth Client key/secret
 
 In the component repository you need to specify OAuth Client credentials as environment variables. You would need two variables
 
