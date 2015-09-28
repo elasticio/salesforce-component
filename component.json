@@ -2,7 +2,7 @@
     "title":"Salesforce",
     "description" : "Customer relationship management (CRM) software & cloud computing from the leader in CRM solutions for businesses large & small.",
     "url" : "http://www.salesforce.com/",
-     "env": [
+    "env": [
         "SALESFORCE_KEY",
         "SALESFORCE_SECRET",
     ],
