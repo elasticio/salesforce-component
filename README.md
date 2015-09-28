@@ -22,7 +22,7 @@ In order to make OAuth work you need a new App in your Salesforce. During app cr
 the callback URL, to process OAuth auehtncation via elastic.io platform your callback URL should be 
 
 ```
-https://app.elastic.io/oauth2/callback
+https://app.elastic.io/callback/oauth2
 ```
 
 More information you can find [here](https://help.salesforce.com/apex/HTViewHelpDoc?id=connected_app_create.htm)
