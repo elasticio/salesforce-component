@@ -16,7 +16,19 @@ then push the code into it:
 git push elasticio master
 ```
 
-## Provision env variables
+## Create new App in Salesforce
+
+In order to make OAuth work you need a new App in your Salesforce. During app creation process you will be asked to specify
+the callback URL, to process OAuth auehtncation via elastic.io platform your callback URL should be 
+
+```
+https://app.elastic.io/oauth2/callback
+```
+
+More information you can find [here](https://help.salesforce.com/apex/HTViewHelpDoc?id=connected_app_create.htm)
+
+
+## Set OAuth Client key/secret
 
 In the component repository you need to specify OAuth Client credentials as environment variables. You would need two variables
 
