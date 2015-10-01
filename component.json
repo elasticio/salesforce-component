@@ -4,7 +4,7 @@
     "url" : "http://www.salesforce.com/",
     "env": [
         "SALESFORCE_KEY",
-        "SALESFORCE_SECRET",
+        "SALESFORCE_SECRET"
     ],
     "credentials" : {
         "fields":{
