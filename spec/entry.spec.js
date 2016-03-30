@@ -213,7 +213,7 @@ describe('Salesforce Entry', function () {
 
                 expect(callScope.emit).toHaveBeenCalled();
                 expect(callScope.emit.calls[0].args[0]).toEqual('updateKeys');
-
+                expect(callScope.emit.calls.length).toEqual(4);
                 expect(callScope.emit.calls[1].args[0]).toEqual('data');
                 var result = callScope.emit.calls[1].args[1];
                 expect(result.body).toEqual(require('./expectedMessage.json').body);
@@ -311,10 +311,8 @@ describe('Salesforce Entry', function () {
 
             runs(function () {
                 expect(error).toBeNull();
-
-                expect(result).toEqual({
-                    in : require('./expectedMessage.json').metadata
-                });
+                expect(result.in).toEqual(require('./expectedMessage.json').metadata);
+                expect(result.out.properties.in).toEqual({ type : 'string', required : true });
             });
         });
 
