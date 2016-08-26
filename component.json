@@ -81,42 +81,42 @@
     },
     "actions":{
         "account":{
-            "title":"New Account",
+            "title":"Upsert Account",
             "main":"./lib/actions/account.js",
             "dynamicMetadata":true
         },
         "case":{
-            "title":"New Case",
+            "title":"Upsert Case",
             "main":"./lib/actions/case.js",
             "dynamicMetadata":true
         },
         "contact":{
-            "title":"New Contact",
+            "title":"Upsert Contact",
             "main":"./lib/actions/contact.js",
             "dynamicMetadata":true
         },
         "event":{
-            "title":"New Event",
+            "title":"Upsert Event",
             "main":"./lib/actions/event.js",
             "dynamicMetadata":true
         },
         "lead":{
-            "title":"New Lead",
+            "title":"Upsert Lead",
             "main":"./lib/actions/lead.js",
             "dynamicMetadata":true
         },
         "note":{
-            "title":"New Note",
+            "title":"Upsert Note",
             "main":"./lib/actions/note.js",
             "dynamicMetadata":true
         },
         "task":{
-            "title":"New Task",
+            "title":"Upsert Task",
             "main":"./lib/actions/task.js",
             "dynamicMetadata":true
         },
         "other":{
-            "title":"Other Object",
+            "title":"Upsert Other Object",
             "main":"./lib/actions/other.js",
             "dynamicMetadata":true,
             "fields":{
