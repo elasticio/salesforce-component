@@ -97,7 +97,7 @@
             "fields":{
                 "extIdField":{
                     "viewClass":"SelectView",
-                    "label":"[Optional] Upsert field",
+                    "label":"Optional Upsert field",
                     "required":false,
                     "model":"externalIdField",
                     "prompt":"Select field"
