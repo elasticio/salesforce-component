@@ -93,7 +93,16 @@
         "contact":{
             "title":"Upsert Contact",
             "main":"./lib/actions/contact.js",
-            "dynamicMetadata":true
+            "dynamicMetadata":true,
+            "fields":{
+                "extIdField":{
+                    "viewClass":"SelectView",
+                    "label":"[Optional] Upsert field",
+                    "required":false,
+                    "model":"externalIdField",
+                    "prompt":"Select field"
+                }
+            }
         },
         "event":{
             "title":"Upsert Event",
