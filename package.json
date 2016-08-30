@@ -22,10 +22,11 @@
   },
   "homepage": "https://github.com/elasticio/salesforce-component#readme",
   "dependencies": {
-    "elasticio-sailor-nodejs": "1.2.0",
     "debug": "^2.2.0",
     "elasticio-node": "^0.0.5",
+    "elasticio-sailor-nodejs": "1.2.0",
     "hbs": "^3.1.0",
+    "jsforce": "^1.7.0",
     "lodash": "^4.6.1",
     "node-uuid": "^1.4.3",
     "q": "^1.4.1",
