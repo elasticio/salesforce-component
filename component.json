@@ -33,11 +33,26 @@
         }
     },
     "triggers":{
-        "newCase":{
-            "title":"New Case",
-            "main":"./lib/triggers/case.js",
+        "queryTrigger": {
+            "title": "SOQL Query",
+            "main": "./lib/triggers/query.js",
             "type":"polling",
-            "dynamicMetadata":true
+            "metadata": {
+                "out": {}
+            },
+            "fields": {
+                "query": {
+                    "label": "SOQL Query",
+                    "required": true,
+                    "viewClass": "TextAreaView"
+                }
+            }
+        },
+        "newCase": {
+            "title": "New Case",
+            "main": "./lib/triggers/case.js",
+            "type": "polling",
+            "dynamicMetadata": true
         },
         "newLead":{
             "title":"New Lead",
@@ -80,6 +95,24 @@
         }
     },
     "actions":{
+        "queryAction": {
+            "title": "Query",
+            "main": "./lib/actions/query.js",
+            "metadata": {
+                "in": {
+                    "type": "object",
+                    "properties": {
+                        "query": {
+                            "maxLength": 20000,
+                            "title": "SOQL Query",
+                            "type": "string",
+                            "required": true
+                        }
+                    }
+                },
+                "out": {}
+            }
+        },
         "account":{
             "title":"New Account",
             "main":"./lib/actions/account.js",
