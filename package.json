@@ -36,6 +36,7 @@
     "grunt-cli": "0.1.7",
     "grunt-jasmine-node": "0.2.1",
     "grunt-jscs": "2.1.0",
-    "nock": "0.27.2"
+    "nock": "0.27.2",
+    "proxyquire": "^1.7.10"
   }
 }
