@@ -686,4 +686,124 @@ describe('Salesforce Entry', function () {
             })
         });
     });
+
+    describe('Wrappers above query', function() {
+        describe('queryAction', function() {
+            it('should be available from sailor', function(done) {
+
+                var action = require('../lib/actions/query');
+
+                var ComponentReader = require('elasticio-sailor-nodejs/lib/component_reader').ComponentReader;
+                var componentReader = new ComponentReader();
+                componentReader.init()
+                    .then(function() {
+                        return componentReader.loadTriggerOrAction('queryAction');
+                    })
+                    .then(function(loadedAction) {
+                        expect(loadedAction.process).toEqual(action.process);
+                        done();
+                    })
+                    .catch(done)
+            });
+
+            it('should invoke SalesforceEntity().processQuery with query and config', function() {
+
+                var query = 'SELECT id, email, LastName, FirstName FROM Contact';
+                var config = {};
+
+                function FakeSalesforceEntity(scope) {
+                    this.scope = scope;
+                }
+
+                FakeSalesforceEntity.prototype.processQuery = function() {
+                    this.scope.emit('end');
+                };
+
+                var action = proxyquire('../lib/actions/query', {
+                    '../entry.js': {
+                        SalesforceEntity: FakeSalesforceEntity
+                    }
+                });
+
+                var entrySpy = FakeSalesforceEntity.prototype;
+                spyOn(entrySpy, 'processQuery').andCallThrough();
+
+                runs(function() {
+                    var msg = {
+                        body: {
+                            query: query
+                        }
+                    };
+                    action.process.call(callScope, msg, config);
+                });
+
+                waitsFor(function() {
+                    return callScope.emit.callCount > 0;
+                });
+
+                runs(function() {
+                    expect(entrySpy.processQuery).toHaveBeenCalled();
+                    expect(entrySpy.processQuery.calls[0].args).toEqual([query, config]);
+                });
+            });
+        });
+
+        describe('queryTrigger', function() {
+            it('should be available from sailor', function(done) {
+
+                var trigger = require('../lib/triggers/query');
+
+                var ComponentReader = require('elasticio-sailor-nodejs/lib/component_reader').ComponentReader;
+                var componentReader = new ComponentReader();
+                componentReader.init()
+                    .then(function() {
+                        return componentReader.loadTriggerOrAction('queryTrigger');
+                    })
+                    .then(function(loadedTrigger) {
+                        expect(loadedTrigger.process).toEqual(trigger.process);
+                        done();
+                    })
+                    .catch(done)
+            });
+
+            it('should invoke SalesforceEntity().processQuery with query and config', function() {
+
+                var query = 'SELECT id, email, LastName, FirstName FROM Contact';
+                var config = {
+                    query: query
+                };
+
+                function FakeSalesforceEntity(scope) {
+                    this.scope = scope;
+                }
+
+                FakeSalesforceEntity.prototype.processQuery = function() {
+                    this.scope.emit('end');
+                };
+
+                var trigger = proxyquire('../lib/triggers/query', {
+                    '../entry.js': {
+                        SalesforceEntity: FakeSalesforceEntity
+                    }
+                });
+
+                var entrySpy = FakeSalesforceEntity.prototype;
+                spyOn(entrySpy, 'processQuery').andCallThrough();
+
+                runs(function() {
+                    var msg = {};
+                    trigger.process.call(callScope, msg, config);
+                });
+
+                waitsFor(function() {
+                    return callScope.emit.callCount > 0;
+                });
+
+                runs(function() {
+                    expect(entrySpy.processQuery).toHaveBeenCalled();
+                    expect(entrySpy.processQuery.calls[0].args).toEqual([query, config]);
+                });
+            });
+        });
+    })
 });
