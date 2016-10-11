@@ -3,10 +3,16 @@
     "description" : "Customer relationship management (CRM) software & cloud computing from the leader in CRM solutions for businesses large & small.",
     "docsUrl": "https://github.com/elasticio/salesforce-component",
     "url" : "http://www.salesforce.com/",
-    "env": [
-        "SALESFORCE_KEY",
-        "SALESFORCE_SECRET"
-    ],
+    "envVars": {
+        "SALESFORCE_KEY": {
+            "required": true,
+            "description": "Your Salesforce OAuth client key"
+        },
+        "SALESFORCE_SECRET": {
+            "required": true,
+            "description": "Your Salesforce OAuth client secret"
+        }
+    },
     "credentials" : {
         "fields":{
             "prodEnv" : {
