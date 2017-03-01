@@ -93,16 +93,7 @@
         "contact":{
             "title":"New Contact",
             "main":"./lib/actions/contact.js",
-            "dynamicMetadata":true,
-            "fields":{
-                "extIdField":{
-                    "viewClass":"SelectView",
-                    "label":"Optional Upsert field",
-                    "required":false,
-                    "model":"externalIdField",
-                    "prompt":"Select field"
-                }
-            }
+            "dynamicMetadata":true
         },
         "event":{
             "title":"New Event",
@@ -143,6 +134,12 @@
             "main":"./lib/actions/upsert.js",
             "dynamicMetadata":true,
             "fields":{
+                "extIdField":{
+                    "viewClass":"TextFieldView",
+                    "label":"Optional Upsert field",
+                    "required":false,
+                    "note": "Please make sure selected SObject has this field and it's of type <i>ExtID</i>"
+                },
                 "sobject":{
                     "viewClass":"SelectView",
                     "label":"Object",
