@@ -145,8 +145,8 @@
                 "viewClass":"TextFieldView",
                 "label":"Optional Upsert field",
                 "required":false,
-                "note": "Please make sure selected SObject has this field and it is marked as 'External ID'"
-                "placeholder": "extID_c"
+                "note": "Please make sure selected SObject has this field and it is marked as 'External ID'",
+                "placeholder": "extID__c"
               }
             }
         }
