@@ -138,7 +138,7 @@
                     "viewClass":"TextFieldView",
                     "label":"Optional Upsert field",
                     "required":false,
-                    "note": "Please make sure selected SObject has this field and it's of type <i>ExtID</i>"
+                    "note": "Please make sure selected SObject has this field and it is marked as 'External ID'"
                 },
                 "sobject":{
                     "viewClass":"SelectView",
