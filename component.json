@@ -155,7 +155,7 @@
             "dynamicMetadata":true
         },
         "other":{
-            "title":"Other Object",
+            "title":"New Other Object",
             "main":"./lib/actions/other.js",
             "dynamicMetadata":true,
             "fields":{
@@ -166,6 +166,27 @@
                     "model":"objectTypes",
                     "prompt":"Please select a Salesforce Object"
                 }
+            }
+        },
+        "upsert":{
+            "title":"Upsert Other Object",
+            "main":"./lib/actions/upsert.js",
+            "dynamicMetadata":true,
+            "fields":{
+                "sobject":{
+                    "viewClass":"SelectView",
+                    "label":"Object",
+                    "required":true,
+                    "model":"objectTypes",
+                    "prompt":"Please select a Salesforce Object"
+                },
+              "extIdField":{
+                "viewClass":"TextFieldView",
+                "label":"Optional Upsert field",
+                "required":false,
+                "note": "Please make sure selected SObject has this field and it is marked as 'External ID'",
+                "placeholder": "extID__c"
+              }
             }
         }
     }
