@@ -176,7 +176,7 @@ describe('Salesforce Entry', function () {
             });
         });
 
-        xit('Query and Retrieve Other Objects', function () {
+        it('Query and Retrieve Other Objects', function () {
 
             spyOn(entry, 'SalesforceEntity').andReturn(sfEntry);
 
