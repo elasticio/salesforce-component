@@ -3,7 +3,9 @@ describe('Salesforce Entry', function () {
     var elasticio = require('elasticio-node');
     var messages = elasticio.messages;
     var nock = require('nock');
+    var Q = require('q');
     var _ = require('lodash');
+    var proxyquire = require('proxyquire');
     var RequestEmulation = require('./requestEmulation.js').RequestEmulation;
     var oAuthUtils = require('../lib/helpers/oauth-utils.js');
 
@@ -206,7 +208,7 @@ describe('Salesforce Entry', function () {
             });
 
             waitsFor(function () {
-                return callScope.emit.callCount > 0;
+                return callScope.emit.callCount > 3;
             });
 
             runs(function () {
@@ -458,4 +460,350 @@ describe('Salesforce Entry', function () {
         });
     });
 
+    describe('processQuery', function() {
+
+        var expectedUpdateKeysData = {
+            oauth: {
+                instance_url: 'http://localhost:1234',
+                access_token: 'aRefreshedToken'
+            }
+        };
+        describe('when objectFetcher returns data', function() {
+            var sfEntry;
+            beforeEach(function() {
+
+                function fakeFetchObjects() {
+                    return Q({
+                            objects: {
+                                totalSize: 20,
+                                done: true,
+                                records: [
+                                    {
+                                        FirstName: 'Tim',
+                                        LastName: 'Barr',
+                                        Id: '0030Y000001plTAQAY',
+                                        attributes: {
+                                            url: '/services/data/v25.0/sobjects/Contact/0030Y000001plTAQAY',
+                                            type: 'Contact'
+                                        }
+                                    },
+                                    {
+                                        FirstName: 'Josh',
+                                        LastName: 'Davis',
+                                        Id: '0030Y000001plTFQAY',
+                                        attributes: {
+                                            url: '/services/data/v25.0/sobjects/Contact/0030Y000001plTFQAY',
+                                            type: 'Contact'
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    );
+                }
+
+                var SalesforceEntity = proxyquire('../lib/entry.js', {
+                    './helpers/objectFetcherQuery': fakeFetchObjects
+                }).SalesforceEntity;
+
+                sfEntry = new SalesforceEntity(callScope);
+
+            });
+
+            it('should emit "data" event with relevant content among with "end" event', function() {
+
+                var cfg = {
+                    oauth: {
+                        instance_url: "http://localhost:1234",
+                        access_token: "aToken"
+                    }
+                };
+
+                runs(function() {
+                    var query = 'SELECT id, LastName, FirstName ' +
+                        'FROM Contact ' +
+                        'WHERE SystemModstamp >  2016-09-02T12:30:41.120Z';
+
+                    sfEntry.processQuery.call(callScope, query, cfg);
+                });
+
+                waitsFor(function() {
+                    return callScope.emit.callCount >= 3;
+                });
+
+                runs(function() {
+
+                    expect(callScope.emit).toHaveBeenCalled();
+                    expect(callScope.emit.calls[0].args).toEqual(['updateKeys', expectedUpdateKeysData]);
+
+                    expect(callScope.emit.calls[1].args[0]).toEqual('data');
+                    var actualDataRecord1 = callScope.emit.calls[1].args[1];
+                    var expectedDataRecord1 = {
+                        id: jasmine.any(String),
+                        attachments: {},
+                        body: {
+                            FirstName: 'Tim',
+                            LastName: 'Barr',
+                            Id: '0030Y000001plTAQAY',
+                            attributes: {
+                                url: '/services/data/v25.0/sobjects/Contact/0030Y000001plTAQAY',
+                                type: 'Contact'
+                            }
+                        },
+                        headers: {
+                            objectId: '/services/data/v25.0/sobjects/Contact/0030Y000001plTAQAY'
+                        },
+                        metadata: {}
+                    };
+                    expect(actualDataRecord1).toEqual(expectedDataRecord1);
+
+                    expect(callScope.emit.calls[2].args[0]).toEqual('data');
+                    var actualDataRecord2 = callScope.emit.calls[2].args[1];
+                    var expectedDataRecord2 = {
+                        id: jasmine.any(String),
+                        attachments: {},
+                        body: {
+                            FirstName: 'Josh',
+                            LastName: 'Davis',
+                            Id: '0030Y000001plTFQAY',
+                            attributes: {
+                                url: '/services/data/v25.0/sobjects/Contact/0030Y000001plTFQAY',
+                                type: 'Contact'
+                            }
+                        },
+                        headers: {
+                            objectId: '/services/data/v25.0/sobjects/Contact/0030Y000001plTFQAY'
+                        },
+                        metadata: {}
+                    };
+                    expect(actualDataRecord2).toEqual(expectedDataRecord2);
+
+                    expect(callScope.emit.calls[3].args).toEqual(['end']);
+                });
+            })
+        });
+
+        describe('when objectFetcher returns empty set', function() {
+            var sfEntry;
+            beforeEach(function() {
+
+                function fakeFetchObjects() {
+                    return Q({
+                            objects: {
+                                totalSize: 0,
+                                done: true,
+                                records: []
+                            }
+                        }
+                    );
+                }
+
+                var SalesforceEntity = proxyquire('../lib/entry.js', {
+                    './helpers/objectFetcherQuery': fakeFetchObjects
+                }).SalesforceEntity;
+
+                sfEntry = new SalesforceEntity(callScope);
+
+            });
+
+            it('should emit "end" event and no any "data" event', function() {
+
+                var cfg = {
+                    oauth: {
+                        instance_url: "http://localhost:1234",
+                        access_token: "aToken"
+                    }
+                };
+
+                runs(function() {
+                    var query = 'SELECT id, LastName, FirstName ' +
+                        'FROM Contact ' +
+                        'WHERE SystemModstamp >  2056-09-02T12:32:41.361Z';
+
+                    sfEntry.processQuery.call(callScope, query, cfg);
+                });
+
+                waitsFor(function() {
+                    return callScope.emit.callCount >= 2;
+                });
+
+                runs(function() {
+
+                    expect(callScope.emit).toHaveBeenCalled();
+                    expect(callScope.emit.calls[0].args).toEqual(['updateKeys', expectedUpdateKeysData]);
+
+                    expect(callScope.emit.calls[1].args).toEqual(['end']);
+                });
+            })
+        });
+        describe('when objectFetcher rejects', function() {
+            var sfEntry;
+            var expectedError;
+            beforeEach(function() {
+
+                function fakeFetchObjects() {
+                    expectedError = new Error('Something has happened')
+                    return Q.reject(error);
+                }
+
+                var SalesforceEntity = proxyquire('../lib/entry.js', {
+                    './helpers/objectFetcherQuery': fakeFetchObjects
+                }).SalesforceEntity;
+
+                sfEntry = new SalesforceEntity(callScope);
+
+            });
+
+            it('should emit "error" event among with "end"', function() {
+
+                var cfg = {
+                    oauth: {
+                        instance_url: "http://localhost:1234",
+                        access_token: "aToken"
+                    }
+                };
+
+                runs(function() {
+                    var query = 'SELECT id, LastName, FirstName ' +
+                        'FROM Contact ' +
+                        'WHERE SystemModstamp >  2056-09-02T12:33:41.361Z';
+
+                    sfEntry.processQuery.call(callScope, query, cfg);
+                });
+
+                waitsFor(function() {
+                    return callScope.emit.callCount >= 3;
+                });
+
+                runs(function() {
+
+                    expect(callScope.emit).toHaveBeenCalled();
+                    expect(callScope.emit.calls[0].args).toEqual(['updateKeys', expectedUpdateKeysData]);
+
+                    expect(callScope.emit.calls[1].args).toEqual(['error', expectedError]);
+                    expect(callScope.emit.calls[2].args).toEqual(['end']);
+                });
+            })
+        });
+    });
+
+    describe('Wrappers above query', function() {
+        describe('queryAction', function() {
+            it('should be available from sailor', function(done) {
+
+                var action = require('../lib/actions/query');
+
+                var ComponentReader = require('elasticio-sailor-nodejs/lib/component_reader').ComponentReader;
+                var componentReader = new ComponentReader();
+                componentReader.init()
+                    .then(function() {
+                        return componentReader.loadTriggerOrAction('queryAction');
+                    })
+                    .then(function(loadedAction) {
+                        expect(loadedAction.process).toEqual(action.process);
+                        done();
+                    })
+                    .catch(done)
+            });
+
+            it('should invoke SalesforceEntity().processQuery with query and config', function() {
+
+                var query = 'SELECT id, email, LastName, FirstName FROM Contact';
+                var config = {};
+
+                function FakeSalesforceEntity(scope) {
+                    this.scope = scope;
+                }
+
+                FakeSalesforceEntity.prototype.processQuery = function() {
+                    this.scope.emit('end');
+                };
+
+                var action = proxyquire('../lib/actions/query', {
+                    '../entry.js': {
+                        SalesforceEntity: FakeSalesforceEntity
+                    }
+                });
+
+                var entrySpy = FakeSalesforceEntity.prototype;
+                spyOn(entrySpy, 'processQuery').andCallThrough();
+
+                runs(function() {
+                    var msg = {
+                        body: {
+                            query: query
+                        }
+                    };
+                    action.process.call(callScope, msg, config);
+                });
+
+                waitsFor(function() {
+                    return callScope.emit.callCount > 0;
+                });
+
+                runs(function() {
+                    expect(entrySpy.processQuery).toHaveBeenCalled();
+                    expect(entrySpy.processQuery.calls[0].args).toEqual([query, config]);
+                });
+            });
+        });
+
+        describe('queryTrigger', function() {
+            it('should be available from sailor', function(done) {
+
+                var trigger = require('../lib/triggers/query');
+
+                var ComponentReader = require('elasticio-sailor-nodejs/lib/component_reader').ComponentReader;
+                var componentReader = new ComponentReader();
+                componentReader.init()
+                    .then(function() {
+                        return componentReader.loadTriggerOrAction('queryTrigger');
+                    })
+                    .then(function(loadedTrigger) {
+                        expect(loadedTrigger.process).toEqual(trigger.process);
+                        done();
+                    })
+                    .catch(done)
+            });
+
+            it('should invoke SalesforceEntity().processQuery with query and config', function() {
+
+                var query = 'SELECT id, email, LastName, FirstName FROM Contact';
+                var config = {
+                    query: query
+                };
+
+                function FakeSalesforceEntity(scope) {
+                    this.scope = scope;
+                }
+
+                FakeSalesforceEntity.prototype.processQuery = function() {
+                    this.scope.emit('end');
+                };
+
+                var trigger = proxyquire('../lib/triggers/query', {
+                    '../entry.js': {
+                        SalesforceEntity: FakeSalesforceEntity
+                    }
+                });
+
+                var entrySpy = FakeSalesforceEntity.prototype;
+                spyOn(entrySpy, 'processQuery').andCallThrough();
+
+                runs(function() {
+                    var msg = {};
+                    trigger.process.call(callScope, msg, config);
+                });
+
+                waitsFor(function() {
+                    return callScope.emit.callCount > 0;
+                });
+
+                runs(function() {
+                    expect(entrySpy.processQuery).toHaveBeenCalled();
+                    expect(entrySpy.processQuery.calls[0].args).toEqual([query, config]);
+                });
+            });
+        });
+    })
 });
