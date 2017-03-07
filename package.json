@@ -21,10 +21,13 @@
     "url": "https://github.com/elasticio/salesforce-component/issues"
   },
   "homepage": "https://github.com/elasticio/salesforce-component#readme",
+  "engines": {
+    "node": "6.10.0"
+  },  
   "dependencies": {
     "debug": "^2.2.0",
     "elasticio-node": "^0.0.5",
-    "elasticio-sailor-nodejs": "2.0.0",
+    "elasticio-sailor-nodejs": "2.0.1",
     "hbs": "^3.1.0",
     "jsforce": "^1.7.1",
     "lodash": "^4.6.1",
