@@ -104,6 +104,7 @@
         "queryAction": {
             "title": "Query",
             "main": "./lib/actions/query.js",
+            "description": "Executing an SOQL Query that may return many results. Each resulting object is emitted one-by-one",
             "metadata": {
                 "in": {
                     "type": "object",
