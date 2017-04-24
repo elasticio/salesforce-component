@@ -10,14 +10,6 @@
     "description": "Contact",
     "type": "object",
     "properties": {
-        "Id": {
-            "type": "string",
-            "title": "Contact ID",
-            "default": null,
-            "required": true,
-            "custom": false,
-            "readonly": true
-        },
         "LastName": {
             "type": "string",
             "title": "Last Name",

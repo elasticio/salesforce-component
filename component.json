@@ -43,6 +43,7 @@
             "title": "SOQL Query",
             "main": "./lib/triggers/query.js",
             "type":"polling",
+            "description": "Will continuously run the same SOQL Query and emit results one-by-one",
             "metadata": {
                 "out": {}
             },
@@ -58,30 +59,35 @@
             "title": "New Case",
             "main": "./lib/triggers/case.js",
             "type": "polling",
+            "description": "Will poll for existing and updated Cases",
             "dynamicMetadata": true
         },
         "newLead":{
             "title":"New Lead",
             "main":"./lib/triggers/lead.js",
             "type":"polling",
+            "description": "Will poll for existing and updated Leads",
             "dynamicMetadata":true
         },
         "newContact":{
             "title":"New Contact",
             "main":"./lib/triggers/contact.js",
             "type":"polling",
+            "description": "Will poll for existing and updated Contacts",
             "dynamicMetadata":true
         },
         "newAccount":{
             "title":"New Account",
             "main":"./lib/triggers/account.js",
             "type":"polling",
+            "description": "Will poll for existing and updated Accounts",
             "dynamicMetadata":true
         },
         "newTask":{
             "title":"New Task",
             "main":"./lib/triggers/task.js",
             "type":"polling",
+            "description": "Will poll for existing and updated Tasks",
             "dynamicMetadata":true
         },
         "entry":{
@@ -89,6 +95,7 @@
             "main":"./lib/entry.js",
             "type":"polling",
             "dynamicMetadata":true,
+            "description": "Will poll for existing and updated objects where you can select any custom or build-in object for your Salesforce instance",
             "fields":{
                 "object":{
                     "viewClass":"SelectView",
@@ -123,36 +130,43 @@
         "account":{
             "title":"New Account",
             "main":"./lib/actions/account.js",
+            "description": "Creates new Account",
             "dynamicMetadata":true
         },
         "case":{
             "title":"New Case",
             "main":"./lib/actions/case.js",
+            "description": "Creates new Case",
             "dynamicMetadata":true
         },
         "contact":{
             "title":"New Contact",
             "main":"./lib/actions/contact.js",
+            "description": "Creates new Contact",
             "dynamicMetadata":true
         },
         "event":{
             "title":"New Event",
             "main":"./lib/actions/event.js",
+            "description": "Creates new Event",
             "dynamicMetadata":true
         },
         "lead":{
             "title":"New Lead",
             "main":"./lib/actions/lead.js",
+            "description": "Creates new Lead",
             "dynamicMetadata":true
         },
         "note":{
             "title":"New Note",
             "main":"./lib/actions/note.js",
+            "description": "Creates new Note",
             "dynamicMetadata":true
         },
         "task":{
             "title":"New Task",
             "main":"./lib/actions/task.js",
+            "description": "Creates new Task",
             "dynamicMetadata":true
         },
         "other":{
