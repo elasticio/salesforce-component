@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/elasticio/salesforce-component#readme",
   "engines": {
-    "node": "6.10.0"
+    "node": "8.x.x"
   },
   "dependencies": {
     "debug": "^2.2.0",
