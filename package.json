@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "debug": "^2.2.0",
-    "elasticio-node": "^0.0.5",
+    "elasticio-node": "^0.0.8",
     "elasticio-sailor-nodejs": "2.1.0",
     "hbs": "^3.1.0",
     "jsforce": "^1.7.1",
