@@ -112,6 +112,15 @@
             "title": "Query",
             "main": "./lib/actions/query.js",
             "description": "Executing an SOQL Query that may return many objects. Each resulting object is emitted one-by-one",
+            "fields": {
+                "batchSize": {
+                    "viewClass":"TextFieldView",
+                    "label":"Optional batch size",
+                    "required": false,
+                    "note": "A positive integer specifying batch size. If no batch size is specified then results of the query will be emitted one-by-one, otherwise query results will be emitted in array of maximum batch size.",
+                    "placeholder": "0"
+                }
+            },
             "metadata": {
                 "in": {
                     "type": "object",
