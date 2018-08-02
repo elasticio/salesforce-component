@@ -25,6 +25,10 @@
                 },
                 "prompt":"Select environment"
             },
+            "apiVersion": {
+                "label":"API Version",
+                "viewClass":"TextFieldView"
+            },
             "oauth":{
                 "label":"Authentication",
                 "viewClass":"OAuthFieldView",
