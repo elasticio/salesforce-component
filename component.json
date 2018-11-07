@@ -231,6 +231,13 @@
           "required": true,
           "model": "getLookupFieldsModel",
           "note": "Please select the field which you want to use for lookup"
+        },
+        "batchSize": {
+          "viewClass": "TextFieldView",
+          "label": "Optional batch size",
+          "required": false,
+          "note": "A positive integer specifying batch size. If no batch size is specified then results of the query will be emitted one-by-one, otherwise query results will be emitted in array of maximum batch size.",
+          "placeholder": "0"
         }
       }
     }
