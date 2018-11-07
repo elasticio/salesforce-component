@@ -58,8 +58,13 @@ describe('lookup', () => {
     emit: sinon.spy(),
   };
 
-  it('lookup Account ', async () => {
+  it('lookup Contact ', async () => {
     lookup.process.call(emitter, message, configuration)
+        .then(console.log);
+  });
+
+  it('Contact Lookup fields ', async () => {
+    lookup.getLookupFieldsModel(configuration)
         .then(console.log);
   });
 });
