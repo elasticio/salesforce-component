@@ -40,7 +40,7 @@ describe('lookup', () => {
           prodEnv: 'login',
           sobject: 'Contact',
           _account: '5be195b7c99b61001068e1d0',
-          lookupField: 'AccountId',
+          lookupField: 'Id',
           batchSize: 2,
         };
     message = {
