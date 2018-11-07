@@ -229,7 +229,7 @@
                     "viewClass":"SelectView",
                     "label":"Lookup by field",
                     "required":false,
-                    "model":"lookupFields",
+                    "model":"getLookupFieldsModel",
                     "note": "Please select the field which you want to use for lookup",
                     "placeholder": "Id (Default)"
                 }
