@@ -70,6 +70,7 @@ describe('lookup', () => {
 
   it('Contact Lookup Meta', async () => {
     lookup.getMetaModel(configuration)
+        .then(JSON.stringify)
         .then(console.log);
   });
 });
