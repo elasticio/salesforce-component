@@ -67,4 +67,9 @@ describe('lookup', () => {
     lookup.getLookupFieldsModel(configuration)
         .then(console.log);
   });
+
+  it('Contact Lookup Meta', async () => {
+    lookup.getMetaModel(configuration)
+        .then(console.log);
+  });
 });
