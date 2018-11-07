@@ -28,7 +28,6 @@
     "debug": "^2.2.0",
     "elasticio-node": "^0.0.9",
     "elasticio-sailor-nodejs": "2.3.0",
-    "flatmap": "0.0.3",
     "hbs": "~3.1.0",
     "jsforce": "^1.7.1",
     "lodash": "^4.6.1",
