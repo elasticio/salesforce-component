@@ -119,6 +119,10 @@
           "required": false,
           "note": "A positive integer specifying batch size. If no batch size is specified then results of the query will be emitted one-by-one, otherwise query results will be emitted in array of maximum batch size.",
           "placeholder": "0"
+        },
+        "allowResultAsSet": {
+          "label": "Allow all results to be returned in a set (overwrites 'Optional batch size feature')",
+          "viewClass": "CheckBoxView"
         }
       },
       "metadata": {
