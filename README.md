@@ -30,7 +30,8 @@ More information you can find [here](https://help.salesforce.com/apex/HTViewHelp
 
 ## Configure OAuth Client key/secret
 
-In the component repository you need to specify OAuth Client credentials as environment variables. You would need two variables
+In the component repository you need to specify OAuth Client credentials as environment variables. You would need two variables          console.log(result.Account)
+
 
 ![image](https://cloud.githubusercontent.com/assets/56208/10132996/4de54eac-65da-11e5-92aa-a8b102d633e5.png)
 
@@ -51,3 +52,14 @@ Use the Salesforce Object Query Language (SOQL) to search your organization’s 
 * **Optional batch size** - A positive integer specifying batch size. If no batch size is specified then results of the query will be emitted one-by-one, otherwise query results will be emitted in array of maximum batch size.
 * **Allow all results to be returned in a set** - checkbox which allows to emit query results in single array. `Optional batch size` option is ignored in this case.
 * **SOQL Query** - Input field where you should type the SOQL query. E.g. `"SELECT ID, Name from Contact where Name like 'John Smi%'"`
+
+
+### Lookup object
+Use the Lookup object action to search your organization’s Salesforce data for specific information.
+
+#### Input field description
+* **Object** - Input field where you should choose the object type, which you want to find. E.g. `Account`
+* **Lookup field** - Input field where you should choose the lookup field which you want to use for result filtering. E.g. `Id`. 
+
+```For now, you can specify all unique, lookup, externalId/Id fields. ```
+* **Optional batch size** - A positive integer specifying batch size. If no batch size is specified then results of the query will be emitted one-by-one, otherwise query results will be emitted in array of maximum batch size.
