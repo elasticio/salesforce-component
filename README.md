@@ -58,18 +58,18 @@ Use the Salesforce Object Query Language (SOQL) to search your organization’s 
 Use the Lookup object action to search your organization’s Salesforce data for specific information.
 
 #### Input field description
+* **Optional batch size** - A positive integer specifying batch size. If no batch size is specified then results of the query will be emitted one-by-one, otherwise query results will be emitted in array of maximum batch size.
 * **Object** - Input field where you should choose the object type, which you want to find. E.g. `Account`
 * **Lookup field** - Input field where you should choose the lookup field which you want to use for result filtering. E.g. `Id`. 
 
 ```For now, you can specify all unique, lookup, externalId/Id fields. ```
-* **Optional batch size** - A positive integer specifying batch size. If no batch size is specified then results of the query will be emitted one-by-one, otherwise query results will be emitted in array of maximum batch size.
 
 ### Upsert object
 Use the Lookup object action to search your organization’s Salesforce data for specific information.
 
 #### Input field description
 * **Object** - Input field where you should choose the object type, which you want to find. E.g. `Account`
-* **Optional Upsert field** - Input field where you should choose the lookup field which you want to use for result filtering. E.g. `Id`. 
+* **Optional Upsert field** - Input field where you should specify the externalId name field. E.g. `ExtId__c`. 
 
-```For now, you can specify all unique, lookup, externalId/Id fields. ```
-* **Optional batch size** - A positive integer specifying batch size. If no batch size is specified then results of the query will be emitted one-by-one, otherwise query results will be emitted in array of maximum batch size.
+You should specify **external** or **internal Id** for making some updates in salesforce sobject.
+If you want to create new Object you should always specify **Optional Upsert field** and value of ExternalId in input body structure.
