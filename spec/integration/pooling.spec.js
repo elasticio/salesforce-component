@@ -40,7 +40,7 @@ describe('lookup', function() {
             refresh_token: process.env.REFRESH_TOKEN,
             access_token: process.env.ACCESS_TOKEN,
           },
-          object: 'Contact',
+          object: 'Account',
         };
     message = {
       body: {},
@@ -55,7 +55,7 @@ describe('lookup', function() {
     emit: sinon.spy(),
   };
 
-  it('Contact lookup without SOQL', async () => {
+  it('Contact pooling without SOQL', async () => {
     await pooling
         .process.call(emitter, message, configuration, snapshot);
     ;
