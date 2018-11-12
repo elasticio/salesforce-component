@@ -6,7 +6,7 @@ const {messages} = require('elasticio-node');
 const chai = require('chai');
 const {expect} = chai;
 
-describe('lookup', function() {
+describe('pooling', function() {
   this.timeout(5000);
 
   let message;
@@ -55,9 +55,15 @@ describe('lookup', function() {
     emit: sinon.spy(),
   };
 
-  it('Contact pooling without SOQL', async () => {
+  it('Account pooling with empty snapshot', async () => {
     await pooling
         .process.call(emitter, message, configuration, snapshot);
-    ;
+  });
+
+
+  it('Account pooling with not empty snapshot', async () => {
+    snapshot="2018-11-12T13:06:01.179Z";
+    await pooling
+        .process.call(emitter, message, configuration, snapshot);
   });
 });
