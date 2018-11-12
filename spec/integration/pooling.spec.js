@@ -45,6 +45,7 @@ describe('pooling', function() {
     message = {
       body: {},
     };
+    snapshot = {};
   });
 
   after(async () => {
