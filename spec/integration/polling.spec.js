@@ -1,12 +1,12 @@
 /* eslint-disable no-return-assign */
 const fs = require('fs');
 const sinon = require('sinon');
-const pooling = require('../../lib/entry');
+const polling = require('../../lib/entry');
 const {messages} = require('elasticio-node');
 const chai = require('chai');
 const {expect} = chai;
 
-describe('pooling', function() {
+describe('polling', function() {
   this.timeout(5000);
 
   let message;
@@ -56,15 +56,15 @@ describe('pooling', function() {
     emit: sinon.spy(),
   };
 
-  it('Account pooling with empty snapshot', async () => {
-    await pooling
+  it('Account polling with empty snapshot', async () => {
+    await polling
         .process.call(emitter, message, configuration, snapshot);
   });
 
 
-  it('Account pooling with not empty snapshot', async () => {
+  it('Account polling with not empty snapshot', async () => {
     snapshot="2018-11-12T13:06:01.179Z";
-    await pooling
+    await polling
         .process.call(emitter, message, configuration, snapshot);
   });
 });
