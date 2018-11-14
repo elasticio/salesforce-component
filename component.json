@@ -185,6 +185,7 @@
     "other": {
       "title": "New Other Object",
       "main": "./lib/actions/other.js",
+      "description": "Creates new Selected Object",
       "dynamicMetadata": true,
       "fields": {
         "object": {
@@ -199,6 +200,7 @@
     "upsert": {
       "title": "Upsert Other Object",
       "main": "./lib/actions/upsert.js",
+      "description": "Create or Update Selected Object",
       "dynamicMetadata": true,
       "fields": {
         "sobject": {
@@ -220,6 +222,7 @@
     "lookup": {
       "title": "Lookup Object",
       "main": "./lib/actions/lookup.js",
+      "description": "Lookup object by selected field",
       "dynamicMetadata": true,
       "fields": {
         "sobject": {
