@@ -73,3 +73,12 @@ Use the Lookup object action to search your organization’s Salesforce data for
 
 You should specify **external** or **internal Id** for making some updates in salesforce sobject.
 If you want to create new Object you should always specify **Optional Upsert field** and value of ExternalId in input body structure.
+
+
+## Triggers
+
+### New Other Object
+This trigger will poll for existing and updated objects where you can select any custom or build-in object for your Salesforce instance
+
+#### Input field description
+* **Object** - Input field where you should select the type of object which updates you want to get. E.g. `Account`
