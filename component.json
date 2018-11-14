@@ -1,217 +1,252 @@
 {
-    "title":"Salesforce",
-    "description" : "Customer relationship management (CRM) software & cloud computing from the leader in CRM solutions for businesses large & small.",
-    "docsUrl": "https://github.com/elasticio/salesforce-component",
-    "url" : "http://www.salesforce.com/",
-    "envVars": {
-        "SALESFORCE_KEY": {
-            "required": true,
-            "description": "Your Salesforce OAuth client key"
-        },
-        "SALESFORCE_SECRET": {
-            "required": true,
-            "description": "Your Salesforce OAuth client secret"
-        }
+  "title": "Salesforce",
+  "description": "Customer relationship management (CRM) software & cloud computing from the leader in CRM solutions for businesses large & small.",
+  "docsUrl": "https://github.com/elasticio/salesforce-component",
+  "url": "http://www.salesforce.com/",
+  "envVars": {
+    "SALESFORCE_KEY": {
+      "required": true,
+      "description": "Your Salesforce OAuth client key"
     },
-    "credentials" : {
-        "fields":{
-            "prodEnv" : {
-                "label":"Environment",
-                "viewClass":"SelectView",
-                "required":true,
-                "model":{
-                    "test":"Sandbox",
-                    "login":"Production"
-                },
-                "prompt":"Select environment"
-            },
-            "oauth":{
-                "label":"Authentication",
-                "viewClass":"OAuthFieldView",
-                "required": true
-            }
-        },
-        "oauth2":{
-            "client_id":"{{SALESFORCE_KEY}}",
-            "client_secret":"{{SALESFORCE_SECRET}}",
-            "auth_uri":"https://{{prodEnv}}.salesforce.com/services/oauth2/authorize",
-            "token_uri":"https://{{prodEnv}}.salesforce.com/services/oauth2/token"
-        }
-    },
-    "triggers":{
-        "queryTrigger": {
-            "title": "SOQL Query",
-            "main": "./lib/triggers/query.js",
-            "type":"polling",
-            "description": "Will continuously run the same SOQL Query and emit results one-by-one",
-            "metadata": {
-                "out": {}
-            },
-            "fields": {
-                "query": {
-                    "label": "SOQL Query",
-                    "required": true,
-                    "viewClass": "TextAreaView"
-                }
-            }
-        },
-        "newCase": {
-            "title": "New Case",
-            "main": "./lib/triggers/case.js",
-            "type": "polling",
-            "description": "Will poll for existing and updated Cases",
-            "dynamicMetadata": true
-        },
-        "newLead":{
-            "title":"New Lead",
-            "main":"./lib/triggers/lead.js",
-            "type":"polling",
-            "description": "Will poll for existing and updated Leads",
-            "dynamicMetadata":true
-        },
-        "newContact":{
-            "title":"New Contact",
-            "main":"./lib/triggers/contact.js",
-            "type":"polling",
-            "description": "Will poll for existing and updated Contacts",
-            "dynamicMetadata":true
-        },
-        "newAccount":{
-            "title":"New Account",
-            "main":"./lib/triggers/account.js",
-            "type":"polling",
-            "description": "Will poll for existing and updated Accounts",
-            "dynamicMetadata":true
-        },
-        "newTask":{
-            "title":"New Task",
-            "main":"./lib/triggers/task.js",
-            "type":"polling",
-            "description": "Will poll for existing and updated Tasks",
-            "dynamicMetadata":true
-        },
-        "entry":{
-            "title":"New Other Object",
-            "main":"./lib/entry.js",
-            "type":"polling",
-            "dynamicMetadata":true,
-            "description": "Will poll for existing and updated objects where you can select any custom or build-in object for your Salesforce instance",
-            "fields":{
-                "object":{
-                    "viewClass":"SelectView",
-                    "label":"Object",
-                    "required":true,
-                    "model":"objectTypes",
-                    "prompt":"Please select a Salesforce Object"
-                }
-            }
-        }
-    },
-    "actions":{
-        "queryAction": {
-            "title": "Query",
-            "main": "./lib/actions/query.js",
-            "description": "Executing an SOQL Query that may return many objects. Each resulting object is emitted one-by-one",
-            "fields": {
-                "batchSize": {
-                    "viewClass":"TextFieldView",
-                    "label":"Optional batch size",
-                    "required": false,
-                    "note": "A positive integer specifying batch size. If no batch size is specified then results of the query will be emitted one-by-one, otherwise query results will be emitted in array of maximum batch size.",
-                    "placeholder": "0"
-                }
-            },
-            "metadata": {
-                "in": {
-                    "type": "object",
-                    "properties": {
-                        "query": {
-                            "maxLength": 20000,
-                            "title": "SOQL Query",
-                            "type": "string",
-                            "required": true
-                        }
-                    }
-                },
-                "out": {}
-            }
-        },
-        "account":{
-            "title":"New Account",
-            "main":"./lib/actions/account.js",
-            "description": "Creates new Account",
-            "dynamicMetadata":true
-        },
-        "case":{
-            "title":"New Case",
-            "main":"./lib/actions/case.js",
-            "description": "Creates new Case",
-            "dynamicMetadata":true
-        },
-        "contact":{
-            "title":"New Contact",
-            "main":"./lib/actions/contact.js",
-            "description": "Creates new Contact",
-            "dynamicMetadata":true
-        },
-        "event":{
-            "title":"New Event",
-            "main":"./lib/actions/event.js",
-            "description": "Creates new Event",
-            "dynamicMetadata":true
-        },
-        "lead":{
-            "title":"New Lead",
-            "main":"./lib/actions/lead.js",
-            "description": "Creates new Lead",
-            "dynamicMetadata":true
-        },
-        "note":{
-            "title":"New Note",
-            "main":"./lib/actions/note.js",
-            "description": "Creates new Note",
-            "dynamicMetadata":true
-        },
-        "task":{
-            "title":"New Task",
-            "main":"./lib/actions/task.js",
-            "description": "Creates new Task",
-            "dynamicMetadata":true
-        },
-        "other":{
-            "title":"New Other Object",
-            "main":"./lib/actions/other.js",
-            "dynamicMetadata":true,
-            "fields":{
-                "object":{
-                    "viewClass":"SelectView",
-                    "label":"Object",
-                    "required":true,
-                    "model":"objectTypes",
-                    "prompt":"Please select a Salesforce Object"
-                }
-            }
-        },
-        "upsert":{
-            "title":"Upsert Other Object",
-            "main":"./lib/actions/upsert.js",
-            "dynamicMetadata":true,
-            "fields":{
-                "sobject":{
-                    "viewClass":"SelectView",
-                    "label":"Object",
-                    "required":true,
-                    "model":"objectTypes",
-                    "prompt":"Please select a Salesforce Object"
-                },
-              "extIdField":{
-                "viewClass":"TextFieldView",
-                "label":"Optional Upsert field",
-                "required":false,
-                "note": "Please make sure selected SObject has this field and it is marked as 'External ID'",
-                "placeholder": "extID__c"
-              }
-            }
-        }
+    "SALESFORCE_SECRET": {
+      "required": true,
+      "description": "Your Salesforce OAuth client secret"
     }
+  },
+  "credentials": {
+    "fields": {
+      "prodEnv": {
+        "label": "Environment",
+        "viewClass": "SelectView",
+        "required": true,
+        "model": {
+          "test": "Sandbox",
+          "login": "Production"
+        },
+        "prompt": "Select environment"
+      },
+      "oauth": {
+        "label": "Authentication",
+        "viewClass": "OAuthFieldView",
+        "required": true
+      }
+    },
+    "oauth2": {
+      "client_id": "{{SALESFORCE_KEY}}",
+      "client_secret": "{{SALESFORCE_SECRET}}",
+      "auth_uri": "https://{{prodEnv}}.salesforce.com/services/oauth2/authorize",
+      "token_uri": "https://{{prodEnv}}.salesforce.com/services/oauth2/token"
+    }
+  },
+  "triggers": {
+    "queryTrigger": {
+      "title": "SOQL Query",
+      "main": "./lib/triggers/query.js",
+      "type": "polling",
+      "description": "Will continuously run the same SOQL Query and emit results one-by-one",
+      "metadata": {
+        "out": {}
+      },
+      "fields": {
+        "query": {
+          "label": "SOQL Query",
+          "required": true,
+          "viewClass": "TextAreaView"
+        }
+      }
+    },
+    "newCase": {
+      "title": "New Case",
+      "main": "./lib/triggers/case.js",
+      "type": "polling",
+      "description": "Will poll for existing and updated Cases",
+      "dynamicMetadata": true
+    },
+    "newLead": {
+      "title": "New Lead",
+      "main": "./lib/triggers/lead.js",
+      "type": "polling",
+      "description": "Will poll for existing and updated Leads",
+      "dynamicMetadata": true
+    },
+    "newContact": {
+      "title": "New Contact",
+      "main": "./lib/triggers/contact.js",
+      "type": "polling",
+      "description": "Will poll for existing and updated Contacts",
+      "dynamicMetadata": true
+    },
+    "newAccount": {
+      "title": "New Account",
+      "main": "./lib/triggers/account.js",
+      "type": "polling",
+      "description": "Will poll for existing and updated Accounts",
+      "dynamicMetadata": true
+    },
+    "newTask": {
+      "title": "New Task",
+      "main": "./lib/triggers/task.js",
+      "type": "polling",
+      "description": "Will poll for existing and updated Tasks",
+      "dynamicMetadata": true
+    },
+    "entry": {
+      "title": "New Other Object",
+      "main": "./lib/entry.js",
+      "type": "polling",
+      "dynamicMetadata": true,
+      "description": "Will poll for existing and updated objects where you can select any custom or build-in object for your Salesforce instance",
+      "fields": {
+        "object": {
+          "viewClass": "SelectView",
+          "label": "Object",
+          "required": true,
+          "model": "objectTypes",
+          "prompt": "Please select a Salesforce Object"
+        }
+      }
+    }
+  },
+  "actions": {
+    "queryAction": {
+      "title": "Query",
+      "main": "./lib/actions/query.js",
+      "description": "Executing an SOQL Query that may return many objects. Each resulting object is emitted one-by-one",
+      "fields": {
+        "batchSize": {
+          "viewClass": "TextFieldView",
+          "label": "Optional batch size",
+          "required": false,
+          "note": "A positive integer specifying batch size. If no batch size is specified then results of the query will be emitted one-by-one, otherwise query results will be emitted in array of maximum batch size.",
+          "placeholder": "0"
+        },
+        "allowResultAsSet": {
+          "label": "Allow all results to be returned in a set (overwrites 'Optional batch size feature')",
+          "viewClass": "CheckBoxView"
+        }
+      },
+      "metadata": {
+        "in": {
+          "type": "object",
+          "properties": {
+            "query": {
+              "maxLength": 20000,
+              "title": "SOQL Query",
+              "type": "string",
+              "required": true
+            }
+          }
+        },
+        "out": {}
+      }
+    },
+    "account": {
+      "title": "New Account",
+      "main": "./lib/actions/account.js",
+      "description": "Creates new Account",
+      "dynamicMetadata": true
+    },
+    "case": {
+      "title": "New Case",
+      "main": "./lib/actions/case.js",
+      "description": "Creates new Case",
+      "dynamicMetadata": true
+    },
+    "contact": {
+      "title": "New Contact",
+      "main": "./lib/actions/contact.js",
+      "description": "Creates new Contact",
+      "dynamicMetadata": true
+    },
+    "event": {
+      "title": "New Event",
+      "main": "./lib/actions/event.js",
+      "description": "Creates new Event",
+      "dynamicMetadata": true
+    },
+    "lead": {
+      "title": "New Lead",
+      "main": "./lib/actions/lead.js",
+      "description": "Creates new Lead",
+      "dynamicMetadata": true
+    },
+    "note": {
+      "title": "New Note",
+      "main": "./lib/actions/note.js",
+      "description": "Creates new Note",
+      "dynamicMetadata": true
+    },
+    "task": {
+      "title": "New Task",
+      "main": "./lib/actions/task.js",
+      "description": "Creates new Task",
+      "dynamicMetadata": true
+    },
+    "other": {
+      "title": "New Other Object",
+      "main": "./lib/actions/other.js",
+      "description": "Creates new Selected Object",
+      "dynamicMetadata": true,
+      "fields": {
+        "object": {
+          "viewClass": "SelectView",
+          "label": "Object",
+          "required": true,
+          "model": "objectTypes",
+          "prompt": "Please select a Salesforce Object"
+        }
+      }
+    },
+    "upsert": {
+      "title": "Upsert Other Object",
+      "main": "./lib/actions/upsert.js",
+      "description": "Create or Update Selected Object",
+      "dynamicMetadata": true,
+      "fields": {
+        "sobject": {
+          "viewClass": "SelectView",
+          "label": "Object",
+          "required": true,
+          "model": "objectTypes",
+          "prompt": "Please select a Salesforce Object"
+        },
+        "extIdField": {
+          "viewClass": "TextFieldView",
+          "label": "Optional Upsert field",
+          "required": false,
+          "note": "Please make sure selected SObject has this field and it is marked as 'External ID'",
+          "placeholder": "extID__c"
+        }
+      }
+    },
+    "lookup": {
+      "title": "Lookup Object",
+      "main": "./lib/actions/lookup.js",
+      "description": "Lookup object by selected field",
+      "dynamicMetadata": true,
+      "fields": {
+        "sobject": {
+          "viewClass": "SelectView",
+          "label": "Object",
+          "required": true,
+          "model": "objectTypes",
+          "prompt": "Please select a Salesforce Object"
+        },
+        "lookupField": {
+          "viewClass": "SelectView",
+          "label": "Lookup by field",
+          "required": true,
+          "model": "getLookupFieldsModel",
+          "note": "Please select the field which you want to use for lookup"
+        },
+        "batchSize": {
+          "viewClass": "TextFieldView",
+          "label": "Optional batch size",
+          "required": false,
+          "note": "A positive integer specifying batch size. If no batch size is specified then results of the query will be emitted one-by-one, otherwise query results will be emitted in array of maximum batch size.",
+          "placeholder": "0"
+        }
+      }
+    }
+  }
 }

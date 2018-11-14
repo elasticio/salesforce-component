@@ -26,8 +26,8 @@
   },
   "dependencies": {
     "debug": "^2.2.0",
-    "elasticio-node": "^0.0.8",
-    "elasticio-sailor-nodejs": "2.1.0",
+    "elasticio-node": "^0.0.9",
+    "elasticio-sailor-nodejs": "2.3.0",
     "hbs": "~3.1.0",
     "jsforce": "^1.7.1",
     "lodash": "^4.6.1",
@@ -41,6 +41,10 @@
     "grunt-jasmine-node": "0.2.1",
     "grunt-jscs": "2.1.0",
     "nock": "0.27.2",
-    "proxyquire": "^1.7.10"
+    "proxyquire": "^1.7.10",
+    "mocha": "^5.0.5",
+    "sinon": "^5.1.0",
+    "dotenv": "^5.0.0",
+    "chai": "^4.2.0"
   }
 }
