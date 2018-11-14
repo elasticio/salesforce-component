@@ -30,7 +30,8 @@ More information you can find [here](https://help.salesforce.com/apex/HTViewHelp
 
 ## Configure OAuth Client key/secret
 
-In the component repository you need to specify OAuth Client credentials as environment variables. You would need two variables
+In the component repository you need to specify OAuth Client credentials as environment variables. You would need two variables          console.log(result.Account)
+
 
 ![image](https://cloud.githubusercontent.com/assets/56208/10132996/4de54eac-65da-11e5-92aa-a8b102d633e5.png)
 
@@ -40,6 +41,43 @@ You would need two variables:
 
 # How to use it
 
+## Triggers
+
+### New Other Object
+This trigger will poll for existing and updated objects where you can select any custom or build-in object for your Salesforce instance
+
+#### Input field description
+* **Object** - Input field where you should select the type of object which updates you want to get. E.g. `Account`
+
 ## Actions
 
 Each action creates a single object. Input metadata is fetched dynamically from your Salesforce account. Output metadata is the same as input metadata, so you may expect all fields that you mapped as input to be returned as output.
+
+### Query
+Use the Salesforce Object Query Language (SOQL) to search your organization’s Salesforce data for specific information. SOQL is similar to the SELECT statement in the widely used Structured Query Language (SQL) but is designed specifically for Salesforce data. This action allows you to interact with your data using SOQL.
+
+#### Input field description
+* **Optional batch size** - A positive integer specifying batch size. If no batch size is specified then results of the query will be emitted one-by-one, otherwise query results will be emitted in array of maximum batch size.
+* **Allow all results to be returned in a set** - checkbox which allows to emit query results in single array. `Optional batch size` option is ignored in this case.
+* **SOQL Query** - Input field where you should type the SOQL query. E.g. `"SELECT ID, Name from Contact where Name like 'John Smi%'"`
+
+
+### Lookup object
+Use the Lookup object action to search your organization’s Salesforce data for specific information.
+
+#### Input field description
+* **Optional batch size** - A positive integer specifying batch size. If no batch size is specified then results of the query will be emitted one-by-one, otherwise query results will be emitted in array of maximum batch size.
+* **Object** - Input field where you should choose the object type, which you want to find. E.g. `Account`
+* **Lookup field** - Input field where you should choose the lookup field which you want to use for result filtering. E.g. `Id`. 
+
+```For now, you can specify all unique, lookup, externalId/Id fields. ```
+
+### Upsert object
+Use the Lookup object action to search your organization’s Salesforce data for specific information.
+
+#### Input field description
+* **Object** - Input field where you should choose the object type, which you want to find. E.g. `Account`
+* **Optional Upsert field** - Input field where you should specify the externalId name field. E.g. `ExtId__c`. 
+
+You should specify **external** or **internal Id** for making some updates in salesforce sobject.
+If you want to create new Object you should always specify **Optional Upsert field** and value of ExternalId in input body structure.
