@@ -40,7 +40,7 @@
   },
   "triggers": {
     "queryTrigger": {
-      "title": "SOQL Query",
+      "title": "Query",
       "main": "./lib/triggers/query.js",
       "type": "polling",
       "description": "Will continuously run the same SOQL Query and emit results one-by-one",
