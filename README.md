@@ -1,10 +1,16 @@
 # salesforce-component
 
+## Description
 Integration component for Salesforce API for the [elastic.io](http://www.elastic.io;) platform.
 
-## General Information
-
+### Purpose
 Salesforce component is designed for Salesforce API integration.
+
+###  Completeness Matrix
+![image](https://user-images.githubusercontent.com/36419533/51548396-e80f5480-1e70-11e9-96d4-afaf697dd694.png)
+
+[Salesforse-component Completeness Matrix](https://docs.google.com/spreadsheets/d/1_4vvDLdQeXqs3c8OxFYE80CvpeSC8e3Wmwl1dcEGO2Q/edit?usp=sharing)
+
 
 ### API version
 The component uses Salesforce - API Version 25.0, except:
