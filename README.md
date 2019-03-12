@@ -181,4 +181,4 @@ This trigger will subscribe for any platform Event using Salesforce API streamin
 You can find more detail information in the [Platform Events Intro Documentation]('https://developer.salesforce.com/docs/atlas.en-us.platform_events.meta/platform_events/platform_events_intro.htm').
 
 #### Limitations:
-Unfortunately, this trigger can be used only for **"Realtime"** flows.
+At the moment this trigger can be used only for **"Realtime"** flows.
