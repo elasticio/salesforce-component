@@ -167,3 +167,18 @@ Polls existing and updated objects. You can select any custom or built-in object
 
 #### Input field description
 * **Object** - Input field where you should select the type of object which updates you want to get. E.g. `Account`
+
+### Subscribe to platform events (REALTIME FLOWS ONLY)
+This trigger will subscribe for any platform Event using Salesforce API streaming.
+
+#### Input field description
+* **Event object name** - Input field where you should select the type of platform event which you want to subscribe E.g. `My platform event`
+
+### How to create new custom Platform event Entity:
+`Setup --> Integrations --> Platform Events --> New Platform Event`
+![Screenshot from 2019-03-11 11-51-10](https://user-images.githubusercontent.com/13310949/54114889-1088e900-43f4-11e9-8b49-3a8113b6577d.png)
+
+You can find more detail information in the [Platform Events Intro Documentation]('https://developer.salesforce.com/docs/atlas.en-us.platform_events.meta/platform_events/platform_events_intro.htm').
+
+#### Limitations:
+Unfortunately, this trigger can be used only for **"Realtime"** flows.

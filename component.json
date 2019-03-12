@@ -105,6 +105,21 @@
           "prompt": "Please select a Salesforce Object"
         }
       }
+    },
+    "streamPlatformEvents": {
+      "title": "Subscribe to platform events (REALTIME FLOWS ONLY)",
+      "description": "Can be used for subscription to the specified in the configuration Platform Event object. Can be used only for Realtime flows",
+      "main": "./lib/triggers/streamPlatformEvents.js",
+      "type": "polling",
+      "fields": {
+        "object": {
+          "viewClass": "SelectView",
+          "label": "Event object name",
+          "required": true,
+          "model": "objectTypes",
+          "prompt": "Please select a Event object"
+        }
+      }
     }
   },
   "actions": {
