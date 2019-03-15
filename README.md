@@ -39,6 +39,13 @@ During credentials creation you would need to:
 - choose ``Environment`` 
 - enter ``Username`` and ``Password`` in a pop-up window after click on ``Authenticate`` button.
 - verify and save your new credentials.
+### Limitations
+According to [Salesforce documentation](https://help.salesforce.com/articleView?id=remoteaccess_request_manage.htm&type=5)
+
+```
+Each connected app allows five unique approvals per user. When a sixth approval is made, the oldest approval is revoked. 
+```
+You can get error `refresh token has been expired` if the same user account was authenticated with same OAuth Application (OAuth Client) more than 4 times. This is feature of the Salesforce platform that automatically invalidates the oldest refresh_token as soon as a number of given refresh tokens for an individual user account exceeds 4.
 
 ## Actions
 ### Query
@@ -167,3 +174,18 @@ Polls existing and updated objects. You can select any custom or built-in object
 
 #### Input field description
 * **Object** - Input field where you should select the type of object which updates you want to get. E.g. `Account`
+
+### Subscribe to platform events (REALTIME FLOWS ONLY)
+This trigger will subscribe for any platform Event using Salesforce API streaming.
+
+#### Input field description
+* **Event object name** - Input field where you should select the type of platform event which you want to subscribe E.g. `My platform event`
+
+### How to create new custom Platform event Entity:
+`Setup --> Integrations --> Platform Events --> New Platform Event`
+![Screenshot from 2019-03-11 11-51-10](https://user-images.githubusercontent.com/13310949/54114889-1088e900-43f4-11e9-8b49-3a8113b6577d.png)
+
+You can find more detail information in the [Platform Events Intro Documentation]('https://developer.salesforce.com/docs/atlas.en-us.platform_events.meta/platform_events/platform_events_intro.htm').
+
+#### Limitations:
+At the moment this trigger can be used only for **"Realtime"** flows.
