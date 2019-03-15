@@ -40,6 +40,13 @@ During credentials creation you would need to:
 - enter ``Username`` and ``Password`` in a pop-up window after click on ``Authenticate`` button.
 - verify and save your new credentials.
 
+### Limitations
+According to [Salesforce documentation](https://help.salesforce.com/articleView?id=remoteaccess_request_manage.htm&type=5)
+
+```
+Each connected app allows five unique approvals per user. When a sixth approval is made, the oldest approval is revoked. 
+```
+You can get error `refresh token has been expired` if the same user account was authenticated with same OAuth Application (OAuth Client) more than 4 times. This is feature of the Salesforce platform that automatically invalidates the oldest refresh_token as soon as a number of given refresh tokens for an individual user account exceeds 4.
 ## Actions
 ### Query
 Executing a SOQL Query that may return many objects. Each resulting object is emitted one-by-one. Use the Salesforce Object Query Language (SOQL) to search your organization’s Salesforce data for specific information. SOQL is similar to the SELECT statement in the widely used Structured Query Language (SQL) but is designed specifically for Salesforce data. This action allows you to interact with your data using SOQL.
