@@ -185,7 +185,7 @@ This trigger will subscribe for any platform Event using Salesforce streaming AP
 `Setup --> Integrations --> Platform Events --> New Platform Event`
 ![Screenshot from 2019-03-11 11-51-10](https://user-images.githubusercontent.com/13310949/54114889-1088e900-43f4-11e9-8b49-3a8113b6577d.png)
 
-You can find more detail information in the [Platform Events Intro Documentation]('https://developer.salesforce.com/docs/atlas.en-us.platform_events.meta/platform_events/platform_events_intro.htm').
+You can find more detail information in the [Platform Events Intro Documentation](https://developer.salesforce.com/docs/atlas.en-us.platform_events.meta/platform_events/platform_events_intro.htm).
 
 #### Limitations:
 At the moment this trigger can be used only for **"Realtime"** flows.
