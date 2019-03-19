@@ -176,7 +176,7 @@ Polls existing and updated objects. You can select any custom or built-in object
 * **Object** - Input field where you should select the type of object which updates you want to get. E.g. `Account`
 
 ### Subscribe to platform events (REALTIME FLOWS ONLY)
-This trigger will subscribe for any platform Event using Salesforce API streaming.
+This trigger will subscribe for any platform Event using Salesforce streaming API.
 
 #### Input field description
 * **Event object name** - Input field where you should select the type of platform event which you want to subscribe E.g. `My platform event`
