@@ -103,6 +103,41 @@
           "required": true,
           "model": "objectTypes",
           "prompt": "Please select a Salesforce Object"
+        },
+        "startTime": {
+          "viewClass": "TextFieldView",
+          "label": "Start Time",
+          "required": false,
+          "placeholder":"2018-11-12T13:06:01.179Z",
+          "note": "Indicates the beginning time to start polling from, default 1970-01-01T00:00:00.000Z"
+        },
+        "endTime": {
+          "viewClass": "TextFieldView",
+          "label": "End Time",
+          "required": false,
+          "placeholder": "2018-11-12T13:06:01.179Z",
+          "note": "If provided, do not fetch records modified after this time (defaults to never)"
+        },
+        "sizeOfPollingPage": {
+          "label": "Size of Polling Page",
+          "viewClass": "SelectView",
+          "required" : false,
+          "model": {
+            "100": 100,
+            "500": 500,
+            "1000": 1000
+          },
+          "prompt": "Please select the size of pages to be fetched (defaults to 1000)"
+        },
+        "singlePagePerInterval": {
+          "label": "Process single page per execution",
+          "viewClass": "SelectView",
+          "required" : false,
+          "model": {
+            "yes": "yes",
+            "no": "no"
+          },
+          "prompt": "Process single page per execution:"
         }
       }
     },
