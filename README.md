@@ -173,7 +173,25 @@ Polls existing and updated Tasks
 Polls existing and updated objects. You can select any custom or built-in object for your Salesforce instance. 
 
 #### Input field description
-* **Object** - Input field where you should select the type of object which updates you want to get. E.g. `Account`
+* **Object** - Input field where you should select the type of object which updates you want to get. E.g. `Account`;
+* **Start Time** - Indicates the beginning time to start polling from. Defaults to `1970-01-01T00:00:00.000Z`;
+* **End Time** - If provided, don’t fetch records modified after this time;
+* **Size of Polling Page** - Indicates the size of pages to be fetched. You can select on of values: `100, 500, 1000`. Defaults to `1000`;
+* **Process single page per execution** - You can select on of options:
+   1. `yes` - if the number of changed records exceeds the maximum number of results in a page, wait until the next flow start to fetch the next page;
+   1. `no` - if the number of changed records exceeds the maximum number of results in a page, the next pages will fetching in the same execution.
+
+For example, you have 234 “Contact” objects, 213 of them were changed from 2019-01-01. 
+You want to select all “Contacts” that were changed from 2019-01-01, set the page size to 100 and process single page per execution.
+For you purpose you need to specify following fields:
+   * Object: `Contact`
+   * Start Time: `2019-01-01T00:00:00.000Z`
+   * Size of Polling Page: `100`
+   * Process single page per execution: `yes` (or leave this empty)
+![image](https://user-images.githubusercontent.com/16806832/54936497-41583a80-4f2b-11e9-9435-f4cdabd0b483.png)
+
+As a result, all contacts will be fetched in three calls of the trigger: two of them by 100 items, and the last one by 13.
+If you select `no` in **Process single page per execution**, all 213 contacts will be fetched in one call of the trigger.
 
 ### Subscribe to platform events (REALTIME FLOWS ONLY)
 This trigger will subscribe for any platform Event using Salesforce streaming API.
