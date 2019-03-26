@@ -67,4 +67,10 @@ describe('polling', function() {
     await polling
         .process.call(emitter, message, configuration, snapshot);
   });
+
+  it('Account polling with not snapshot.previousLastModified', async () => {
+    snapshot={previousLastModified:"2018-11-12T13:06:01.179Z"};
+    await polling
+        .process.call(emitter, message, configuration, snapshot);
+  });
 });
