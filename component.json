@@ -59,35 +59,35 @@
       "title": "New Case",
       "main": "./lib/triggers/case.js",
       "type": "polling",
-      "description": "Will poll for existing and updated Cases",
+      "description": "Will poll for existing and updated Cases (max 10000)",
       "dynamicMetadata": true
     },
     "newLead": {
       "title": "New Lead",
       "main": "./lib/triggers/lead.js",
       "type": "polling",
-      "description": "Will poll for existing and updated Leads",
+      "description": "Will poll for existing and updated Leads (max 10000)",
       "dynamicMetadata": true
     },
     "newContact": {
       "title": "New Contact",
       "main": "./lib/triggers/contact.js",
       "type": "polling",
-      "description": "Will poll for existing and updated Contacts",
+      "description": "Will poll for existing and updated Contacts (max 10000)",
       "dynamicMetadata": true
     },
     "newAccount": {
       "title": "New Account",
       "main": "./lib/triggers/account.js",
       "type": "polling",
-      "description": "Will poll for existing and updated Accounts",
+      "description": "Will poll for existing and updated Accounts (max 10000)",
       "dynamicMetadata": true
     },
     "newTask": {
       "title": "New Task",
       "main": "./lib/triggers/task.js",
       "type": "polling",
-      "description": "Will poll for existing and updated Tasks",
+      "description": "Will poll for existing and updated Tasks (max 10000)",
       "dynamicMetadata": true
     },
     "entry": {
