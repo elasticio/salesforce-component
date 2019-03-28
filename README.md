@@ -155,19 +155,19 @@ Use the Salesforce Object Query Language (SOQL) to search your organization’s 
 
 
 ### New Case
-Polls existing and updated Cases
+Polls existing and updated Cases (fetches a maximum of 1000 objects per execution)
 
 ### New Lead
-Polls existing and updated Leads
+Polls existing and updated Leads (fetches a maximum of 1000 objects per execution)
 
 ### New Contact
-Polls existing and updated Contacts
+Polls existing and updated Contacts (fetches a maximum of 1000 objects per execution)
 
 ### New Account
-Polls existing and updated Accounts
+Polls existing and updated Accounts (fetches a maximum of 1000 objects per execution)
 
 ### New Task
-Polls existing and updated Tasks
+Polls existing and updated Tasks (fetches a maximum of 1000 objects per execution)
 
 ### New Other Object
 Polls existing and updated objects. You can select any custom or built-in object for your Salesforce instance. 
