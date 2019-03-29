@@ -270,6 +270,7 @@
       }
     },
     "lookup": {
+      "deprecated": true,
       "title": "Lookup Object",
       "main": "./lib/actions/lookup.js",
       "description": "Lookup object by selected field",
@@ -295,6 +296,46 @@
           "required": false,
           "note": "A positive integer specifying batch size. If no batch size is specified then results of the query will be emitted one-by-one, otherwise query results will be emitted in array of maximum batch size.",
           "placeholder": "0"
+        }
+      }
+    },
+    "lookupObject": {
+      "title": "Lookup Object (at most 1)",
+      "main": "./lib/actions/lookupObject.js",
+      "description": "Lookup object (at most 1) by selected field",
+      "dynamicMetadata": true,
+      "fields": {
+        "sobject": {
+          "viewClass": "SelectView",
+          "label": "Object",
+          "required": true,
+          "model": "objectTypes",
+          "prompt": "Please select a Salesforce Object"
+        },
+        "typeOfSearch": {
+          "viewClass": "SelectView",
+          "label": "Type Of Search",
+          "required": true,
+          "model":{
+            "uniqueFields": "Unique Fields",
+            "allFields": "All Fields"
+          },
+          "prompt": "Please select a Salesforce Object"
+        },
+        "lookupField": {
+          "viewClass": "SelectView",
+          "label": "Lookup by field",
+          "required": true,
+          "model": "getLookupFieldsModel",
+          "note": "Please select the field which you want to use for lookup"
+        },
+        "allowCriteriaToBeOmitted": {
+          "viewClass": "CheckBoxView",
+          "label": "Allow criteria to be omitted"
+        },
+        "allowZeroResults": {
+          "viewClass": "CheckBoxView",
+          "label": "Allow zero results"
         }
       }
     }

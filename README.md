@@ -125,7 +125,7 @@ Action creates a single object. Input metadata is fetched dynamically from your 
 You should specify **external** or **internal Id** for making some updates in salesforce object.
 If you want to create new Object you should always specify **Optional Upsert field** and value of ExternalId in input body structure.
 
-### Lookup Object
+### Lookup Object (deprecated)
 Lookup an object by a selected field.
 Action creates a single object. Input metadata is fetched dynamically from your Salesforce account. Output metadata is the same as input metadata, so you may expect all fields that you mapped as input to be returned as output.
 
@@ -143,6 +143,22 @@ Action creates a single object. Input metadata is fetched dynamically from your 
 |Lookup found a single object, e.g. we were able to identify a parent Account to the Contact|A single message will be emitted, found object will be a body of the message|
 |Lookup found multiple objects (that may happen when a lookup is made by non-unique field) | Each found object will be emitted with the separate message|
 
+
+
+### Lookup Object (at most 1)
+Lookup an object by a selected field.
+Action creates a single object. Input metadata is fetched dynamically from your Salesforce account. Output metadata is the same as input metadata, so you may expect all fields that you mapped as input to be returned as output.
+
+#### Input field description
+* **Object** - dropdown list where you should choose the object type, which you want to find. E.g. `Account`.
+* **Type Of Search** -  dropdown list with two values: `Unique Fields` and `All Fields`.
+* **Lookup by field** - dropdown list with all fields on the selected object, if on *Type Of Search* is chosen `All Fields`, or with all fields on the selected object where `type` is `id` or `unique` is `true` , if on *Type Of Search* is chosen `Unique Fields`.
+* **Allow criteria to be omitted** - checkbox, if checked - search criteria can be omitted and the empty object will be returned, else - search criteria are required.
+* **Allow zero results** - checkbox, if checked and nothing is found - empty object will be returned, else - action throw an error.
+
+#### Metadata description
+
+Metadata contains one field whose name, type and mandatoriness are generated according to the value of the configuration fields *Lookup by field* and *Allow criteria to be omitted*.
 
 ## Triggers
 ### Query
