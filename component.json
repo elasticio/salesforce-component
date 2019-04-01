@@ -123,7 +123,7 @@
           "viewClass": "TextFieldView",
           "required" : false,
           "placeholder": "1000",
-          "note": "Please set the size of pages to be fetched (defaults to 1000). Needs to be positive integer, max 10000 objects"
+          "note": "Please set the size of pages to be fetched (defaults to 1000). Please enter positive integer only, max 10000 objects"
         },
         "singlePagePerInterval": {
           "label": "Process single page per execution",
