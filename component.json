@@ -120,14 +120,10 @@
         },
         "sizeOfPollingPage": {
           "label": "Size of Polling Page",
-          "viewClass": "SelectView",
+          "viewClass": "TextFieldView",
           "required" : false,
-          "model": {
-            "100": 100,
-            "500": 500,
-            "1000": 1000
-          },
-          "prompt": "Please select the size of pages to be fetched (defaults to 1000)"
+          "placeholder": "1000",
+          "note": "Please set the size of pages to be fetched (defaults to 1000). Needs to be positive integer, max 10000 objects"
         },
         "singlePagePerInterval": {
           "label": "Process single page per execution",
