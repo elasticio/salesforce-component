@@ -135,4 +135,38 @@ describe('Polling trigger test', function () {
     expect(emitter.emit.withArgs('data').callCount).to.be.equal(0);
     expect(emitter.emit.withArgs('snapshot').callCount).to.be.equal(0);
   });
+
+  it('should be called with arg error', async function () {
+    conn = sinon.stub(jsforce, 'Connection').callsFake(function () {
+      const connStub = {
+        sobject: function () {
+          return connStub
+        },
+        on: function () {
+          return connStub
+        },
+        select: function () {
+          return connStub
+        },
+        where: function () {
+          return connStub
+        },
+        sort: function () {
+          return connStub
+        },
+        execute: function (cfg, processResults) {
+          processResults(undefined, []);
+          return connStub
+        },
+      };
+      return connStub;
+    });
+    snapshot.previousLastModified = '2019-28-03T00:00:00.000Z';
+    configuration.sizeOfPollingPage = 'test';
+    await polling
+      .process.call(emitter, message, configuration, snapshot);
+    expect(emitter.emit.withArgs('error').callCount).to.be.equal(1);
+    expect(emitter.emit.withArgs('data').callCount).to.be.equal(0);
+    expect(emitter.emit.withArgs('snapshot').callCount).to.be.equal(0);
+  });
 });
