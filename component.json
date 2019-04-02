@@ -59,35 +59,35 @@
       "title": "New Case",
       "main": "./lib/triggers/case.js",
       "type": "polling",
-      "description": "Will poll for existing and updated Cases",
+      "description": "Will poll for existing and updated Cases (max 10000)",
       "dynamicMetadata": true
     },
     "newLead": {
       "title": "New Lead",
       "main": "./lib/triggers/lead.js",
       "type": "polling",
-      "description": "Will poll for existing and updated Leads",
+      "description": "Will poll for existing and updated Leads (max 10000)",
       "dynamicMetadata": true
     },
     "newContact": {
       "title": "New Contact",
       "main": "./lib/triggers/contact.js",
       "type": "polling",
-      "description": "Will poll for existing and updated Contacts",
+      "description": "Will poll for existing and updated Contacts (max 10000)",
       "dynamicMetadata": true
     },
     "newAccount": {
       "title": "New Account",
       "main": "./lib/triggers/account.js",
       "type": "polling",
-      "description": "Will poll for existing and updated Accounts",
+      "description": "Will poll for existing and updated Accounts (max 10000)",
       "dynamicMetadata": true
     },
     "newTask": {
       "title": "New Task",
       "main": "./lib/triggers/task.js",
       "type": "polling",
-      "description": "Will poll for existing and updated Tasks",
+      "description": "Will poll for existing and updated Tasks (max 10000)",
       "dynamicMetadata": true
     },
     "entry": {
@@ -103,6 +103,37 @@
           "required": true,
           "model": "objectTypes",
           "prompt": "Please select a Salesforce Object"
+        },
+        "startTime": {
+          "viewClass": "TextFieldView",
+          "label": "Start Time",
+          "required": false,
+          "placeholder":"2018-11-12T13:06:01.179Z",
+          "note": "Indicates the beginning time to start polling from, default 1970-01-01T00:00:00.000Z"
+        },
+        "endTime": {
+          "viewClass": "TextFieldView",
+          "label": "End Time",
+          "required": false,
+          "placeholder": "2018-11-12T13:06:01.179Z",
+          "note": "If provided, do not fetch records modified after this time (defaults to never)"
+        },
+        "sizeOfPollingPage": {
+          "label": "Size of Polling Page",
+          "viewClass": "TextFieldView",
+          "required" : false,
+          "placeholder": "1000",
+          "note": "Please set the size of pages to be fetched (defaults to 1000). Please enter positive integer only, max 10000 objects"
+        },
+        "singlePagePerInterval": {
+          "label": "Process single page per execution",
+          "viewClass": "SelectView",
+          "required" : false,
+          "model": {
+            "yes": "yes",
+            "no": "no"
+          },
+          "prompt": "Process single page per execution:"
         }
       }
     },
@@ -235,6 +266,7 @@
       }
     },
     "lookup": {
+      "deprecated": true,
       "title": "Lookup Object",
       "main": "./lib/actions/lookup.js",
       "description": "Lookup object by selected field",
@@ -260,6 +292,46 @@
           "required": false,
           "note": "A positive integer specifying batch size. If no batch size is specified then results of the query will be emitted one-by-one, otherwise query results will be emitted in array of maximum batch size.",
           "placeholder": "0"
+        }
+      }
+    },
+    "lookupObject": {
+      "title": "Lookup Object (at most 1)",
+      "main": "./lib/actions/lookupObject.js",
+      "description": "Lookup object (at most 1) by selected field",
+      "dynamicMetadata": true,
+      "fields": {
+        "sobject": {
+          "viewClass": "SelectView",
+          "label": "Object",
+          "required": true,
+          "model": "objectTypes",
+          "prompt": "Please select a Salesforce Object"
+        },
+        "typeOfSearch": {
+          "viewClass": "SelectView",
+          "label": "Type Of Search",
+          "required": true,
+          "model":{
+            "uniqueFields": "Unique Fields",
+            "allFields": "All Fields"
+          },
+          "prompt": "Please select a Salesforce Object"
+        },
+        "lookupField": {
+          "viewClass": "SelectView",
+          "label": "Lookup by field",
+          "required": true,
+          "model": "getLookupFieldsModel",
+          "note": "Please select the field which you want to use for lookup"
+        },
+        "allowCriteriaToBeOmitted": {
+          "viewClass": "CheckBoxView",
+          "label": "Allow criteria to be omitted"
+        },
+        "allowZeroResults": {
+          "viewClass": "CheckBoxView",
+          "label": "Allow zero results"
         }
       }
     }

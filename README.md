@@ -125,7 +125,7 @@ Action creates a single object. Input metadata is fetched dynamically from your 
 You should specify **external** or **internal Id** for making some updates in salesforce object.
 If you want to create new Object you should always specify **Optional Upsert field** and value of ExternalId in input body structure.
 
-### Lookup Object
+### Lookup Object (deprecated)
 Lookup an object by a selected field.
 Action creates a single object. Input metadata is fetched dynamically from your Salesforce account. Output metadata is the same as input metadata, so you may expect all fields that you mapped as input to be returned as output.
 
@@ -144,6 +144,22 @@ Action creates a single object. Input metadata is fetched dynamically from your 
 |Lookup found multiple objects (that may happen when a lookup is made by non-unique field) | Each found object will be emitted with the separate message|
 
 
+
+### Lookup Object (at most 1)
+Lookup an object by a selected field.
+Action creates a single object. Input metadata is fetched dynamically from your Salesforce account. Output metadata is the same as input metadata, so you may expect all fields that you mapped as input to be returned as output.
+
+#### Input field description
+* **Object** - dropdown list where you should choose the object type, which you want to find. E.g. `Account`.
+* **Type Of Search** -  dropdown list with two values: `Unique Fields` and `All Fields`.
+* **Lookup by field** - dropdown list with all fields on the selected object, if on *Type Of Search* is chosen `All Fields`, or with all fields on the selected object where `type` is `id` or `unique` is `true` , if on *Type Of Search* is chosen `Unique Fields`.
+* **Allow criteria to be omitted** - checkbox, if checked - search criteria can be omitted and the empty object will be returned, else - search criteria are required.
+* **Allow zero results** - checkbox, if checked and nothing is found - empty object will be returned, else - action throw an error.
+
+#### Metadata description
+
+Metadata contains one field whose name, type and mandatoriness are generated according to the value of the configuration fields *Lookup by field* and *Allow criteria to be omitted*.
+
 ## Triggers
 ### Query
 Continuously runs the same SOQL Query and emits results one-by-one.
@@ -155,25 +171,43 @@ Use the Salesforce Object Query Language (SOQL) to search your organization’s 
 
 
 ### New Case
-Polls existing and updated Cases
+Polls existing and updated Cases (fetches a maximum of 1000 objects per execution)
 
 ### New Lead
-Polls existing and updated Leads
+Polls existing and updated Leads (fetches a maximum of 1000 objects per execution)
 
 ### New Contact
-Polls existing and updated Contacts
+Polls existing and updated Contacts (fetches a maximum of 1000 objects per execution)
 
 ### New Account
-Polls existing and updated Accounts
+Polls existing and updated Accounts (fetches a maximum of 1000 objects per execution)
 
 ### New Task
-Polls existing and updated Tasks
+Polls existing and updated Tasks (fetches a maximum of 1000 objects per execution)
 
 ### New Other Object
 Polls existing and updated objects. You can select any custom or built-in object for your Salesforce instance. 
 
 #### Input field description
-* **Object** - Input field where you should select the type of object which updates you want to get. E.g. `Account`
+* **Object** - Input field where you should select the type of object which updates you want to get. E.g. `Account`;
+* **Start Time** - Indicates the beginning time to start polling from. Defaults to `1970-01-01T00:00:00.000Z`;
+* **End Time** - If provided, don’t fetch records modified after this time;
+* **Size of Polling Page** - Indicates the size of pages to be fetched. You can set positive integer, max `10 000`, defaults to `1000`;
+* **Process single page per execution** - You can select on of options (defaults to `yes`):
+   1. `yes` - if the number of changed records exceeds the maximum number of results in a page, wait until the next flow start to fetch the next page;
+   2. `no` - if the number of changed records exceeds the maximum number of results in a page, the next pages will fetching in the same execution.
+
+For example, you have 234 “Contact” objects, 213 of them were changed from 2019-01-01. 
+You want to select all “Contacts” that were changed from 2019-01-01, set the page size to 100 and process single page per execution.
+For you purpose you need to specify following fields:
+   * Object: `Contact`
+   * Start Time: `2019-01-01T00:00:00.000Z`
+   * Size of Polling Page: `100`
+   * Process single page per execution: `yes` (or leave this empty)
+![image](https://user-images.githubusercontent.com/16806832/55322499-30f11400-5485-11e9-81da-50518f76258c.png)
+
+As a result, all contacts will be fetched in three calls of the trigger: two of them by 100 items, and the last one by 13.
+If you select `no` in **Process single page per execution**, all 213 contacts will be fetched in one call of the trigger.
 
 ### Subscribe to platform events (REALTIME FLOWS ONLY)
 This trigger will subscribe for any platform Event using Salesforce streaming API.
