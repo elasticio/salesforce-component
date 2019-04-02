@@ -59,9 +59,8 @@ describe('Polling trigger test', function () {
         sort: function () {
           return connStub
         },
-        execute: function (cfg, processResults) {
-          processResults(undefined, records);
-          return connStub
+        execute: function () {
+          return records
         },
       };
       return connStub;
@@ -91,9 +90,8 @@ describe('Polling trigger test', function () {
         sort: function () {
           return connStub
         },
-        execute: function (cfg, processResults) {
-          processResults(undefined, []);
-          return connStub
+        execute: function () {
+          return [];
         },
       };
       return connStub;
@@ -154,9 +152,8 @@ describe('Polling trigger test', function () {
         sort: function () {
           return connStub
         },
-        execute: function (cfg, processResults) {
-          processResults(undefined, []);
-          return connStub
+        execute: function () {
+          return [];
         },
       };
       return connStub;
