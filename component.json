@@ -11,6 +11,10 @@
     "SALESFORCE_SECRET": {
       "required": true,
       "description": "Your Salesforce OAuth client secret"
+    },
+    "SALESFORCE_API_VERSION": {
+      "required": true,
+      "description": "Salesforce API version to use for non deprecated methods. Default 45.0"
     }
   },
   "credentials": {
@@ -54,41 +58,6 @@
           "viewClass": "TextAreaView"
         }
       }
-    },
-    "newCase": {
-      "title": "New Case",
-      "main": "./lib/triggers/case.js",
-      "type": "polling",
-      "description": "Will poll for existing and updated Cases (max 10000)",
-      "dynamicMetadata": true
-    },
-    "newLead": {
-      "title": "New Lead",
-      "main": "./lib/triggers/lead.js",
-      "type": "polling",
-      "description": "Will poll for existing and updated Leads (max 10000)",
-      "dynamicMetadata": true
-    },
-    "newContact": {
-      "title": "New Contact",
-      "main": "./lib/triggers/contact.js",
-      "type": "polling",
-      "description": "Will poll for existing and updated Contacts (max 10000)",
-      "dynamicMetadata": true
-    },
-    "newAccount": {
-      "title": "New Account",
-      "main": "./lib/triggers/account.js",
-      "type": "polling",
-      "description": "Will poll for existing and updated Accounts (max 10000)",
-      "dynamicMetadata": true
-    },
-    "newTask": {
-      "title": "New Task",
-      "main": "./lib/triggers/task.js",
-      "type": "polling",
-      "description": "Will poll for existing and updated Tasks (max 10000)",
-      "dynamicMetadata": true
     },
     "entry": {
       "title": "New Other Object",
@@ -151,6 +120,46 @@
           "prompt": "Please select a Event object"
         }
       }
+    },
+    "newCase": {
+      "deprecated": true,
+      "title": "New Case",
+      "main": "./lib/triggers/case.js",
+      "type": "polling",
+      "description": "Will poll for existing and updated Cases (max 10000)",
+      "dynamicMetadata": true
+    },
+    "newLead": {
+      "deprecated": true,
+      "title": "New Lead",
+      "main": "./lib/triggers/lead.js",
+      "type": "polling",
+      "description": "Will poll for existing and updated Leads (max 10000)",
+      "dynamicMetadata": true
+    },
+    "newContact": {
+      "deprecated": true,
+      "title": "New Contact",
+      "main": "./lib/triggers/contact.js",
+      "type": "polling",
+      "description": "Will poll for existing and updated Contacts (max 10000)",
+      "dynamicMetadata": true
+    },
+    "newAccount": {
+      "deprecated": true,
+      "title": "New Account",
+      "main": "./lib/triggers/account.js",
+      "type": "polling",
+      "description": "Will poll for existing and updated Accounts (max 10000)",
+      "dynamicMetadata": true
+    },
+    "newTask": {
+      "deprecated": true,
+      "title": "New Task",
+      "main": "./lib/triggers/task.js",
+      "type": "polling",
+      "description": "Will poll for existing and updated Tasks (max 10000)",
+      "dynamicMetadata": true
     }
   },
   "actions": {
@@ -186,63 +195,6 @@
         "out": {}
       }
     },
-    "account": {
-      "title": "New Account",
-      "main": "./lib/actions/account.js",
-      "description": "Creates new Account",
-      "dynamicMetadata": true
-    },
-    "case": {
-      "title": "New Case",
-      "main": "./lib/actions/case.js",
-      "description": "Creates new Case",
-      "dynamicMetadata": true
-    },
-    "contact": {
-      "title": "New Contact",
-      "main": "./lib/actions/contact.js",
-      "description": "Creates new Contact",
-      "dynamicMetadata": true
-    },
-    "event": {
-      "title": "New Event",
-      "main": "./lib/actions/event.js",
-      "description": "Creates new Event",
-      "dynamicMetadata": true
-    },
-    "lead": {
-      "title": "New Lead",
-      "main": "./lib/actions/lead.js",
-      "description": "Creates new Lead",
-      "dynamicMetadata": true
-    },
-    "note": {
-      "title": "New Note",
-      "main": "./lib/actions/note.js",
-      "description": "Creates new Note",
-      "dynamicMetadata": true
-    },
-    "task": {
-      "title": "New Task",
-      "main": "./lib/actions/task.js",
-      "description": "Creates new Task",
-      "dynamicMetadata": true
-    },
-    "other": {
-      "title": "New Other Object",
-      "main": "./lib/actions/other.js",
-      "description": "Creates new Selected Object",
-      "dynamicMetadata": true,
-      "fields": {
-        "object": {
-          "viewClass": "SelectView",
-          "label": "Object",
-          "required": true,
-          "model": "objectTypes",
-          "prompt": "Please select a Salesforce Object"
-        }
-      }
-    },
     "upsert": {
       "title": "Upsert Other Object",
       "main": "./lib/actions/upsert.js",
@@ -265,33 +217,18 @@
         }
       }
     },
-    "lookup": {
-      "deprecated": true,
-      "title": "Lookup Object",
-      "main": "./lib/actions/lookup.js",
-      "description": "Lookup object by selected field",
+    "other": {
+      "title": "New Other Object",
+      "main": "./lib/actions/other.js",
+      "description": "Creates new Selected Object",
       "dynamicMetadata": true,
       "fields": {
-        "sobject": {
+        "object": {
           "viewClass": "SelectView",
           "label": "Object",
           "required": true,
           "model": "objectTypes",
           "prompt": "Please select a Salesforce Object"
-        },
-        "lookupField": {
-          "viewClass": "SelectView",
-          "label": "Lookup by field",
-          "required": true,
-          "model": "getLookupFieldsModel",
-          "note": "Please select the field which you want to use for lookup"
-        },
-        "batchSize": {
-          "viewClass": "TextFieldView",
-          "label": "Optional batch size",
-          "required": false,
-          "note": "A positive integer specifying batch size. If no batch size is specified then results of the query will be emitted one-by-one, otherwise query results will be emitted in array of maximum batch size.",
-          "placeholder": "0"
         }
       }
     },
@@ -332,6 +269,85 @@
         "allowZeroResults": {
           "viewClass": "CheckBoxView",
           "label": "Allow zero results"
+        }
+      }
+    },
+    "account": {
+      "deprecated": true,
+      "title": "New Account",
+      "main": "./lib/actions/account.js",
+      "description": "Creates new Account",
+      "dynamicMetadata": true
+    },
+    "case": {
+      "deprecated": true,
+      "title": "New Case",
+      "main": "./lib/actions/case.js",
+      "description": "Creates new Case",
+      "dynamicMetadata": true
+    },
+    "contact": {
+      "deprecated": true,
+      "title": "New Contact",
+      "main": "./lib/actions/contact.js",
+      "description": "Creates new Contact",
+      "dynamicMetadata": true
+    },
+    "event": {
+      "deprecated": true,
+      "title": "New Event",
+      "main": "./lib/actions/event.js",
+      "description": "Creates new Event",
+      "dynamicMetadata": true
+    },
+    "lead": {
+      "deprecated": true,
+      "title": "New Lead",
+      "main": "./lib/actions/lead.js",
+      "description": "Creates new Lead",
+      "dynamicMetadata": true
+    },
+    "note": {
+      "deprecated": true,
+      "title": "New Note",
+      "main": "./lib/actions/note.js",
+      "description": "Creates new Note",
+      "dynamicMetadata": true
+    },
+    "task": {
+      "deprecated": true,
+      "title": "New Task",
+      "main": "./lib/actions/task.js",
+      "description": "Creates new Task",
+      "dynamicMetadata": true
+    },
+    "lookup": {
+      "deprecated": true,
+      "title": "Lookup Object",
+      "main": "./lib/actions/lookup.js",
+      "description": "Lookup object by selected field",
+      "dynamicMetadata": true,
+      "fields": {
+        "sobject": {
+          "viewClass": "SelectView",
+          "label": "Object",
+          "required": true,
+          "model": "objectTypes",
+          "prompt": "Please select a Salesforce Object"
+        },
+        "lookupField": {
+          "viewClass": "SelectView",
+          "label": "Lookup by field",
+          "required": true,
+          "model": "getLookupFieldsModel",
+          "note": "Please select the field which you want to use for lookup"
+        },
+        "batchSize": {
+          "viewClass": "TextFieldView",
+          "label": "Optional batch size",
+          "required": false,
+          "note": "A positive integer specifying batch size. If no batch size is specified then results of the query will be emitted one-by-one, otherwise query results will be emitted in array of maximum batch size.",
+          "placeholder": "0"
         }
       }
     }

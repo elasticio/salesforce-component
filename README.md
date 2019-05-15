@@ -13,10 +13,9 @@ Salesforce component is designed for Salesforce API integration.
 
 
 ### API version
-The component uses Salesforce - API Version 25.0, except:
+The component uses Salesforce - API Version 45.0, except:
 - Action: Lookup Object - API Version 39.0
-- Action: Query - API Version 39.0
-- Action: Upsert Other Object - API Version 39.0
+- Deprecated Actions and Triggers - API Version 25.0
 
 ### Authentication
 Authentication occurs via OAuth 2.0. 
