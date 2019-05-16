@@ -121,7 +121,6 @@ describe('Polling trigger test', function () {
           return connStub
         },
         execute: function (cfg, processResults) {
-          // processResults(undefined, []);
           return connStub
         },
       };
