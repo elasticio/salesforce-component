@@ -7,7 +7,7 @@
 Salesforce component is designed for Salesforce API integration.
 
 ###  Completeness Matrix
-![image](https://user-images.githubusercontent.com/13310949/54443827-22e38980-474a-11e9-8f8d-29128794a36f.png)
+![image](https://user-images.githubusercontent.com/18464641/58022456-28789980-7b16-11e9-9584-8c9ca68f2b5b.png)
 
 [Salesforse-component Completeness Matrix](https://docs.google.com/spreadsheets/d/1_4vvDLdQeXqs3c8OxFYE80CvpeSC8e3Wmwl1dcEGO2Q/edit?usp=sharing)
 
