@@ -1,22 +1,20 @@
 # salesforce-component
 
 ## Description
-Integration component for Salesforce API for the [elastic.io](http://www.elastic.io;) platform.
+[elastic.io](http://www.elastic.io;) iPaaS component that connects to Salesforce API
 
 ### Purpose
 Salesforce component is designed for Salesforce API integration.
 
 ###  Completeness Matrix
-![image](https://user-images.githubusercontent.com/13310949/54443827-22e38980-474a-11e9-8f8d-29128794a36f.png)
+![image](https://user-images.githubusercontent.com/18464641/58022456-28789980-7b16-11e9-9584-8c9ca68f2b5b.png)
 
 [Salesforse-component Completeness Matrix](https://docs.google.com/spreadsheets/d/1_4vvDLdQeXqs3c8OxFYE80CvpeSC8e3Wmwl1dcEGO2Q/edit?usp=sharing)
 
 
 ### API version
-The component uses Salesforce - API Version 25.0, except:
-- Action: Lookup Object - API Version 39.0
-- Action: Query - API Version 39.0
-- Action: Upsert Other Object - API Version 39.0
+The component uses Salesforce - API Version 45.0, except:
+- Deprecated Actions and Triggers - API Version 25.0
 
 ### Authentication
 Authentication occurs via OAuth 2.0. 
@@ -50,6 +48,7 @@ You can get error `refresh token has been expired` if the same user account was 
 ## Actions
 ### Query
 Executing a SOQL Query that may return many objects. Each resulting object is emitted one-by-one. Use the Salesforce Object Query Language (SOQL) to search your organization’s Salesforce data for specific information. SOQL is similar to the SELECT statement in the widely used Structured Query Language (SQL) but is designed specifically for Salesforce data. This action allows you to interact with your data using SOQL.
+If query found no data empty object returned. 
 
 #### Input fields description
 * **Optional batch size** - A positive integer specifying batch size. If no batch size is specified then results of the query will be emitted one-by-one, otherwise, query results will be emitted in an array of maximum batch size.
@@ -220,6 +219,7 @@ This trigger will subscribe for any platform Event using Salesforce streaming AP
 ![Screenshot from 2019-03-11 11-51-10](https://user-images.githubusercontent.com/13310949/54114889-1088e900-43f4-11e9-8b49-3a8113b6577d.png)
 
 You can find more detail information in the [Platform Events Intro Documentation](https://developer.salesforce.com/docs/atlas.en-us.platform_events.meta/platform_events/platform_events_intro.htm).
-
+#### Environment Variables
+SALESFORCE_API_VERSION - API version for not deprecated actions and triggers e.g(46.0), default value 45.0
 #### Limitations:
 At the moment this trigger can be used only for **"Realtime"** flows.
