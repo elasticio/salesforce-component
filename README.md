@@ -1,7 +1,7 @@
 # salesforce-component
 
 ## Description
-Integration component for Salesforce API for the [elastic.io](http://www.elastic.io;) platform.
+Integration component for Salesforce API for the [elastic.io](http://www.elastic.io;) iPaaS.
 
 ### Purpose
 Salesforce component is designed for Salesforce API integration.
