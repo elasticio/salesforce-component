@@ -7,7 +7,7 @@
 Salesforce component is designed for Salesforce API integration.
 
 ###  Completeness Matrix
-![image](https://user-images.githubusercontent.com/18464641/58022456-28789980-7b16-11e9-9584-8c9ca68f2b5b.png)
+![Salesforse-component Completeness Matrix](https://user-images.githubusercontent.com/13310949/58088365-32100900-7bcb-11e9-8c66-89bee9f1d120.png)
 
 [Salesforse-component Completeness Matrix](https://docs.google.com/spreadsheets/d/1_4vvDLdQeXqs3c8OxFYE80CvpeSC8e3Wmwl1dcEGO2Q/edit?usp=sharing)
 
@@ -55,56 +55,71 @@ If query found no data empty object returned.
 * **Allow all results to be returned in a set** - checkbox which allows emitting query results in a single array. `Optional batch size` option is ignored in this case.
 * **SOQL Query** - Input field where you should type the SOQL query. E.g. `"SELECT ID, Name from Contact where Name like 'John Smi%'"`
 
-### New Account 
+### New Account `(deprecated)`
 Creates a new Account.
 Action creates a single object. Input metadata is fetched dynamically from your Salesforce account. Output metadata is the same as input metadata, so you may expect all fields that you mapped as input to be returned as output.
 
 #### Input fields description
 This action will automatically retrieve all existing fields of `Account` object type that available on your Salesforce organization.
 
-### New Case
+Action is `deprecated`. You can use [Create Object](#create-object) action instead.
+
+### New Case `(deprecated)`
 Creates a new Case.
 Action creates a single object. Input metadata is fetched dynamically from your Salesforce account. Output metadata is the same as input metadata, so you may expect all fields that you mapped as input to be returned as output.
 
 #### Input fields description
 This action will automatically retrieve all existing fields of `Case` object type that available on your Salesforce organization
 
-### New Contact
+Action is `deprecated`. You can use [Create Object](#create-object) action instead.
+
+### New Contact `(deprecated)`
 Creates a new Contact.
 Action creates a single object. Input metadata is fetched dynamically from your Salesforce account. Output metadata is the same as input metadata, so you may expect all fields that you mapped as input to be returned as output.
+
 
 #### Input fields description
 This action will automatically retrieve all existing fields of `Contact` object type that available on your Salesforce organization
 
-### New Event
+Action is `deprecated`. You can use [Create Object](#create-object) action instead.
+
+### New Event `(deprecated)`
 Creates a new Event.
 Action creates a single object. Input metadata is fetched dynamically from your Salesforce account. Output metadata is the same as input metadata, so you may expect all fields that you mapped as input to be returned as output.
 
 #### Input fields description
 This action will automatically retrieve all existing fields of `Event` object type that available on your Salesforce organization
 
-### New Lead
+Action is `deprecated`. You can use [Create Object](#create-object) action instead.
+
+### New Lead `(deprecated)`
 Creates a new Lead.
 Action creates a single object. Input metadata is fetched dynamically from your Salesforce account. Output metadata is the same as input metadata, so you may expect all fields that you mapped as input to be returned as output.
 
 #### Input fields description
 This action will automatically retrieve all existing fields of `Lead` object type that available on your Salesforce organization
 
-### New Note
+Action is `deprecated`. You can use [Create Object](#create-object) action instead.
+
+### New Note `(deprecated)`
 Creates a new Note.
 Action creates a single object. Input metadata is fetched dynamically from your Salesforce account. Output metadata is the same as input metadata, so you may expect all fields that you mapped as input to be returned as output.
 
 #### Input fields description
 This action will automatically retrieve all existing fields of `Note` object type that available on your Salesforce organization
 
-### New Task
+Action is `deprecated`. You can use [Create Object](#create-object) action instead.
+
+### New Task `(deprecated)`
 Creates a new Task.
 Action creates a single object. Input metadata is fetched dynamically from your Salesforce account. Output metadata is the same as input metadata, so you may expect all fields that you mapped as input to be returned as output.
 
 #### Input fields description
 This action will automatically retrieve all existing fields of `Task` object type that available on your Salesforce organization
 
-### New Other Object
+Action is `deprecated`. You can use [Create Object](#create-object) action instead.
+
+### Create Object
 Creates a new Selected Object.
 Action creates a single object. Input metadata is fetched dynamically from your Salesforce account. Output metadata is the same as input metadata, so you may expect all fields that you mapped as input to be returned as output.
 
@@ -169,22 +184,32 @@ Use the Salesforce Object Query Language (SOQL) to search your organization’s 
 * **SOQL Query** - Input field for your SOQL Query
 
 
-### New Case
+### New Case `(deprecated)`
 Polls existing and updated Cases (fetches a maximum of 1000 objects per execution)
 
-### New Lead
+Trigger is `deprecated`. You can use [Get New and Updated Objects Polling](#get-new-and-updated-objects-polling) action instead.
+
+### New Lead `(deprecated)`
 Polls existing and updated Leads (fetches a maximum of 1000 objects per execution)
 
-### New Contact
+Trigger is `deprecated`. You can use [Get New and Updated Objects Polling](#get-new-and-updated-objects-polling) action instead.
+
+### New Contact `(deprecated)`
 Polls existing and updated Contacts (fetches a maximum of 1000 objects per execution)
 
-### New Account
+Trigger is `deprecated`. You can use [Get New and Updated Objects Polling](#get-new-and-updated-objects-polling) action instead.
+
+### New Account `(deprecated)`
 Polls existing and updated Accounts (fetches a maximum of 1000 objects per execution)
 
-### New Task
+Trigger is `deprecated`. You can use [Get New and Updated Objects Polling](#get-new-and-updated-objects-polling) action instead.
+
+### New Task `(deprecated)`
 Polls existing and updated Tasks (fetches a maximum of 1000 objects per execution)
 
-### New Other Object
+Trigger is `deprecated`. You can use [Get New and Updated Objects Polling](#get-new-and-updated-objects-polling) action instead.
+
+### Get New and Updated Objects Polling
 Polls existing and updated objects. You can select any custom or built-in object for your Salesforce instance. 
 
 #### Input field description
