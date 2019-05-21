@@ -60,7 +60,7 @@
       }
     },
     "entry": {
-      "title": "New Other Object",
+      "title": "Get New and Updated Objects Polling",
       "main": "./lib/entry.js",
       "type": "polling",
       "dynamicMetadata": true,
@@ -77,7 +77,7 @@
           "viewClass": "TextFieldView",
           "label": "Start Time",
           "required": false,
-          "placeholder":"2018-11-12T13:06:01.179Z",
+          "placeholder": "2018-11-12T13:06:01.179Z",
           "note": "Indicates the beginning time to start polling from, default 1970-01-01T00:00:00.000Z"
         },
         "endTime": {
@@ -90,14 +90,14 @@
         "sizeOfPollingPage": {
           "label": "Size of Polling Page",
           "viewClass": "TextFieldView",
-          "required" : false,
+          "required": false,
           "placeholder": "1000",
           "note": "Please set the size of pages to be fetched (defaults to 1000). Please enter positive integer only, max 10000 objects"
         },
         "singlePagePerInterval": {
           "label": "Process single page per execution",
           "viewClass": "SelectView",
-          "required" : false,
+          "required": false,
           "model": {
             "yes": "yes",
             "no": "no"
@@ -126,7 +126,7 @@
       "title": "New Case",
       "main": "./lib/triggers/case.js",
       "type": "polling",
-      "description": "Will poll for existing and updated Cases (max 10000)",
+      "description": "Trigger is deprecated. You can use Get New and Updated Objects Polling action instead.",
       "dynamicMetadata": true
     },
     "newLead": {
@@ -134,7 +134,7 @@
       "title": "New Lead",
       "main": "./lib/triggers/lead.js",
       "type": "polling",
-      "description": "Will poll for existing and updated Leads (max 10000)",
+      "description": "Trigger is deprecated. You can use Get New and Updated Objects Polling action instead.",
       "dynamicMetadata": true
     },
     "newContact": {
@@ -142,7 +142,7 @@
       "title": "New Contact",
       "main": "./lib/triggers/contact.js",
       "type": "polling",
-      "description": "Will poll for existing and updated Contacts (max 10000)",
+      "description": "Trigger is deprecated. You can use Get New and Updated Objects Polling action instead.",
       "dynamicMetadata": true
     },
     "newAccount": {
@@ -150,7 +150,7 @@
       "title": "New Account",
       "main": "./lib/triggers/account.js",
       "type": "polling",
-      "description": "Will poll for existing and updated Accounts (max 10000)",
+      "description": "Trigger is deprecated. You can use Get New and Updated Objects Polling action instead.",
       "dynamicMetadata": true
     },
     "newTask": {
@@ -158,7 +158,7 @@
       "title": "New Task",
       "main": "./lib/triggers/task.js",
       "type": "polling",
-      "description": "Will poll for existing and updated Tasks (max 10000)",
+      "description": "Trigger is deprecated. You can use Get New and Updated Objects Polling action instead.",
       "dynamicMetadata": true
     }
   },
@@ -218,7 +218,7 @@
       }
     },
     "other": {
-      "title": "New Other Object",
+      "title": "Create Object",
       "main": "./lib/actions/other.js",
       "description": "Creates new Selected Object",
       "dynamicMetadata": true,
@@ -249,7 +249,7 @@
           "viewClass": "SelectView",
           "label": "Type Of Search",
           "required": true,
-          "model":{
+          "model": {
             "uniqueFields": "Unique Fields",
             "allFields": "All Fields"
           },
@@ -276,49 +276,49 @@
       "deprecated": true,
       "title": "New Account",
       "main": "./lib/actions/account.js",
-      "description": "Creates new Account",
+      "description": "Action is deprecated. You can use Create Object action instead.",
       "dynamicMetadata": true
     },
     "case": {
       "deprecated": true,
       "title": "New Case",
       "main": "./lib/actions/case.js",
-      "description": "Creates new Case",
+      "description": "Action is deprecated. You can use Create Object action instead.",
       "dynamicMetadata": true
     },
     "contact": {
       "deprecated": true,
       "title": "New Contact",
       "main": "./lib/actions/contact.js",
-      "description": "Creates new Contact",
+      "description": "Action is deprecated. You can use Create Object action instead.",
       "dynamicMetadata": true
     },
     "event": {
       "deprecated": true,
       "title": "New Event",
       "main": "./lib/actions/event.js",
-      "description": "Creates new Event",
+      "description": "Action is deprecated. You can use Create Object action instead.",
       "dynamicMetadata": true
     },
     "lead": {
       "deprecated": true,
       "title": "New Lead",
       "main": "./lib/actions/lead.js",
-      "description": "Creates new Lead",
+      "description": "Action is deprecated. You can use Create Object action instead.",
       "dynamicMetadata": true
     },
     "note": {
       "deprecated": true,
       "title": "New Note",
       "main": "./lib/actions/note.js",
-      "description": "Creates new Note",
+      "description": "Action is deprecated. You can use Create Object action instead.",
       "dynamicMetadata": true
     },
     "task": {
       "deprecated": true,
       "title": "New Task",
       "main": "./lib/actions/task.js",
-      "description": "Creates new Task",
+      "description": "Action is deprecated. You can use Create Object action instead.",
       "dynamicMetadata": true
     },
     "lookup": {
