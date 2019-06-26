@@ -77,14 +77,14 @@
           "viewClass": "TextFieldView",
           "label": "Start Time",
           "required": false,
-          "placeholder": "2018-11-12T13:06:01.179Z",
+          "placeholder": "1970-01-01T00:00:00.000Z",
           "note": "Indicates the beginning time to start polling from, default 1970-01-01T00:00:00.000Z"
         },
         "endTime": {
           "viewClass": "TextFieldView",
           "label": "End Time",
           "required": false,
-          "placeholder": "2018-11-12T13:06:01.179Z",
+          "placeholder": "3000-01-01T00:00:00.000Z",
           "note": "If provided, do not fetch records modified after this time (defaults to never)"
         },
         "sizeOfPollingPage": {
