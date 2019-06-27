@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 const chai = require('chai');
 const nock = require('nock');
 const verify = require('../verifyCredentials');
@@ -12,7 +13,7 @@ const oauth = {
 let cfg;
 
 describe('Verify Credentials', () => {
-  it('should return {verified: false} without credentials in cfg', () => {
+  it('should return verified false without credentials in cfg', () => {
     cfg = {};
     verify(cfg, (err, data) => {
       expect(err).to.equal(null);
@@ -20,52 +21,61 @@ describe('Verify Credentials', () => {
     });
   });
 
-  it('should return verified false for 401 answer', () => {
+  it('should return verified false for 401 answer', (done) => {
     cfg = { oauth };
-    nock(BASE_URL, { Authorization: `Bearer ${oauth.access_token}` })
+    nock(BASE_URL)
       .get(path)
       .reply(401, '');
     verify(cfg, (err, data) => {
+      if (err) return done(err);
+
       expect(err).to.equal(null);
       expect(data).to.deep.equal({ verified: false });
+      done();
     });
   });
 
-  it('should return verified false for 403 answer', () => {
+  it('should return verified false for 403 answer', (done) => {
     cfg = { oauth };
-    nock(BASE_URL, { Authorization: `Bearer ${oauth.access_token}` })
+    nock(BASE_URL)
       .get(path)
       .reply(403, '');
     verify(cfg, (err, data) => {
+      if (err) return done(err);
+
       expect(err).to.equal(null);
-      expect(data.verified).to.equal(false);
+      expect(data.verified).to.deep.equal(false);
+      done();
     });
   });
 
-  it('should return verified true for 200 answer', () => {
+  it('should return verified true for 200 answer', (done) => {
     cfg = { oauth };
-    nock(BASE_URL, { Authorization: `Bearer ${oauth.access_token}` })
+    nock(BASE_URL)
       .get(path)
       .reply(200, '');
     verify(cfg, (err, data) => {
+      if (err) return done(err);
       expect(err).to.equal(null);
       expect(data).to.deep.equal({ verified: true });
+      done();
     });
   });
 
-  it('should return error for 500 cases', () => {
+  it('should return error for 500 cases', (done) => {
     cfg = { oauth };
-    nock(BASE_URL, { Authorization: `Bearer ${oauth.access_token}` })
+    nock(BASE_URL)
       .get(path)
       .reply(500, 'Super Error');
     verify(cfg, (err) => {
       expect(err.message).to.equal('Salesforce respond with 500');
+      done();
     });
   });
 
-  it('should throwError', () => {
+  it('should throwError', (done) => {
     cfg = { oauth };
-    nock(BASE_URL, { Authorization: `Bearer ${oauth.access_token}` })
+    nock(BASE_URL)
       .get(path)
       .replyWithError({
         message: 'something awful happened',
@@ -73,6 +83,7 @@ describe('Verify Credentials', () => {
       });
     verify(cfg, (err) => {
       expect(err.message).to.equal('something awful happened');
+      done();
     });
   });
 });
