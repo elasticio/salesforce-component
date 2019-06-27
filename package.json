@@ -4,7 +4,8 @@
   "description": "elastic.io component that connects to Salesforce API (node.js)",
   "main": "index.js",
   "scripts": {
-    "test": "echo ''"
+    "test": "mocha spec --recursive --timeout 50000",
+    "integration-test": "mocha spec-integration --recursive --timeout 50000"
   },
   "repository": {
     "type": "git",
@@ -36,15 +37,13 @@
     "request": "^2.61.0"
   },
   "devDependencies": {
-    "grunt": "~0.4.5",
-    "grunt-cli": "0.1.7",
-    "grunt-jasmine-node": "0.2.1",
-    "grunt-jscs": "2.1.0",
-    "nock": "0.27.2",
-    "proxyquire": "^1.7.10",
-    "mocha": "^5.0.5",
-    "sinon": "^5.1.0",
-    "dotenv": "^5.0.0",
-    "chai": "^4.2.0"
+    "chai": "4.2.0",
+    "dotenv": "8.0.0",
+    "eslint": "5.16.0",
+    "eslint-config-airbnb-base": "13.1.0",
+    "eslint-plugin-import": "2.18.0",
+    "mocha": "6.1.4",
+    "nock": "10.0.6",
+    "sinon": "7.3.2"
   }
 }
