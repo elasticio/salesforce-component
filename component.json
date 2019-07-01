@@ -196,7 +196,7 @@
       }
     },
     "upsert": {
-      "title": "Upsert Other Object",
+      "title": "Upsert Object",
       "main": "./lib/actions/upsert.js",
       "description": "Create or Update Selected Object",
       "dynamicMetadata": true,
