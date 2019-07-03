@@ -253,7 +253,7 @@
             "uniqueFields": "Unique Fields",
             "allFields": "All Fields"
           },
-          "prompt": "Please select a Salesforce Object"
+          "prompt": "Please select a type of search"
         },
         "lookupField": {
           "viewClass": "SelectView",
