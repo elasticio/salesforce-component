@@ -58,6 +58,9 @@ If query found no data empty object returned.
 Creates a new Selected Object.
 Action creates a single object. Input metadata is fetched dynamically from your Salesforce account. Output metadata is the same as input metadata, so you may expect all fields that you mapped as input to be returned as output.
 
+Note:
+In case of an **Attachment** object type you should specify `Body` in base64 encoding. `ParentId` is a Salesforce ID of an object (Account, Lead, Contact) which an attachment is going to be attached to.
+
 #### Input fields description
 * **Object** - Input field where you should choose the object type, which you want to find. E.g. `Account`
 
