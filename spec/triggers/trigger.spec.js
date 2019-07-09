@@ -8,13 +8,7 @@ const polling = require('../../lib/entry');
 const configuration = {
   apiVersion: '39.0',
   oauth: {
-    issued_at: '1541510572760',
-    token_type: 'Bearer',
-    id: 'https://login.salesforce.com/id/11/11',
     instance_url: 'https://example.com',
-    id_token: 'ddd',
-    scope: 'refresh_token full',
-    signature: '=',
     refresh_token: 'refresh_token',
     access_token: 'access_token',
   },
