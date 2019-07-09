@@ -1,136 +1,89 @@
-describe('Verify Credentials', function () {
-    var nock = require('nock');
-    var request = require('request');
+/* eslint-disable consistent-return */
+const chai = require('chai');
+const nock = require('nock');
+const verify = require('../verifyCredentials');
 
-    var verify = require('../verifyCredentials.js');
+const { expect } = chai;
+const BASE_URL = 'https://someselasforcenode.com';
+const path = '/services/data/v32.0/sobjects';
+const oauth = {
+  access_token: 'some-access-id',
+  instance_url: 'https://someselasforcenode.com',
+};
+let cfg;
 
-    var cfg;
-    var cb;
-    var BASE_URL = 'https://someselasforcenode.com';
-    var path = '/services/data/v32.0/sobjects';
-
-    beforeEach(function () {
-        cfg = {
-            oauth: {
-                access_token: 'some-access-id',
-                instance_url: 'https://someselasforcenode.com'
-            }
-        };
-
-        cb = jasmine.createSpy('cb');
+describe('Verify Credentials', () => {
+  it('should return verified false without credentials in cfg', () => {
+    cfg = {};
+    verify(cfg, (err, data) => {
+      expect(err).to.equal(null);
+      expect(data).to.deep.equal({ verified: false });
     });
+  });
 
-    it('should provide message if user doesn\'t provide any credentials', function () {
-        var cfg = {
-            error: {}
-        };
+  it('should return verified false for 401 answer', (done) => {
+    cfg = { oauth };
+    nock(BASE_URL)
+      .get(path)
+      .reply(401, '');
+    verify(cfg, (err, data) => {
+      if (err) return done(err);
 
-        waitsFor(function () {
-            return cb.callCount;
-        });
-
-        verify(cfg, cb);
-
-        runs(function () {
-            expect(cb).toHaveBeenCalled();
-            expect(cb.calls.length).toEqual(1);
-            expect(cb.calls[0].args[1].verified).toEqual(false);
-        });
+      expect(err).to.equal(null);
+      expect(data).to.deep.equal({ verified: false });
+      done();
     });
+  });
 
-    it('should return verified false for 401 answer', function () {
+  it('should return verified false for 403 answer', (done) => {
+    cfg = { oauth };
+    nock(BASE_URL)
+      .get(path)
+      .reply(403, '');
+    verify(cfg, (err, data) => {
+      if (err) return done(err);
 
-        nock(BASE_URL)
-            .get(path)
-            .reply(401, '');
-
-        waitsFor(function () {
-            return cb.callCount;
-        });
-
-        verify(cfg, cb);
-
-        runs(function () {
-            expect(cb).toHaveBeenCalled();
-            expect(cb.calls.length).toEqual(1);
-            expect(cb).toHaveBeenCalledWith(null, {verified: false});
-        });
+      expect(err).to.equal(null);
+      expect(data.verified).to.deep.equal(false);
+      done();
     });
-    it('should return verified false for 403 answer', function () {
+  });
 
-        nock(BASE_URL)
-            .get(path)
-            .reply(401, '');
-
-        waitsFor(function () {
-            return cb.callCount;
-        });
-
-        verify(cfg, cb);
-
-        runs(function () {
-            expect(cb).toHaveBeenCalled();
-            expect(cb.calls.length).toEqual(1);
-            expect(cb).toHaveBeenCalledWith(null, {verified: false});
-        });
+  it('should return verified true for 200 answer', (done) => {
+    cfg = { oauth };
+    nock(BASE_URL)
+      .get(path)
+      .reply(200, '');
+    verify(cfg, (err, data) => {
+      if (err) return done(err);
+      expect(err).to.equal(null);
+      expect(data).to.deep.equal({ verified: true });
+      done();
     });
+  });
 
-    it('should return verified true for 200 answer', function () {
-        nock(BASE_URL)
-            .get(path)
-            .reply(200, {});
-
-        waitsFor(function () {
-            return cb.callCount;
-        });
-
-        verify(cfg, cb);
-
-        runs(function () {
-            expect(cb).toHaveBeenCalled();
-            expect(cb.calls.length).toEqual(1);
-            expect(cb).toHaveBeenCalledWith(null, {verified: true});
-        });
+  it('should return error for 500 cases', (done) => {
+    cfg = { oauth };
+    nock(BASE_URL)
+      .get(path)
+      .reply(500, 'Super Error');
+    verify(cfg, (err) => {
+      expect(err.message).to.equal('Salesforce respond with 500');
+      done();
     });
+  });
 
-    it('should return error for 500 cases', function () {
-
-        nock(BASE_URL)
-            .get(path)
-            .reply(500, {message: 'super error 500'});
-
-
-        waitsFor(function () {
-            return cb.callCount;
-        });
-
-        verify(cfg, cb);
-
-        runs(function () {
-            expect(cb).toHaveBeenCalled();
-            expect(cb.calls.length).toEqual(1);
-            expect(cb.calls[0].args[0].message).toEqual('Salesforce respond with 500');
-        });
+  it('should throwError', (done) => {
+    cfg = { oauth };
+    nock(BASE_URL)
+      .get(path)
+      .replyWithError({
+        message: 'something awful happened',
+        code: 'AWFUL_ERROR',
+      });
+    verify(cfg, (err) => {
+      expect(err.message).to.equal('something awful happened');
+      done();
     });
-
-    it('should return error for error cases', function () {
-
-        spyOn(request, 'get').andCallFake(function (opt, cb) {
-            cb({message: 'super error'});
-        });
-
-        waitsFor(function () {
-            return cb.callCount;
-        });
-
-        verify(cfg, cb);
-
-        runs(function () {
-            expect(cb).toHaveBeenCalled();
-            expect(cb.calls.length).toEqual(1);
-            expect(cb.calls[0].args[0].message).toEqual('super error');
-        });
-    });
-
-
+  });
 });
