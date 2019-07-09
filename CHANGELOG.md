@@ -2,6 +2,7 @@
 
 * Add support for `Create Attachment` feature
 * Fix bug with Salesforce's and platform's types mismatch
+* Make unit tests great again (internal issue)
 
 ## 1.0.0 (June 27, 2019)
 
