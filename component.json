@@ -123,7 +123,7 @@
     }
   },
   "actions": {
-    "queryAction": {
+    "query": {
       "title": "Query",
       "main": "./lib/actions/query.js",
       "description": "Executing an SOQL Query that may return many objects. Each resulting object is emitted one-by-one",
@@ -177,7 +177,7 @@
         }
       }
     },
-    "other": {
+    "create": {
       "title": "Create Object",
       "main": "./lib/actions/other.js",
       "description": "Creates new Selected Object",
