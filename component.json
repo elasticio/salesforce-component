@@ -1,7 +1,7 @@
 {
-  "title": "Salesforce",
+  "title": "Salesforce by XPC",
   "description": "Customer relationship management (CRM) software & cloud computing from the leader in CRM solutions for businesses large & small.",
-  "docsUrl": "https://github.com/elasticio/salesforce-component",
+  "docsUrl": "",
   "url": "http://www.salesforce.com/",
   "envVars": {
     "SALESFORCE_KEY": {
@@ -120,46 +120,6 @@
           "prompt": "Please select a Event object"
         }
       }
-    },
-    "newCase": {
-      "deprecated": true,
-      "title": "New Case",
-      "main": "./lib/triggers/case.js",
-      "type": "polling",
-      "description": "Trigger is deprecated. You can use Get New and Updated Objects Polling action instead.",
-      "dynamicMetadata": true
-    },
-    "newLead": {
-      "deprecated": true,
-      "title": "New Lead",
-      "main": "./lib/triggers/lead.js",
-      "type": "polling",
-      "description": "Trigger is deprecated. You can use Get New and Updated Objects Polling action instead.",
-      "dynamicMetadata": true
-    },
-    "newContact": {
-      "deprecated": true,
-      "title": "New Contact",
-      "main": "./lib/triggers/contact.js",
-      "type": "polling",
-      "description": "Trigger is deprecated. You can use Get New and Updated Objects Polling action instead.",
-      "dynamicMetadata": true
-    },
-    "newAccount": {
-      "deprecated": true,
-      "title": "New Account",
-      "main": "./lib/triggers/account.js",
-      "type": "polling",
-      "description": "Trigger is deprecated. You can use Get New and Updated Objects Polling action instead.",
-      "dynamicMetadata": true
-    },
-    "newTask": {
-      "deprecated": true,
-      "title": "New Task",
-      "main": "./lib/triggers/task.js",
-      "type": "polling",
-      "description": "Trigger is deprecated. You can use Get New and Updated Objects Polling action instead.",
-      "dynamicMetadata": true
     }
   },
   "actions": {
@@ -269,85 +229,6 @@
         "allowZeroResults": {
           "viewClass": "CheckBoxView",
           "label": "Allow zero results"
-        }
-      }
-    },
-    "account": {
-      "deprecated": true,
-      "title": "New Account",
-      "main": "./lib/actions/account.js",
-      "description": "Action is deprecated. You can use Create Object action instead.",
-      "dynamicMetadata": true
-    },
-    "case": {
-      "deprecated": true,
-      "title": "New Case",
-      "main": "./lib/actions/case.js",
-      "description": "Action is deprecated. You can use Create Object action instead.",
-      "dynamicMetadata": true
-    },
-    "contact": {
-      "deprecated": true,
-      "title": "New Contact",
-      "main": "./lib/actions/contact.js",
-      "description": "Action is deprecated. You can use Create Object action instead.",
-      "dynamicMetadata": true
-    },
-    "event": {
-      "deprecated": true,
-      "title": "New Event",
-      "main": "./lib/actions/event.js",
-      "description": "Action is deprecated. You can use Create Object action instead.",
-      "dynamicMetadata": true
-    },
-    "lead": {
-      "deprecated": true,
-      "title": "New Lead",
-      "main": "./lib/actions/lead.js",
-      "description": "Action is deprecated. You can use Create Object action instead.",
-      "dynamicMetadata": true
-    },
-    "note": {
-      "deprecated": true,
-      "title": "New Note",
-      "main": "./lib/actions/note.js",
-      "description": "Action is deprecated. You can use Create Object action instead.",
-      "dynamicMetadata": true
-    },
-    "task": {
-      "deprecated": true,
-      "title": "New Task",
-      "main": "./lib/actions/task.js",
-      "description": "Action is deprecated. You can use Create Object action instead.",
-      "dynamicMetadata": true
-    },
-    "lookup": {
-      "deprecated": true,
-      "title": "Lookup Object",
-      "main": "./lib/actions/lookup.js",
-      "description": "Lookup object by selected field",
-      "dynamicMetadata": true,
-      "fields": {
-        "sobject": {
-          "viewClass": "SelectView",
-          "label": "Object",
-          "required": true,
-          "model": "objectTypes",
-          "prompt": "Please select a Salesforce Object"
-        },
-        "lookupField": {
-          "viewClass": "SelectView",
-          "label": "Lookup by field",
-          "required": true,
-          "model": "getLookupFieldsModel",
-          "note": "Please select the field which you want to use for lookup"
-        },
-        "batchSize": {
-          "viewClass": "TextFieldView",
-          "label": "Optional batch size",
-          "required": false,
-          "note": "A positive integer specifying batch size. If no batch size is specified then results of the query will be emitted one-by-one, otherwise query results will be emitted in array of maximum batch size.",
-          "placeholder": "0"
         }
       }
     }

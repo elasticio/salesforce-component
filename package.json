@@ -1,27 +1,12 @@
 {
-  "name": "salesforce-component",
-  "version": "1.1.1",
-  "description": "elastic.io component that connects to Salesforce API (node.js)",
-  "main": "index.js",
+  "name": "salesforce-component_xpc",
+  "version": "1.0.0",
+  "description": "Magic XPC component that connects to Salesforce API (node.js)",
   "scripts": {
     "test": "eslint & mocha spec --recursive --timeout 50000",
     "integration-test": "mocha spec-integration --recursive --timeout 50000"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/elasticio/salesforce-component.git"
-  },
-  "keywords": [
-    "elasticio",
-    "salesforce",
-    "REST"
-  ],
-  "author": "elastic.io GmbH",
-  "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/elasticio/salesforce-component/issues"
-  },
-  "homepage": "https://github.com/elasticio/salesforce-component#readme",
+  "author": "Magic XPC",
   "engines": {
     "node": "8.x.x"
   },
