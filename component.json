@@ -14,7 +14,7 @@
     },
     "SALESFORCE_API_VERSION": {
       "required": true,
-      "description": "Salesforce API version to use for non deprecated methods. Default 45.0"
+      "description": "Salesforce API version to use for non deprecated methods. Default 46.0"
     }
   },
   "credentials": {
@@ -179,7 +179,7 @@
     },
     "create": {
       "title": "Create Object",
-      "main": "./lib/actions/other.js",
+      "main": "./lib/actions/createObject.js",
       "description": "Creates new Selected Object",
       "dynamicMetadata": true,
       "fields": {
