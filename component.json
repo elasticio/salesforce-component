@@ -40,7 +40,8 @@
       "client_secret": "{{SALESFORCE_SECRET}}",
       "auth_uri": "https://{{prodEnv}}.salesforce.com/services/oauth2/authorize",
       "token_uri": "https://{{prodEnv}}.salesforce.com/services/oauth2/token"
-    }
+    },
+    "useOAuthClient": true
   },
   "triggers": {
     "queryTrigger": {
