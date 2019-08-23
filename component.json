@@ -183,7 +183,7 @@
       "description": "Creates new Selected Object",
       "dynamicMetadata": true,
       "fields": {
-        "object": {
+        "sobject": {
           "viewClass": "SelectView",
           "label": "Object",
           "required": true,
