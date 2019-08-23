@@ -29,5 +29,6 @@ node_modules
 .idea
 *.iml
 .env
+.vscode
 
 salesforce-ext-local
