@@ -189,6 +189,10 @@
           "required": true,
           "model": "objectTypes",
           "prompt": "Please select a Salesforce Object"
+        },
+        "utilizeAttachment": {
+          "viewClass": "CheckBoxView",
+          "label": "Utilize data attachment from previous step (for objects with a binary field)"
         }
       }
     },
