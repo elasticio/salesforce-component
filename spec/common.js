@@ -25,5 +25,8 @@ module.exports = {
       refresh_token: "the not less important also unthinkable top secret refresh token"
     }
   },
-  emit: function(par1, par2) {}
+  emit: function(what, message) { 
+    if (typeof what === "string" && what.toLowerCase().includes("error"))
+      throw message;
+  }
 };
