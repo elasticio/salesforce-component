@@ -214,6 +214,10 @@
           "required": false,
           "note": "Please make sure selected SObject has this field and it is marked as 'External ID'",
           "placeholder": "extID__c"
+        },
+        "utilizeAttachment": {
+          "viewClass": "CheckBoxView",
+          "label": "Utilize data attachment from previous step (for objects with a binary field)"
         }
       }
     },
