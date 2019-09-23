@@ -1,0 +1,140 @@
+{
+  "bulkInsertCase": {
+    "message": {
+      "body": {
+      },
+      "attachments": {
+        "cases_insert.csv": {
+          "url": "http://file.storage.server/cases_insert.csv",
+          "content-type": "application/octet-stream"
+        }
+      },
+      "id": "f4e0d892-2bd0-490f-a8c2-281ac0383ad8"
+    },
+    "configuration": {
+      "sobject": "Case",
+      "operation": "insert"
+    },
+    "responses": {
+      "http://file.storage.server": {
+        "/cases_insert.csv": {
+          "method": "GET",
+          "response": "Type,Reason,SuppliedName\nQuestion,R1,SN1\nQuestion,R2,SN2\nQuestion,R3,SN3"
+        }
+      },
+      "https://test.salesforce.com": {
+        "/services/async/46.0/job": {
+          "method": "POST",
+          "response": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><jobInfo xmlns=\"http://www.force.com/2009/06/asyncapi/dataload\"> <id>7502o00000JqBYLAA3</id> <operation>insert</operation> <object>Case</object> <createdById>0052o000008w0iqAAA</createdById> <createdDate>2019-09-18T09:55:24.000Z</createdDate> <systemModstamp>2019-09-18T09:55:24.000Z</systemModstamp> <state>Open</state> <concurrencyMode>Parallel</concurrencyMode> <contentType>CSV</contentType> <numberBatchesQueued>0</numberBatchesQueued> <numberBatchesInProgress>0</numberBatchesInProgress> <numberBatchesCompleted>0</numberBatchesCompleted> <numberBatchesFailed>0</numberBatchesFailed> <numberBatchesTotal>0</numberBatchesTotal> <numberRecordsProcessed>0</numberRecordsProcessed> <numberRetries>0</numberRetries> <apiVersion>46.0</apiVersion> <numberRecordsFailed>0</numberRecordsFailed> <totalProcessingTime>0</totalProcessingTime> <apiActiveProcessingTime>0</apiActiveProcessingTime> <apexProcessingTime>0</apexProcessingTime> </jobInfo>"
+        },
+        "/services/async/46.0/job/7502o00000JqBYLAA3/batch": {
+          "method": "POST",
+          "response": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><batchInfo xmlns=\"http://www.force.com/2009/06/asyncapi/dataload\"> <id>7512o00000QcYGDAA3</id> <jobId>7502o00000JqBYLAA3</jobId> <state>Queued</state> <createdDate>2019-09-18T09:55:24.000Z</createdDate> <systemModstamp>2019-09-18T09:55:24.000Z</systemModstamp> <numberRecordsProcessed>0</numberRecordsProcessed> <numberRecordsFailed>0</numberRecordsFailed> <totalProcessingTime>0</totalProcessingTime> <apiActiveProcessingTime>0</apiActiveProcessingTime> <apexProcessingTime>0</apexProcessingTime> </batchInfo>"
+        },
+        "/services/async/46.0/job/7502o00000JqBYLAA3/batch/7512o00000QcYGDAA3": {
+          "method": "GET",
+          "response": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><batchInfo xmlns=\"http://www.force.com/2009/06/asyncapi/dataload\"> <id>7512o00000QcYGDAA3</id> <jobId>7502o00000JqBYLAA3</jobId> <state>Completed</state> <createdDate>2019-09-18T09:55:24.000Z</createdDate> <systemModstamp>2019-09-18T09:55:25.000Z</systemModstamp> <numberRecordsProcessed>3</numberRecordsProcessed> <numberRecordsFailed>0</numberRecordsFailed> <totalProcessingTime>371</totalProcessingTime> <apiActiveProcessingTime>79</apiActiveProcessingTime> <apexProcessingTime>0</apexProcessingTime> </batchInfo>"
+        },
+        "/services/async/46.0/job/7502o00000JqBYLAA3/batch/7512o00000QcYGDAA3/result": {
+          "method": "GET",
+          "header": {
+            "Content-Type": "text/csv"
+          },
+          "response": "\"Id\",\"Success\",\"Created\",\"Error\"\n\"5002o00002E8FIIAA3\",\"true\",\"true\",\"\"\n\"5002o00002E8FIJAA3\",\"true\",\"true\",\"\"\n\"5002o00002E8FIKAA3\",\"true\",\"true\",\"\""
+        }
+      }
+    }
+  },
+  "bulkUpdateCase": {
+    "message": {
+      "attachments": {
+        "cases_update.csv": {
+          "url": "http://file.storage.server/cases_update.csv",
+          "content-type": "application/octet-stream"
+        }
+      },
+      "body": {
+      },
+      "id": "f4e0d892-2bd0-490f-a8c2-281ac0383ad8"
+    },
+    "configuration": {
+      "sobject": "Case",
+      "operation": "update"
+    },
+    "responses": {
+      "http://file.storage.server": {
+        "/cases_update.csv": {
+          "method": "GET",
+          "response": "id,SuppliedName\n5002o00002E89BbAAJ,SN2222222"
+        }
+      },
+      "https://test.salesforce.com": {
+        "/services/async/46.0/job": {
+          "method": "POST",
+          "response": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><jobInfo xmlns=\"http://www.force.com/2009/06/asyncapi/dataload\"> <id>7502o00000JqFMTAA3</id> <operation>update</operation> <object>Case</object> <createdById>0052o000008w0iqAAA</createdById> <createdDate>2019-09-18T15:07:31.000Z</createdDate> <systemModstamp>2019-09-18T15:07:31.000Z</systemModstamp> <state>Open</state> <concurrencyMode>Parallel</concurrencyMode> <contentType>CSV</contentType> <numberBatchesQueued>0</numberBatchesQueued> <numberBatchesInProgress>0</numberBatchesInProgress> <numberBatchesCompleted>0</numberBatchesCompleted> <numberBatchesFailed>0</numberBatchesFailed> <numberBatchesTotal>0</numberBatchesTotal> <numberRecordsProcessed>0</numberRecordsProcessed> <numberRetries>0</numberRetries> <apiVersion>46.0</apiVersion> <numberRecordsFailed>0</numberRecordsFailed> <totalProcessingTime>0</totalProcessingTime> <apiActiveProcessingTime>0</apiActiveProcessingTime> <apexProcessingTime>0</apexProcessingTime> </jobInfo>"
+        },
+        "/services/async/46.0/job/7502o00000JqFMTAA3/batch": {
+          "method": "POST",
+          "response": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><batchInfo xmlns=\"http://www.force.com/2009/06/asyncapi/dataload\"> <id>7512o00000QcdHVAAZ</id> <jobId>7502o00000JqFMTAA3</jobId> <state>Queued</state> <createdDate>2019-09-18T15:07:31.000Z</createdDate> <systemModstamp>2019-09-18T15:07:31.000Z</systemModstamp> <numberRecordsProcessed>0</numberRecordsProcessed> <numberRecordsFailed>0</numberRecordsFailed> <totalProcessingTime>0</totalProcessingTime> <apiActiveProcessingTime>0</apiActiveProcessingTime> <apexProcessingTime>0</apexProcessingTime> </batchInfo>"
+        },
+        "/services/async/46.0/job/7502o00000JqFMTAA3/batch/7512o00000QcdHVAAZ": {
+          "method": "GET",
+          "response": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><batchInfo xmlns=\"http://www.force.com/2009/06/asyncapi/dataload\"> <id>7512o00000QcdHVAAZ</id> <jobId>7502o00000JqFMTAA3</jobId> <state>Completed</state> <createdDate>2019-09-18T15:07:31.000Z</createdDate> <systemModstamp>2019-09-18T15:07:31.000Z</systemModstamp> <numberRecordsProcessed>1</numberRecordsProcessed> <numberRecordsFailed>1</numberRecordsFailed> <totalProcessingTime>115</totalProcessingTime> <apiActiveProcessingTime>11</apiActiveProcessingTime> <apexProcessingTime>0</apexProcessingTime> </batchInfo>"
+        },
+        "/services/async/46.0/job/7502o00000JqFMTAA3/batch/7512o00000QcdHVAAZ/result": {
+          "method": "GET",
+          "header": {
+            "Content-Type": "text/csv"
+          },
+          "response": "\"Id\",\"Success\",\"Created\",\"Error\"\n\"\",\"false\",\"false\",\"ENTITY_IS_DELETED:entity is deleted:--\""
+        }
+      }
+    }
+  },
+  "bulkDeleteCase": {
+    "message": {
+      "body": {
+      },
+      "attachments": {
+        "cases_delete.csv": {
+          "url": "http://file.storage.server/cases_delete.csv",
+          "content-type": "application/octet-stream"
+        }
+      },
+      "id": "db50d0c4-0370-4d6f-b5e0-8242f1ffeb48"
+    },
+    "configuration": {
+      "sobject": "Case",
+      "operation": "delete"
+    },
+    "responses": {
+      "http://file.storage.server": {
+        "/cases_delete.csv": {
+          "method": "GET",
+          "response": "id\n5002o00002BT0IUAA1"
+        }
+      },
+      "https://test.salesforce.com": {
+        "/services/async/46.0/job": {
+          "method": "POST",
+          "response": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><jobInfo xmlns=\"http://www.force.com/2009/06/asyncapi/dataload\"> <id>7502o00000JrBezAAF</id> <operation>delete</operation> <object>Case</object> <createdById>0052o000008w0iqAAA</createdById> <createdDate>2019-09-23T08:16:04.000Z</createdDate> <systemModstamp>2019-09-23T08:16:04.000Z</systemModstamp> <state>Open</state> <concurrencyMode>Parallel</concurrencyMode> <contentType>CSV</contentType> <numberBatchesQueued>0</numberBatchesQueued> <numberBatchesInProgress>0</numberBatchesInProgress> <numberBatchesCompleted>0</numberBatchesCompleted> <numberBatchesFailed>0</numberBatchesFailed> <numberBatchesTotal>0</numberBatchesTotal> <numberRecordsProcessed>0</numberRecordsProcessed> <numberRetries>0</numberRetries> <apiVersion>46.0</apiVersion> <numberRecordsFailed>0</numberRecordsFailed> <totalProcessingTime>0</totalProcessingTime> <apiActiveProcessingTime>0</apiActiveProcessingTime> <apexProcessingTime>0</apexProcessingTime> </jobInfo>"
+        },
+        "/services/async/46.0/job/7502o00000JrBezAAF/batch": {
+          "method": "POST",
+          "response": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><batchInfo xmlns=\"http://www.force.com/2009/06/asyncapi/dataload\"> <id>7512o00000Qdvv6AAB</id> <jobId>7502o00000JrBezAAF</jobId> <state>Queued</state> <createdDate>2019-09-23T08:16:04.000Z</createdDate> <systemModstamp>2019-09-23T08:16:04.000Z</systemModstamp> <numberRecordsProcessed>0</numberRecordsProcessed> <numberRecordsFailed>0</numberRecordsFailed> <totalProcessingTime>0</totalProcessingTime> <apiActiveProcessingTime>0</apiActiveProcessingTime> <apexProcessingTime>0</apexProcessingTime> </batchInfo>"
+        },
+        "/services/async/46.0/job/7502o00000JrBezAAF/batch/7512o00000Qdvv6AAB": {
+          "method": "GET",
+          "response": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><batchInfo xmlns=\"http://www.force.com/2009/06/asyncapi/dataload\"> <id>7512o00000Qdvv6AAB</id> <jobId>7502o00000JrBezAAF</jobId> <state>Completed</state> <createdDate>2019-09-23T08:16:04.000Z</createdDate> <systemModstamp>2019-09-23T08:16:11.000Z</systemModstamp> <numberRecordsProcessed>1</numberRecordsProcessed> <numberRecordsFailed>0</numberRecordsFailed> <totalProcessingTime>557</totalProcessingTime> <apiActiveProcessingTime>453</apiActiveProcessingTime> <apexProcessingTime>0</apexProcessingTime> </batchInfo>"
+        },
+        "/services/async/46.0/job/7502o00000JrBezAAF/batch/7512o00000Qdvv6AAB/result": {
+          "method": "GET",
+          "header": {
+            "Content-Type": "text/csv"
+          },
+          "response": "\"Id\",\"Success\",\"Created\",\"Error\"\n\"5002o00002BT0IUAA1\",\"true\",\"false\",\"\""
+        }
+      }
+    }
+  }
+}
