@@ -277,6 +277,10 @@
         "allowZeroResults": {
           "viewClass": "CheckBoxView",
           "label": "Allow zero results"
+        },
+        "passBinaryData": {
+          "viewClass": "CheckBoxView",
+          "label": "Pass binary data to the next component (if found object has it)"
         }
       }
     },
