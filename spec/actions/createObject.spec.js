@@ -96,7 +96,7 @@ describe("Create Object module: getMetaModel", () => {
     }).then(function(data) {
       chai.expect(data).to.deep.equal(expectedResult);
       sfScope.done();
-      sfRefreshTokenScope.done();
+      //sfRefreshTokenScope.done();
     }); 
   }
 

@@ -4,7 +4,7 @@
   "description": "elastic.io component that connects to Salesforce API (node.js)",
   "main": "index.js",
   "scripts": {
-    "test": "exit 0",
+    "test": "mocha spec --recursive --timeout 50000",
     "integration-test": "mocha spec-integration --recursive --timeout 50000"
   },
   "repository": {
