@@ -284,6 +284,42 @@
         }
       }
     },
+    "lookupObjects": {
+      "title": "Lookup Objects (Plural)",
+      "main": "./lib/actions/lookupObjects.js",
+      "description": "Look for objects satisfying specified criteria",
+      "dynamicMetadata": true,
+      "fields": {
+        "sobject": {
+          "viewClass": "SelectView",
+          "label": "Object",
+          "required": true,
+          "model": "objectTypes",
+          "prompt": "Please select a Salesforce Object"
+        },
+        "includeDeleted": {
+          "viewClass": "CheckBoxView",
+          "label": "Include deleted"
+        },
+        "outputMethod": {
+          "viewClass": "SelectView",
+          "label": "Output method",
+          "required": true,
+          "model": {
+            "emitAll": "Emit all",
+            "emitPage": "Emit page",
+            "emitIndividually": "Emit individually"
+          },
+          "prompt": "Please select an output method"
+        },
+        "termNumber": {
+          "viewClass": "TextFieldView",
+          "label": "Number of search terms",
+          "required": true,
+          "placeholder": "Please specify a number of search terms (>=1)"
+        }
+      }
+    },
     "account": {
       "deprecated": true,
       "title": "New Account",
