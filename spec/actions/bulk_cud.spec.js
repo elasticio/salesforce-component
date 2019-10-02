@@ -3,8 +3,10 @@ const chai = require('chai');
 const nock = require('nock');
 
 const testCommon = require('../common.js');
-const testData = require('./bulk.json');
-const bulk = require('../../lib/actions/bulk.js');
+const testData = require('./bulk_cud.json');
+const bulk = require('../../lib/actions/bulk_cud.js');
+
+nock.disableNetConnect();
 
 
 describe('Salesforce bulk', () => {
@@ -23,17 +25,22 @@ describe('Salesforce bulk', () => {
 
     const expectedResult = [{ "id": "5002o00002E8FIIAA3", "success": true, "errors": [] }, { "id": "5002o00002E8FIJAA3", "success": true, "errors": [] }, { "id": "5002o00002E8FIKAA3", "success": true, "errors": [] }];
 
+    const scopes = [];
     for (let host in data.responses) {
       for (let path in data.responses[host]) {
-        nock(host).
+        scopes.push(nock(host).
           intercept(path, data.responses[host][path].method).
-          reply(200, data.responses[host][path].response, data.responses[host][path].header);
+          reply(200, data.responses[host][path].response, data.responses[host][path].header));
       }
     }
 
     const result = await bulk.process(data.message, data.configuration);
 
     chai.expect(result.body).to.deep.equal(expectedResult);
+
+    for (let i = 0; i < scopes.length; i++) {
+      scopes[i].done();
+    }
   });
 
 
@@ -45,17 +52,22 @@ describe('Salesforce bulk', () => {
 
     const expectedResult = [{ "id": null, "success": false, "errors": ["ENTITY_IS_DELETED:entity is deleted:--"] }];
 
+    const scopes = [];
     for (let host in data.responses) {
       for (let path in data.responses[host]) {
-        nock(host).
+        scopes.push(nock(host).
           intercept(path, data.responses[host][path].method).
-          reply(200, data.responses[host][path].response, data.responses[host][path].header);
+          reply(200, data.responses[host][path].response, data.responses[host][path].header));
       }
     }
 
     const result = await bulk.process(data.message, data.configuration);
 
     chai.expect(result.body).to.deep.equal(expectedResult);
+
+    for (let i = 0; i < scopes.length; i++) {
+      scopes[i].done();
+    }
   });
 
 
@@ -67,17 +79,22 @@ describe('Salesforce bulk', () => {
 
     const expectedResult = [{ "id": "5002o00002BT0IUAA1", "success": true, "errors": [] }];
 
+    const scopes = [];
     for (let host in data.responses) {
       for (let path in data.responses[host]) {
-        nock(host).
+        scopes.push(nock(host).
           intercept(path, data.responses[host][path].method).
-          reply(200, data.responses[host][path].response, data.responses[host][path].header);
+          reply(200, data.responses[host][path].response, data.responses[host][path].header));
       }
     }
 
     const result = await bulk.process(data.message, data.configuration);
 
     chai.expect(result.body).to.deep.equal(expectedResult);
+
+    for (let i = 0; i < scopes.length; i++) {
+      scopes[i].done();
+    }
   });
 
 });

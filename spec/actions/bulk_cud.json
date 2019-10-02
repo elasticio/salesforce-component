@@ -38,7 +38,7 @@
         "/services/async/46.0/job/7502o00000JqBYLAA3/batch/7512o00000QcYGDAA3/result": {
           "method": "GET",
           "header": {
-            "Content-Type": "text/csv"
+            "content-type": "text/csv"
           },
           "response": "\"Id\",\"Success\",\"Created\",\"Error\"\n\"5002o00002E8FIIAA3\",\"true\",\"true\",\"\"\n\"5002o00002E8FIJAA3\",\"true\",\"true\",\"\"\n\"5002o00002E8FIKAA3\",\"true\",\"true\",\"\""
         }

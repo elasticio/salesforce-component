@@ -421,6 +421,13 @@
           "required": true,
           "model": "objectTypes",
           "prompt": "Please select a Salesforce Object"
+        },
+        "timeout": {
+          "viewClass": "TextFieldView",
+          "label": "Timeout for operation (sec)",
+          "required": true,
+          "note": "A positive integer specifying timeout in seconds. Maximum Salesforce's server timeout for the bulk operations is 10 min (600 sec).",
+          "placeholder": "600"
         }
       }
     },
