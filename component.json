@@ -399,9 +399,9 @@
         }
       }
     },
-    "bulk": {
-      "title": "Bulk operations",
-      "main": "./lib/actions/bulk.js",
+    "bulk_cud": {
+      "title": "Bulk Create/Update/Delete",
+      "main": "./lib/actions/bulk_cud.js",
       "description": "Bulk operations on objects in CSV file",
       "fields": {
         "operation": {
@@ -422,6 +422,14 @@
           "model": "objectTypes",
           "prompt": "Please select a Salesforce Object"
         }
+      }
+    },
+    "bulk_q": {
+      "title": "Bulk Query",
+      "main": "./lib/actions/bulk_q.js",
+      "description": "Bulk query with the results in CSV file",
+      "metadata": {
+        "in": "./lib/schemas/bulk_q.in.json"
       }
     }
   }
