@@ -419,6 +419,7 @@
           "viewClass": "SelectView",
           "label": "Object",
           "required": true,
+          "require": ["operation"],
           "model": "objectTypes",
           "prompt": "Please select a Salesforce Object"
         },
