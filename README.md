@@ -17,15 +17,15 @@ The component uses Salesforce - API Version 45.0, except:
 - Deprecated Actions and Triggers - API Version 25.0
 
 ### Authentication
-Authentication occurs via OAuth 2.0. 
-In the component repository you need to specify OAuth Client credentials as environment variables: 
+Authentication occurs via OAuth 2.0.
+In the component repository you need to specify OAuth Client credentials as environment variables:
 - ```SALESFORCE_KEY``` - your OAuth client key
 - ```SALESFORCE_SECRET``` - your OAuth client secret
 
 ## Create new App in Salesforce
 
 In order to make OAuth work, you need a new App in your Salesforce. During app creation process you will be asked to specify
-the callback URL, to process OAuth authentication via elastic.io platform your callback URL should be 
+the callback URL, to process OAuth authentication via elastic.io platform your callback URL should be
 
 ```https://your-tenant.elastic.io/callback/oauth2```
 
@@ -34,7 +34,7 @@ More information you can find [here](https://help.salesforce.com/apex/HTViewHelp
 ## Credentials
 
 During credentials creation you would need to:
-- choose ``Environment`` 
+- choose ``Environment``
 - enter ``Username`` and ``Password`` in a pop-up window after click on ``Authenticate`` button.
 - verify and save your new credentials.
 ### Limitations
@@ -47,7 +47,7 @@ You can get error `refresh token has been expired` if the same user account was 
 ## Actions
 ### Query
 Executing a SOQL Query that may return many objects. Each resulting object is emitted one-by-one. Use the Salesforce Object Query Language (SOQL) to search your organization’s Salesforce data for specific information. SOQL is similar to the SELECT statement in the widely used Structured Query Language (SQL) but is designed specifically for Salesforce data. This action allows you to interact with your data using SOQL.
-If query found no data empty object returned. 
+If query found no data empty object returned.
 
 #### Input fields description
 * **Optional batch size** - A positive integer specifying batch size. If no batch size is specified then results of the query will be emitted one-by-one, otherwise, query results will be emitted in an array of maximum batch size.
@@ -72,7 +72,7 @@ Action creates a single object. Input metadata is fetched dynamically from your 
 
 #### Input field description
 * **Object** - Input field where you should choose the object type, which you want to find. E.g. `Account`
-* **Optional Upsert field** - Input field where you should specify the ExternalID name field. E.g. `ExtId__c`. 
+* **Optional Upsert field** - Input field where you should specify the ExternalID name field. E.g. `ExtId__c`.
 
 You should specify **external** or **internal Id** for making some updates in salesforce object.
 If you want to create new Object you should always specify **Optional Upsert field** and value of ExternalId in input body structure.
@@ -92,6 +92,29 @@ Action creates a single object. Input metadata is fetched dynamically from your 
 
 Metadata contains one field whose name, type and mandatoriness are generated according to the value of the configuration fields *Lookup by field* and *Allow criteria to be omitted*.
 
+### Bulk Create/Update/Delete
+Bulk API provides a simple interface for quickly loading large amounts of data from CSV file into Salesforce (up to 10'000 records).
+Action take csv file from attachment as an input. CSV file format is described on [Salesforce documentatio](https://developer.salesforce.com/docs/atlas.en-us.api_bulk_v2.meta/api_bulk_v2/datafiles.htm)
+
+#### Input field description
+* **Operation** - dropdown list with 3 supported operations: `Create`, `Update` and `Delete`.
+* **Object** - dropdown list where you should choose the object type to perform bulk operation. E.g. `Case`.
+* **Timeout** - maximum time to wait while the server complete a bulk operation (default: `600` sec).
+
+Result is an array contains objects with 3 field.
+* **id** - `string`, salesforce object id
+* **success** - `boolean`, if operation was successful `true`
+* **errors** - `array`, if operation failed contains description of errors
+
+### Bulk Query
+Fetches records to a CSV file.
+
+#### Input field description
+* **SOQL Query** - Input field where you should type the SOQL query. E.g. `"SELECT ID, Name from Contact where Name like 'John Smi%'"`
+
+Result is a CSV file in the attachment.
+
+
 ### Lookup Object (deprecated)
 Lookup an object by a selected field.
 Action creates a single object. Input metadata is fetched dynamically from your Salesforce account. Output metadata is the same as input metadata, so you may expect all fields that you mapped as input to be returned as output.
@@ -99,7 +122,7 @@ Action creates a single object. Input metadata is fetched dynamically from your 
 #### Input field description
 * **Optional batch size** - A positive integer specifying batch size. If no batch size is specified then results of the query will be emitted one-by-one, otherwise, query results will be emitted in an array of maximum batch size.
 * **Object** - Input field where you should choose the object type, which you want to find. E.g. `Account`
-* **Lookup field** - Input field where you should choose the lookup field which you want to use for result filtering. E.g. `Id`. 
+* **Lookup field** - Input field where you should choose the lookup field which you want to use for result filtering. E.g. `Id`.
 
 ```For now, you can specify all unique, lookup, ExternalID/Id fields. ```
 
@@ -184,7 +207,7 @@ Use the Salesforce Object Query Language (SOQL) to search your organization’s 
 * **SOQL Query** - Input field for your SOQL Query
 
 ### Get New and Updated Objects Polling
-Polls existing and updated objects. You can select any custom or built-in object for your Salesforce instance. 
+Polls existing and updated objects. You can select any custom or built-in object for your Salesforce instance.
 
 #### Input field description
 * **Object** - Input field where you should select the type of object which updates you want to get. E.g. `Account`;
@@ -195,7 +218,7 @@ Polls existing and updated objects. You can select any custom or built-in object
    1. `yes` - if the number of changed records exceeds the maximum number of results in a page, wait until the next flow start to fetch the next page;
    2. `no` - if the number of changed records exceeds the maximum number of results in a page, the next pages will fetching in the same execution.
 
-For example, you have 234 “Contact” objects, 213 of them were changed from 2019-01-01. 
+For example, you have 234 “Contact” objects, 213 of them were changed from 2019-01-01.
 You want to select all “Contacts” that were changed from 2019-01-01, set the page size to 100 and process single page per execution.
 For you purpose you need to specify following fields:
    * Object: `Contact`
