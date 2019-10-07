@@ -28,5 +28,29 @@ module.exports = {
   emit: function(what, message) { 
     if (typeof what === "string" && what.toLowerCase().includes("error"))
       throw message;
+
+    if (typeof(this.emitCallback) === "function")
+      this.emitCallback(what, message);
+  },
+  emitCallback: null,
+  buildSOQL: function(objectMeta, values) {
+    let soql = `SELECT%20${objectMeta.fields[0].name}`;
+    
+    for (let i = 1; i < objectMeta.fields.length; ++i)
+      soql += `%2C%20${objectMeta.fields[i].name}`;
+    
+    soql += `%20FROM%20${objectMeta.name}%20WHERE%20`;
+
+    for (const key in values) {
+      soql += `${key}%20%3D%20`;
+      const field = objectMeta.fields.find(field => field.name === key);
+      if (!field) throw new Error(`There is not ${key} field in ${objectMeta.name} object`);
+      if (field.soapType === "tns:ID" || field.soapType === "xsd:string")
+        soql += `%27${values[key]}%27`;
+      else 
+        soql += `${values[key]}`;
+    }
+
+    return soql;
   }
 };

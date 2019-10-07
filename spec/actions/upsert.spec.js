@@ -9,14 +9,14 @@ const testCommon = require("../common.js");
 const objectTypesReply = require("../sfObjects.json");
 const metaModelDocumentReply = require("../sfDocumentMetadata.json");
 const metaModelAccountReply = require("../sfAccountMetadata.json");
-const createObject = require("../../lib/actions/createObject.js");
+const upsertObject = require("../../lib/actions/upsert.js");
 
 // Disable real HTTP requests
 nock.disableNetConnect();
 
-describe("Create Object module: objectTypes", () => {
+describe("Upsert Object module: objectTypes", () => {
 
-  it(`Retrieves the list of createable sobjects`, async () => {
+  it(`Retrieves the list of createable/updateable sobjects`, async () => {
 
     const scope = nock(testCommon.configuration.oauth.instance_url)
       .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects`)
@@ -24,18 +24,18 @@ describe("Create Object module: objectTypes", () => {
       
     const expectedResult = {};
     objectTypesReply.sobjects.forEach((object) => {
-      if (object.createable)
+      if (object.createable && object.updateable)
         expectedResult[object.name] = object.label;
     });
 
-    const result = await createObject.objectTypes(testCommon.configuration);
+    const result = await upsertObject.objectTypes(testCommon.configuration);
     chai.expect(result).to.deep.equal(expectedResult);
 
     scope.done();
   });
 });
 
-describe("Create Object module: getMetaModel", () => {
+describe("Upsert Object module: getMetaModel", () => {
 
   function testMetaData(object, getMetaModelReply) {
     const sfScope = nock(testCommon.configuration.oauth.instance_url)
@@ -48,7 +48,10 @@ describe("Create Object module: getMetaModel", () => {
       
     const expectedResult = {
       in: {
-        description: object,
+        type: "object",
+        properties: {}
+      },
+      out: {
         type: "object",
         properties: {}
       }
@@ -57,118 +60,57 @@ describe("Create Object module: getMetaModel", () => {
       if (field.createable) {
         const fieldDescriptor = {
           title: field.label,
-          custom: field.custom,
           default: field.defaultValue,
           type: (() => {
             switch (field.soapType) {
               case 'xsd:boolean': return 'boolean';
               case 'xsd:double': return 'number';
-              case 'xsd:int': return 'integer';
+              case 'xsd:int': return 'number';
               default: return 'string';
             }
           })(),
-          required: !field.nillable && !field.defaultedOnCreate,
-          readonly: field.calculated || !field.updateable
+          required: !field.nillable && !field.defaultedOnCreate
         };
+
+        if (field.type === 'textarea')
+          fieldDescriptor.maxLength = 1000;
 
         if (field.picklistValues != undefined && field.picklistValues.length != 0) {
           fieldDescriptor.enum = [];
           field.picklistValues.forEach((pick) => { fieldDescriptor.enum.push(pick.value); });
         }
 
-        expectedResult.in.properties[field.name] = fieldDescriptor;
+        expectedResult.in.properties[field.name] = { ...fieldDescriptor, required: false };
+        expectedResult.out.properties[field.name] = fieldDescriptor;
       }
     });
-    expectedResult.out = _.cloneDeep(expectedResult.in);
-    expectedResult.out.properties.id = {
-      type: "string",
-      required: true,
-      readonly: true,
-      title: "ObjectID"
+
+    expectedResult.in.properties.Id = {
+      type: 'string',
+      required: false,
+      title: 'Id',
     };
 
-    return new Promise(function(resolve, reject) {
-      testCommon.configuration.sobject = object;
-      createObject.getMetaModel.call(testCommon, testCommon.configuration, function getResult(err, data) {
-        if (err)
-          reject(err);
-
-        resolve(data);
-      });
-    }).then(function(data) {
+    testCommon.configuration.sobject = object;
+    return upsertObject.getMetaModel.call(testCommon, testCommon.configuration)
+    .then(data => {
       chai.expect(data).to.deep.equal(expectedResult);
       sfScope.done();
       //sfRefreshTokenScope.done();
-    }); 
+    });
   }
 
   it(`Retrieves metadata for Document object`, testMetaData.bind(null, "Document", metaModelDocumentReply));
   it(`Retrieves metadata for Account object`, testMetaData.bind(null, "Account", metaModelAccountReply));
 });
 
-describe("Create Object module: createObject", () => {
+describe("Upsert Object module: upsertObject", () => {
 
-  it(`Sends request for Account creation`, async () => {
-
-    const message = {
-      body: {
-        Name: "Fred",
-        BillingStreet: "Elm Street"
-      }
-    };
-
-    nock(testCommon.configuration.oauth.instance_url)
-      .post(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects/Account`, message.body)
-      .reply(200, {
-        id: "new_account_id",
-        success: true
-      });
-
-    testCommon.configuration.sobject = "Account";
-    const result = await createObject.process.call(testCommon, _.cloneDeep(message), testCommon.configuration);
-    
-    message.body.id = "new_account_id";
-    chai.expect(result.body).to.deep.equal(message.body);
-  });
-
-  it(`Sends request for Document creation not using input attachment`, async () => {
+  it(`Sends request for Document update not using input attachment`, async () => {
 
     const message = {
       body: {
-        FolderId: "xxxyyyzzz",
-        Name: "NotVeryImportantDoc",
-        IsPublic: false,
-        Body: "not quite binary data",
-        ContentType: "application/octet-stream"
-      },
-      attachments: {
-        theFile: {
-          url: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Everest_kalapatthar.jpg/800px-Everest_kalapatthar.jpg",
-          "content-type": "image/jpeg"
-        }
-      }
-    };
-
-    nock(testCommon.configuration.oauth.instance_url)
-      .post(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects/Document`, message.body)
-      .reply(200, {
-        id: "new_document_id",
-        success: true
-      });
-
-    testCommon.configuration.sobject = "Document";
-    testCommon.configuration.utilizeAttachment = false;
-    
-    const result = await createObject.process.call(testCommon, _.cloneDeep(message), testCommon.configuration);
-    
-    message.body.id = "new_document_id";
-    chai.expect(result.body).to.deep.equal(message.body);
-  });
-
-  it(`Sends request for Document creation using input attachment`, async () => {
-
-    const message = {
-      body: {
+        Id: "testObjId",
         FolderId: "xxxyyyzzz",
         Name: "NotVeryImportantDoc",
         IsPublic: false,
@@ -184,19 +126,64 @@ describe("Create Object module: createObject", () => {
     };
 
     const resultRequestBody = _.cloneDeep(message.body);
+    delete resultRequestBody.Id;
+
+    const scope = nock(testCommon.configuration.oauth.instance_url, { encodedQueryParams: true })
+      .patch(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects/Document/${message.body.Id}`, resultRequestBody)
+      .reply(204)
+      .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects/Document/describe`)
+      .reply(200, metaModelDocumentReply)
+      .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/query?q=${testCommon.buildSOQL(metaModelDocumentReply, {Id: message.body.Id})}`)
+      .reply(200, { done: true, totalSize: 1, records: [message.body] });
+
+    testCommon.configuration.sobject = "Document";
+    testCommon.configuration.utilizeAttachment = false;
+    
+    let dataReceived = false;
+    testCommon.emitCallback = function(what, msg) {
+      if (what === 'data') { 
+        chai.expect(msg.body).to.deep.equal(message.body);
+        dataReceived = true;
+      }
+    };
+
+    await upsertObject.process.call(testCommon, _.cloneDeep(message), testCommon.configuration);
+    if (!dataReceived) throw new Error("Output message has not been emitted.")
+    scope.done();
+  });
+
+  it(`Sends request for Document update using input attachment`, async () => {
+
+    const message = {
+      body: {
+        Id: "testObjId",
+        FolderId: "xxxyyyzzz",
+        Name: "NotVeryImportantDoc",
+        IsPublic: false,
+        Body: "not quite binary data",
+        ContentType: "application/octet-stream"
+      },
+      attachments: {
+        theFile: {
+          url: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Everest_kalapatthar.jpg/800px-Everest_kalapatthar.jpg",
+          "content-type": "image/jpeg"
+        }
+      }
+    };
+
+    const resultRequestBody = _.cloneDeep(message.body);
+    delete resultRequestBody.Id;
     resultRequestBody.Body = Buffer.from(JSON.stringify(message)).toString('base64'); // Take the message as binary data
     resultRequestBody.ContentType = message.attachments.theFile["content-type"];
 
-    const newDocID = "new_document_id";
-
-    const sfScope = nock(testCommon.configuration.oauth.instance_url)
-      .post(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects/Document`, resultRequestBody)
-      .reply(200, {
-        id: newDocID,
-        success: true
-      })
+    const scope = nock(testCommon.configuration.oauth.instance_url, { encodedQueryParams: true })
+      .patch(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects/Document/${message.body.Id}`, resultRequestBody)
+      .reply(204)
       .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects/Document/describe`)
-      .reply(200, metaModelDocumentReply);
+      .times(2)
+      .reply(200, metaModelDocumentReply)
+      .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/query?q=${testCommon.buildSOQL(metaModelDocumentReply, {Id: message.body.Id})}`)
+      .reply(200, { done: true, totalSize: 1, records: [message.body] });
 
     const binaryScope = nock("https://upload.wikimedia.org")
       .get(`/wikipedia/commons/thumb/f/f6/Everest_kalapatthar.jpg/800px-Everest_kalapatthar.jpg`)
@@ -205,14 +192,17 @@ describe("Create Object module: createObject", () => {
     testCommon.configuration.sobject = "Document";
     testCommon.configuration.utilizeAttachment = true;
     
-    const result = await createObject.process.call(testCommon, _.cloneDeep(message), testCommon.configuration);
+    let dataReceived = false;
+    testCommon.emitCallback = function(what, msg) {
+      if (what === 'data') { 
+        chai.expect(msg.body).to.deep.equal(message.body);
+        dataReceived = true;
+      }
+    };
 
-    resultRequestBody.id = newDocID;
-    delete resultRequestBody.Body;
-    chai.expect(result.body).to.deep.equal(resultRequestBody);
-
-    sfScope.done();
+    await upsertObject.process.call(testCommon, _.cloneDeep(message), testCommon.configuration);
+    if (!dataReceived) throw new Error("Output message has not been emitted.")
+    scope.done();
     binaryScope.done();
   });
-
 });
