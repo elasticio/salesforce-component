@@ -240,6 +240,23 @@
         }
       }
     },
+    "delete": {
+      "title": "Delete Object",
+      "main": "./lib/actions/deleteObject.js",
+      "description": "Delete Selected Object",
+      "fields": {
+        "sobject": {
+          "viewClass": "SelectView",
+          "label": "Object",
+          "required": true,
+          "model": "objectTypes",
+          "prompt": "Please select a Salesforce Object"
+        }
+      },
+      "metadata": {
+        "in": "./lib/schemas/deleteObject.in.json"
+      }
+    },
     "lookupObject": {
       "title": "Lookup Object (at most 1)",
       "main": "./lib/actions/lookupObject.js",
