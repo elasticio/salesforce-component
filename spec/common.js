@@ -3,6 +3,27 @@
 process.env.SALESFORCE_KEY = "asd";
 process.env.SALESFORCE_SECRET = "sdc";
 
+require('elasticio-rest-node');
+
+const EXT_FILE_STORAGE = "http://file.storage.server/file";
+
+require.cache[require.resolve('elasticio-rest-node')] = {
+  exports: () => {
+    return {
+      resources: {
+        storage: {
+          createSignedUrl: () => {
+            return {
+              get_url: EXT_FILE_STORAGE,
+              put_url: EXT_FILE_STORAGE
+            }
+          }
+        }
+      }
+    };
+  }
+};
+
 module.exports = {
   configuration: {
     prodEnv: "login",
@@ -52,5 +73,6 @@ module.exports = {
     }
 
     return soql;
-  }
+  },
+  EXT_FILE_STORAGE: EXT_FILE_STORAGE
 };

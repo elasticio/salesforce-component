@@ -23,7 +23,7 @@ describe('Salesforce bulk query', () => {
     const data = testData.bulkQuery;
     data.configuration = { ...testCommon.configuration, ...data.configuration };
 
-    const expectedResult = { "bulk_query.csv": { "content-type": "text/csv", "url": "http://file.storage.server/file" } };
+    const expectedResult = { "bulk_query.csv": { "content-type": "text/csv", "url": testCommon.EXT_FILE_STORAGE } };
 
     for (let host in data.responses) {
       for (let path in data.responses[host]) {
@@ -32,25 +32,6 @@ describe('Salesforce bulk query', () => {
           reply(200, data.responses[host][path].response, data.responses[host][path].header);
       }
     }
-
-    require('elasticio-rest-node');
-
-    require.cache[require.resolve('elasticio-rest-node')] = {
-      exports: sinon.stub().callsFake(() => {
-        return {
-          resources: {
-            storage: {
-              createSignedUrl: () => {
-                return {
-                  "get_url": "http://file.storage.server/file",
-                  "put_url": "http://file.storage.server/file"
-                }
-              }
-            }
-          }
-        };
-      })
-    };
 
     const bulk = require('../../lib/actions/bulk_q.js');
 
