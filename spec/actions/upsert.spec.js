@@ -139,16 +139,16 @@ describe("Upsert Object module: upsertObject", () => {
     testCommon.configuration.sobject = "Document";
     testCommon.configuration.utilizeAttachment = false;
     
-    let dataReceived = false;
-    testCommon.emitCallback = function(what, msg) {
-      if (what === 'data') { 
-        chai.expect(msg.body).to.deep.equal(message.body);
-        dataReceived = true;
-      }
-    };
+    const getResult = new Promise(resolve => {
+      testCommon.emitCallback = function(what, msg) {
+        if (what === 'data') resolve(msg);
+      };
+    });
 
     await upsertObject.process.call(testCommon, _.cloneDeep(message), testCommon.configuration);
-    if (!dataReceived) throw new Error("Output message has not been emitted.")
+    const result = await getResult;
+    
+    chai.expect(result.body).to.deep.equal(message.body);
     scope.done();
   });
 
@@ -192,16 +192,16 @@ describe("Upsert Object module: upsertObject", () => {
     testCommon.configuration.sobject = "Document";
     testCommon.configuration.utilizeAttachment = true;
     
-    let dataReceived = false;
-    testCommon.emitCallback = function(what, msg) {
-      if (what === 'data') { 
-        chai.expect(msg.body).to.deep.equal(message.body);
-        dataReceived = true;
-      }
-    };
+    const getResult = new Promise(resolve => {
+      testCommon.emitCallback = function(what, msg) {
+        if (what === 'data') resolve(msg);
+      };
+    });
 
     await upsertObject.process.call(testCommon, _.cloneDeep(message), testCommon.configuration);
-    if (!dataReceived) throw new Error("Output message has not been emitted.")
+    const result = await getResult;
+    
+    chai.expect(result.body).to.deep.equal(message.body);
     scope.done();
     binaryScope.done();
   });
