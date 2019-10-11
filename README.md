@@ -67,6 +67,18 @@ In case of an **Attachment** object type you should specify `Body` in base64 enc
 
 This action will automatically retrieve all existing fields of chosen object type that available on your Salesforce organization
 
+### Delete Object
+Deletes a Selected Object.
+
+#### Input field description
+* **Object** - Input field where you should choose the object type, which you want to delete. E.g. `Account`
+* **id** - `string`, salesforce object id
+
+Result is an array contains objects with 3 field.
+* **id** - `string`, salesforce object id
+* **success** - `boolean`, if operation was successful `true`
+* **errors** - `array`, if operation failed contains description of errors
+
 ### Upsert Object
 Creates or Updates Selected Object.
 Action creates a single object. Input metadata is fetched dynamically from your Salesforce account. Output metadata is the same as input metadata, so you may expect all fields that you mapped as input to be returned as output.
@@ -106,7 +118,7 @@ Lookup a list of objects satisfying specified criteria.
 #### Metadata description
 
 Depending on the the configuration field *Output method* the input metadata can contain different fields:
-*Output method* - "Emit page": 
+*Output method* - "Emit page":
 Field "Page size" - optional positive integer that defaults to 1000;
 Field "Page number" - required non-negative integer that is 0 based and defaults to 0;
 
@@ -126,7 +138,7 @@ Between each two term's group of fields:
 
 Field "Logical operator" - one of the following: "AND", "OR";
 
-Output data is an object, with a field "results" that is an array of objects. 
+Output data is an object, with a field "results" that is an array of objects.
 
 ### Bulk Create/Update/Delete
 Bulk API provides a simple interface for quickly loading large amounts of data from CSV file into Salesforce (up to 10'000 records).
