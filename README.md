@@ -101,6 +101,7 @@ Action creates a single object. Input metadata is fetched dynamically from your 
 * **Lookup by field** - dropdown list with all fields on the selected object, if on *Type Of Search* is chosen `All Fields`, or with all fields on the selected object where `type` is `id` or `unique` is `true` , if on *Type Of Search* is chosen `Unique Fields`.
 * **Allow criteria to be omitted** - checkbox, if checked - search criteria can be omitted and the empty object will be returned, else - search criteria are required.
 * **Allow zero results** - checkbox, if checked and nothing is found - empty object will be returned, else - action throw an error.
+* **Pass binary data to the next component (if found object has it)** - a checkbox, if it is checked and found object has a binary field (type of base64) then its data is passed to the next component as a binary attachment.
 
 #### Metadata description
 

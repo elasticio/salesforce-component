@@ -5,6 +5,7 @@
 * Added `Lookup Objects (Plural)` action
 * `Create object` action: added ability to utilize binary data attachment from previous step
 * `Upsert object` action: added ability to utilize binary data attachment from previous step
+* `Lookup Object (at most 1)` action: added ability to pass binary data (if found object has it) to the next component as a binary attachment
 
 ## 1.1.1 (July 10, 2019)
 
