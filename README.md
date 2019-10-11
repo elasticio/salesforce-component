@@ -63,6 +63,7 @@ In case of an **Attachment** object type you should specify `Body` in base64 enc
 
 #### Input fields description
 * **Object** - Input field where you should choose the object type, which you want to find. E.g. `Account`
+* **Utilize data attachment from previous step (for objects with a binary field)** - a checkbox, if it is checked and an input message contains an attachment and specified object has a binary field (type of base64) then the input data is put into object's binary field. In this case any data specified for the binary field in the data mapper is discarded.
 
 This action will automatically retrieve all existing fields of chosen object type that available on your Salesforce organization
 

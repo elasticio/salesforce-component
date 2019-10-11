@@ -2,6 +2,7 @@
 
 * Added support for `Bulk operations` feature (Create/Update/Delete and Query)
 * Added `Lookup Objects (Plural)` action
+* `Create object` action: added ability to utilize binary data attachment from previous step
 
 ## 1.1.1 (July 10, 2019)
 
