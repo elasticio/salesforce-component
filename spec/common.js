@@ -54,7 +54,7 @@ module.exports = {
       this.emitCallback(what, message);
   },
   emitCallback: null,
-  buildSOQL: function(objectMeta, values) {
+  buildSOQL: function(objectMeta, where) {
     let soql = `SELECT%20${objectMeta.fields[0].name}`;
     
     for (let i = 1; i < objectMeta.fields.length; ++i)
@@ -62,14 +62,18 @@ module.exports = {
     
     soql += `%20FROM%20${objectMeta.name}%20WHERE%20`;
 
-    for (const key in values) {
-      soql += `${key}%20%3D%20`;
-      const field = objectMeta.fields.find(field => field.name === key);
-      if (!field) throw new Error(`There is not ${key} field in ${objectMeta.name} object`);
-      if (field.soapType === "tns:ID" || field.soapType === "xsd:string")
-        soql += `%27${values[key]}%27`;
-      else 
-        soql += `${values[key]}`;
+    if (typeof(where) === "string") {
+      soql += where;
+    } else {
+      for (const key in where) {
+        soql += `${key}%20%3D%20`;
+        const field = objectMeta.fields.find(field => field.name === key);
+        if (!field) throw new Error(`There is not ${key} field in ${objectMeta.name} object`);
+        if (field.soapType === "tns:ID" || field.soapType === "xsd:string")
+          soql += `%27${where[key]}%27`;
+        else 
+          soql += `${where[key]}`;
+      }
     }
 
     return soql;
