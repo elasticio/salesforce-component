@@ -1,7 +1,6 @@
 /* eslint-disable no-return-assign */
 const chai = require('chai');
 const nock = require('nock');
-const sinon = require('sinon');
 
 const testCommon = require('../common.js');
 const testData = require('./bulk_q.json');
