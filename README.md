@@ -74,6 +74,7 @@ Action creates a single object. Input metadata is fetched dynamically from your 
 #### Input field description
 * **Object** - Input field where you should choose the object type, which you want to find. E.g. `Account`
 * **Optional Upsert field** - Input field where you should specify the ExternalID name field. E.g. `ExtId__c`.
+* **Utilize data attachment from previous step (for objects with a binary field)** - a checkbox, if it is checked and an input message contains an attachment and specified object has a binary field (type of base64) then the input data is put into object's binary field. In this case any data specified for the binary field in the data mapper is discarded.
 
 You should specify **external** or **internal Id** for making some updates in salesforce object.
 If you want to create new Object you should always specify **Optional Upsert field** and value of ExternalId in input body structure.
