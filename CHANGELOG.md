@@ -1,7 +1,7 @@
 ## [Unreleased] 1.2.0 (October 18, 2019)
 
 * Added support for `Bulk operations` feature (Create/Update/Delete and Query)
-
+* Added `Lookup Objects (Plural)` action
 
 ## 1.1.1 (July 10, 2019)
 

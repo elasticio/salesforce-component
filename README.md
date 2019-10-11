@@ -92,6 +92,40 @@ Action creates a single object. Input metadata is fetched dynamically from your 
 
 Metadata contains one field whose name, type and mandatoriness are generated according to the value of the configuration fields *Lookup by field* and *Allow criteria to be omitted*.
 
+### Lookup Objects (plural)
+Lookup a list of objects satisfying specified criteria.
+
+#### Input field description
+* **Object** - dropdown list where you should choose the object type, which you want to find. E.g. `Account`.
+* **Include deleted** - checkbox, if checked - records that have been deleted are included into the result list.
+* **Output method** - dropdown list with following values: "Emit all", "Emit page", "Emit individually".
+* **Number of search terms** - text field where you can specify a number of search terms (not less than 0 and not greater than 42). If specified value is not allowed then it is set to 0.
+
+#### Metadata description
+
+Depending on the the configuration field *Output method* the input metadata can contain different fields:
+*Output method* - "Emit page": 
+Field "Page size" - optional positive integer that defaults to 1000;
+Field "Page number" - required non-negative integer that is 0 based and defaults to 0;
+
+*Output method* - "Emit all":
+Field "Maximum number of records" - optional positive integer that defaults to 1000;
+
+*Output method* - "Emit individually":
+Field "Maximum number of records" - optional positive integer that defaults to 10000;
+
+Groups of fields for each search term go next:
+
+Field "Field name" - string represents object's field (a list of allowed values is available);
+Field "Field value" - string represents value for selected field;
+Field "Condition" - one of the following: "=", "!=", "<", "<=", ">", ">=", "LIKE", "IN", "NOT IN";
+
+Between each two term's group of fields:
+
+Field "Logical operator" - one of the following: "AND", "OR";
+
+Output data is an object, with a field "results" that is an array of objects. 
+
 ### Bulk Create/Update/Delete
 Bulk API provides a simple interface for quickly loading large amounts of data from CSV file into Salesforce (up to 10'000 records).
 Action take csv file from attachment as an input. CSV file format is described on [Salesforce documentatio](https://developer.salesforce.com/docs/atlas.en-us.api_bulk_v2.meta/api_bulk_v2/datafiles.htm)
