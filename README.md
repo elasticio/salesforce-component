@@ -50,6 +50,9 @@ Executing a SOQL Query that may return many objects. Each resulting object is em
 If query found no data empty object returned.
 
 #### Input fields description
+* **Include deleted** - checkbox, if checked - records that have been deleted are included into the result list.
+
+#### Input fields description
 * **Optional batch size** - A positive integer specifying batch size. If no batch size is specified then results of the query will be emitted one-by-one, otherwise, query results will be emitted in an array of maximum batch size.
 * **Allow all results to be returned in a set** - checkbox which allows emitting query results in a single array. `Optional batch size` option is ignored in this case.
 * **SOQL Query** - Input field where you should type the SOQL query. E.g. `"SELECT ID, Name from Contact where Name like 'John Smi%'"`

@@ -178,6 +178,10 @@
         "allowResultAsSet": {
           "label": "Allow all results to be returned in a set (overwrites 'Optional batch size feature')",
           "viewClass": "CheckBoxView"
+        },
+        "includeDeleted": {
+          "viewClass": "CheckBoxView",
+          "label": "Include deleted"
         }
       },
       "metadata": {
