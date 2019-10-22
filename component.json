@@ -4,11 +4,11 @@
   "docsUrl": "https://github.com/elasticio/salesforce-component",
   "url": "http://www.salesforce.com/",
   "envVars": {
-    "SALESFORCE_KEY": {
+    "OAUTH_CLIENT_ID": {
       "required": true,
       "description": "Your Salesforce OAuth client key"
     },
-    "SALESFORCE_SECRET": {
+    "OAUTH_CLIENT_SECRET": {
       "required": true,
       "description": "Your Salesforce OAuth client secret"
     },
@@ -36,8 +36,8 @@
       }
     },
     "oauth2": {
-      "client_id": "{{SALESFORCE_KEY}}",
-      "client_secret": "{{SALESFORCE_SECRET}}",
+      "client_id": "{{OAUTH_CLIENT_ID}}",
+      "client_secret": "{{OAUTH_CLIENT_SECRET}}",
       "auth_uri": "https://{{prodEnv}}.salesforce.com/services/oauth2/authorize",
       "token_uri": "https://{{prodEnv}}.salesforce.com/services/oauth2/token"
     },
