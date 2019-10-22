@@ -1,3 +1,7 @@
+## 1.1.2
+
+* oAuth client compatibility added
+
 ## 1.1.1 (July 10, 2019)
 
 * Add support for `Create Attachment` feature
