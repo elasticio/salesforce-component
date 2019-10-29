@@ -3,6 +3,7 @@
   "description": "Customer relationship management (CRM) software & cloud computing from the leader in CRM solutions for businesses large & small.",
   "docsUrl": "https://github.com/elasticio/salesforce-component",
   "url": "http://www.salesforce.com/",
+  "buildType": "docker",
   "envVars": {
     "SALESFORCE_KEY": {
       "required": true,
