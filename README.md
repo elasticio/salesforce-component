@@ -19,8 +19,8 @@ The component uses Salesforce - API Version 45.0, except:
 ### Authentication
 Authentication occurs via OAuth 2.0.
 In the component repository you need to specify OAuth Client credentials as environment variables:
-- ```SALESFORCE_KEY``` - your OAuth client key
-- ```SALESFORCE_SECRET``` - your OAuth client secret
+- ```OAUTH_CLIENT_ID``` - your OAuth client key
+- ```OAUTH_CLIENT_SECRET``` - your OAuth client secret
 
 ## Create new App in Salesforce
 
@@ -47,10 +47,10 @@ You can get error `refresh token has been expired` if the same user account was 
 ## Actions
 ### Query
 Executing a SOQL Query that may return many objects. Each resulting object is emitted one-by-one. Use the Salesforce Object Query Language (SOQL) to search your organization’s Salesforce data for specific information. SOQL is similar to the SELECT statement in the widely used Structured Query Language (SQL) but is designed specifically for Salesforce data. This action allows you to interact with your data using SOQL.
-If query found no data empty object returned.
+Empty object will be returned, if query doesn't find any data.
 
 #### Input fields description
-* **Include deleted** - checkbox, if checked - records that have been deleted are included into the result list.
+* **Include deleted** - checkbox, if checked - deleted records will be included into the result list.
 
 #### Input fields description
 * **Optional batch size** - A positive integer specifying batch size. If no batch size is specified then results of the query will be emitted one-by-one, otherwise, query results will be emitted in an array of maximum batch size.
@@ -82,7 +82,7 @@ Deletes a Selected Object.
 Result is an object with 3 fields.
 * **id** - `string`, salesforce object id
 * **success** - `boolean`, if operation was successful `true`
-* **errors** - `array`, if operation failed contains description of errors
+* **errors** - `array`, if operation fails, it will contain description of errors
 
 ### Upsert Object
 Creates or Updates Selected Object.
@@ -106,7 +106,7 @@ Action creates a single object. Input metadata is fetched dynamically from your 
 * **Lookup by field** - dropdown list with all fields on the selected object, if on *Type Of Search* is chosen `All Fields`, or with all fields on the selected object where `type` is `id` or `unique` is `true` , if on *Type Of Search* is chosen `Unique Fields`.
 * **Allow criteria to be omitted** - checkbox, if checked - search criteria can be omitted and the empty object will be returned, else - search criteria are required.
 * **Allow zero results** - checkbox, if checked and nothing is found - empty object will be returned, else - action throw an error.
-* **Pass binary data to the next component (if found object has it)** - a checkbox, if it is checked and found object has a binary field (type of base64) then its data is passed to the next component as a binary attachment.
+* **Pass binary data to the next component (if found object has it)** - a checkbox, if it is checked and found object has a binary field (type of base64) then its data will be passed to the next component as a binary attachment.
 
 #### Metadata description
 
@@ -117,22 +117,22 @@ Lookup a list of objects satisfying specified criteria.
 
 #### Input field description
 * **Object** - dropdown list where you should choose the object type, which you want to find. E.g. `Account`.
-* **Include deleted** - checkbox, if checked - records that have been deleted are included into the result list.
+* **Include deleted** - checkbox, if checked - deleted records will be included into the result list.
 * **Output method** - dropdown list with following values: "Emit all", "Emit page", "Emit individually".
-* **Number of search terms** - text field where you can specify a number of search terms (not less than 0 and not greater than 42). If specified value is not allowed then it is set to 0.
+* **Number of search terms** - text field where you can specify a number of search terms (not less than 0 and not greater than 42). Default value is 0 (if provided value is not allowed).
 
 #### Metadata description
 
 Depending on the the configuration field *Output method* the input metadata can contain different fields:
 *Output method* - "Emit page":
 Field "Page size" - optional positive integer that defaults to 1000;
-Field "Page number" - required non-negative integer that is 0 based and defaults to 0;
+Field "Page number" - required non-negative integer (starts with 0, default value 0);
 
 *Output method* - "Emit all":
-Field "Maximum number of records" - optional positive integer that defaults to 1000;
+Field "Maximum number of records" - optional positive integer (default value 1000);
 
 *Output method* - "Emit individually":
-Field "Maximum number of records" - optional positive integer that defaults to 10000;
+Field "Maximum number of records" - optional positive integer (default value 10000);
 
 Groups of fields for each search term go next:
 
@@ -148,14 +148,14 @@ Output data is an object, with a field "results" that is an array of objects.
 
 ### Bulk Create/Update/Delete
 Bulk API provides a simple interface for quickly loading large amounts of data from CSV file into Salesforce (up to 10'000 records).
-Action take csv file from attachment as an input. CSV file format is described on [Salesforce documentatio](https://developer.salesforce.com/docs/atlas.en-us.api_bulk_v2.meta/api_bulk_v2/datafiles.htm)
+Action takes a CSV file from the attachment as an input. CSV file format is described in the [Salesforce documentatio](https://developer.salesforce.com/docs/atlas.en-us.api_bulk_v2.meta/api_bulk_v2/datafiles.htm)
 
 #### Input field description
 * **Operation** - dropdown list with 3 supported operations: `Create`, `Update` and `Delete`.
 * **Object** - dropdown list where you should choose the object type to perform bulk operation. E.g. `Case`.
-* **Timeout** - maximum time to wait while the server complete a bulk operation (default: `600` sec).
+* **Timeout** - maximum time to wait until the server completes a bulk operation (default: `600` sec).
 
-Result is an array contains objects with 3 field.
+Result is an array that contains objects with 3 fields.
 * **id** - `string`, salesforce object id
 * **success** - `boolean`, if operation was successful `true`
 * **errors** - `array`, if operation failed contains description of errors

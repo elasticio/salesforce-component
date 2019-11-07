@@ -3,12 +3,13 @@
   "description": "Customer relationship management (CRM) software & cloud computing from the leader in CRM solutions for businesses large & small.",
   "docsUrl": "https://github.com/elasticio/salesforce-component",
   "url": "http://www.salesforce.com/",
+  "buildType": "docker",
   "envVars": {
-    "SALESFORCE_KEY": {
+    "OAUTH_CLIENT_ID": {
       "required": true,
       "description": "Your Salesforce OAuth client key"
     },
-    "SALESFORCE_SECRET": {
+    "OAUTH_CLIENT_SECRET": {
       "required": true,
       "description": "Your Salesforce OAuth client secret"
     },
@@ -36,8 +37,8 @@
       }
     },
     "oauth2": {
-      "client_id": "{{SALESFORCE_KEY}}",
-      "client_secret": "{{SALESFORCE_SECRET}}",
+      "client_id": "{{OAUTH_CLIENT_ID}}",
+      "client_secret": "{{OAUTH_CLIENT_SECRET}}",
       "auth_uri": "https://{{prodEnv}}.salesforce.com/services/oauth2/authorize",
       "token_uri": "https://{{prodEnv}}.salesforce.com/services/oauth2/token"
     }
@@ -163,7 +164,7 @@
     }
   },
   "actions": {
-    "query": {
+    "queryAction": {
       "title": "Query",
       "main": "./lib/actions/query.js",
       "description": "Executing an SOQL Query that may return many objects. Each resulting object is emitted one-by-one",

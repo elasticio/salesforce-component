@@ -1,7 +1,7 @@
 'use strict';
 
-process.env.SALESFORCE_KEY = "asd";
-process.env.SALESFORCE_SECRET = "sdc";
+process.env.OAUTH_CLIENT_ID = "asd";
+process.env.OAUTH_CLIENT_SECRET = "sdc";
 
 require('elasticio-rest-node');
 
@@ -46,7 +46,7 @@ module.exports = {
       refresh_token: "the not less important also unthinkable top secret refresh token"
     }
   },
-  emit: function(what, message) { 
+  emit: function(what, message) {
     if (typeof what === "string" && what.toLowerCase().includes("error"))
       throw message;
 
@@ -56,10 +56,10 @@ module.exports = {
   emitCallback: null,
   buildSOQL: function(objectMeta, where) {
     let soql = `SELECT%20${objectMeta.fields[0].name}`;
-    
+
     for (let i = 1; i < objectMeta.fields.length; ++i)
       soql += `%2C%20${objectMeta.fields[i].name}`;
-    
+
     soql += `%20FROM%20${objectMeta.name}%20WHERE%20`;
 
     if (typeof(where) === "string") {
@@ -71,7 +71,7 @@ module.exports = {
         if (!field) throw new Error(`There is not ${key} field in ${objectMeta.name} object`);
         if (field.soapType === "tns:ID" || field.soapType === "xsd:string")
           soql += `%27${where[key]}%27`;
-        else 
+        else
           soql += `${where[key]}`;
       }
     }

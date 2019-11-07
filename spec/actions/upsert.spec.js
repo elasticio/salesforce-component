@@ -21,7 +21,7 @@ describe("Upsert Object module: objectTypes", () => {
     const scope = nock(testCommon.configuration.oauth.instance_url)
       .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects`)
       .reply(200, objectTypesReply);
-      
+
     const expectedResult = {};
     objectTypesReply.sobjects.forEach((object) => {
       if (object.createable && object.updateable)
@@ -45,7 +45,7 @@ describe("Upsert Object module: getMetaModel", () => {
     const sfRefreshTokenScope = nock(testCommon.refresh_token.url)
       .post('')
       .reply(200, testCommon.refresh_token.response);
-      
+
     const expectedResult = {
       in: {
         type: "object",
@@ -96,7 +96,6 @@ describe("Upsert Object module: getMetaModel", () => {
     .then(data => {
       chai.expect(data).to.deep.equal(expectedResult);
       sfScope.done();
-      //sfRefreshTokenScope.done();
     });
   }
 
@@ -138,7 +137,7 @@ describe("Upsert Object module: upsertObject", () => {
 
     testCommon.configuration.sobject = "Document";
     testCommon.configuration.utilizeAttachment = false;
-    
+
     const getResult = new Promise(resolve => {
       testCommon.emitCallback = function(what, msg) {
         if (what === 'data') resolve(msg);
@@ -147,7 +146,7 @@ describe("Upsert Object module: upsertObject", () => {
 
     await upsertObject.process.call(testCommon, _.cloneDeep(message), testCommon.configuration);
     const result = await getResult;
-    
+
     chai.expect(result.body).to.deep.equal(message.body);
     scope.done();
   });
@@ -191,7 +190,7 @@ describe("Upsert Object module: upsertObject", () => {
 
     testCommon.configuration.sobject = "Document";
     testCommon.configuration.utilizeAttachment = true;
-    
+
     const getResult = new Promise(resolve => {
       testCommon.emitCallback = function(what, msg) {
         if (what === 'data') resolve(msg);
@@ -200,7 +199,7 @@ describe("Upsert Object module: upsertObject", () => {
 
     await upsertObject.process.call(testCommon, _.cloneDeep(message), testCommon.configuration);
     const result = await getResult;
-    
+
     chai.expect(result.body).to.deep.equal(message.body);
     scope.done();
     binaryScope.done();
