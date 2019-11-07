@@ -28,7 +28,7 @@ describe("Upsert Object module: objectTypes", () => {
         expectedResult[object.name] = object.label;
     });
 
-    const result = await upsertObject.objectTypes(testCommon.configuration);
+    const result = await upsertObject.objectTypes.call(testCommon, testCommon.configuration);
     chai.expect(result).to.deep.equal(expectedResult);
 
     scope.done();

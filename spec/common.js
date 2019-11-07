@@ -53,6 +53,14 @@ module.exports = {
     if (typeof(this.emitCallback) === "function")
       this.emitCallback(what, message);
   },
+  logger: {
+    fatal: () => { },
+    error: () => { },
+    warn: () => { },
+    info: () => { },
+    debug: () => { },
+    trace: () => { },
+  },
   emitCallback: null,
   buildSOQL: function(objectMeta, where) {
     let soql = `SELECT%20${objectMeta.fields[0].name}`;

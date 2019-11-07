@@ -22,14 +22,14 @@ describe("Lookup Objects (plural) module: objectTypes", () => {
     const scope = nock(testCommon.configuration.oauth.instance_url)
       .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects`)
       .reply(200, objectTypesReply);
-      
+
     const expectedResult = {};
     objectTypesReply.sobjects.forEach((object) => {
       if (object.queryable)
         expectedResult[object.name] = object.label;
     });
 
-    const result = await lookupObjects.objectTypes(testCommon.configuration);
+    const result = await lookupObjects.objectTypes.call(testCommon, testCommon.configuration);
     chai.expect(result).to.deep.equal(expectedResult);
 
     scope.done();
@@ -46,7 +46,7 @@ describe("Lookup Objects module: getMetaModel", () => {
     nock(testCommon.refresh_token.url)
       .post('')
       .reply(200, testCommon.refresh_token.response);
-      
+
     const expectedResult = {
       in: {
         type: "object",
@@ -103,7 +103,7 @@ describe("Lookup Objects module: getMetaModel", () => {
           })(),
           required: !field.nillable && !field.defaultedOnCreate
         };
-  
+
         if (field.soapType === 'urn:address') {
           fieldDescriptor.properties = {
             city: { type: 'string' },
@@ -113,18 +113,18 @@ describe("Lookup Objects module: getMetaModel", () => {
             street: { type: 'string' },
           };
         }
-  
+
         if (field.type === 'textarea')
           fieldDescriptor.maxLength = 1000;
-  
+
         if (field.picklistValues != undefined && field.picklistValues.length != 0) {
           fieldDescriptor.enum = [];
           field.picklistValues.forEach((pick) => { fieldDescriptor.enum.push(pick.value); });
         }
-  
+
         if (configuration.lookupField === field.name)
           expectedResult.in.properties[field.name] = { ...fieldDescriptor, required: !configuration.allowCriteriaToBeOmitted };
-          
+
         expectedResult.out.properties.results.properties[field.name] = fieldDescriptor;
       }
     });
@@ -154,7 +154,7 @@ describe("Lookup Objects module: getMetaModel", () => {
           }
         }
       };
-  
+
       if (i != configuration.termNumber) {
         expectedResult.in.properties[`link_${i}_${i+1}`] = {
           title: "Logical operator",
@@ -201,7 +201,7 @@ describe("Lookup Objects module: getMetaModel", () => {
 
       if (configuration.lookupField === field.name)
         expectedResult.in.properties[field.name] = { ...fieldDescriptor, required: !configuration.allowCriteriaToBeOmitted };
-        
+
       expectedResult.out.properties.results.properties[field.name] = fieldDescriptor;
     });
 
@@ -217,7 +217,7 @@ describe("Lookup Objects module: getMetaModel", () => {
     sobject: "Document",
     outputMethod: "emitAll",
     termNumber: 2
-  }, 
+  },
   metaModelDocumentReply));
 
   it(`Retrieves metadata for Account object`, testMetaData.bind(null, {
@@ -225,7 +225,7 @@ describe("Lookup Objects module: getMetaModel", () => {
     sobject: "Account",
     outputMethod: "emitPage",
     termNumber: 2
-  }, 
+  },
   metaModelAccountReply));
 });
 
@@ -275,8 +275,8 @@ describe("Lookup Objects (plural) module: processAction", () => {
       ]
     };
 
-    let expectedQuery = testCommon.buildSOQL(metaModelDocumentReply, 
-      `Name%20%3D%20%27${message.body.sTerm_1.fieldValue}%27%20` + 
+    let expectedQuery = testCommon.buildSOQL(metaModelDocumentReply,
+      `Name%20%3D%20%27${message.body.sTerm_1.fieldValue}%27%20` +
       `${message.body.link_1_2}%20` +
       `FolderId%20%3D%20%27${message.body.sTerm_2.fieldValue}%27%20` +
       `%20LIMIT%20${message.body.limit}`);
@@ -287,11 +287,11 @@ describe("Lookup Objects (plural) module: processAction", () => {
       .reply(200, metaModelDocumentReply)
       .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/query?q=${expectedQuery}`)
       .reply(200, { done: true, totalSize: testReply.results.length, records: testReply.results });
-    
+
     lookupObjects.process.call(testCommon, _.cloneDeep(message), testCommon.configuration);
     return new Promise(resolve => {
       testCommon.emitCallback = function(what, msg) {
-        if (what === 'data') { 
+        if (what === 'data') {
           chai.expect(msg.body).to.deep.equal(testReply);
           scope.done();
           resolve();
@@ -343,8 +343,8 @@ describe("Lookup Objects (plural) module: processAction", () => {
       ]
     };
 
-    const expectedQuery = testCommon.buildSOQL(metaModelAccountReply, 
-      `NumberOfEmployees%20%3D%20${message.body.sTerm_1.fieldValue}%20` + 
+    const expectedQuery = testCommon.buildSOQL(metaModelAccountReply,
+      `NumberOfEmployees%20%3D%20${message.body.sTerm_1.fieldValue}%20` +
       `${message.body.link_1_2}%20` +
       `NumberOfEmployees%20%3E%20${message.body.sTerm_2.fieldValue}%20` +
       `%20LIMIT%201000`);
@@ -354,11 +354,11 @@ describe("Lookup Objects (plural) module: processAction", () => {
       .reply(200, metaModelAccountReply)
       .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/query?q=${expectedQuery}`)
       .reply(200, { done: true, totalSize: testReply.results.length, records: testReply.results });
-    
+
     lookupObjects.process.call(testCommon, _.cloneDeep(message), testCommon.configuration);
     return new Promise(resolve => {
       testCommon.emitCallback = function(what, msg) {
-        if (what === 'data') { 
+        if (what === 'data') {
           chai.expect(msg.body).to.deep.equal(testReply);
           scope.done();
           resolve();
@@ -419,8 +419,8 @@ describe("Lookup Objects (plural) module: processAction", () => {
       ]
     };
 
-    const expectedQuery = testCommon.buildSOQL(metaModelAccountReply, 
-      `NumberOfEmployees%20%3D%20${message.body.sTerm_1.fieldValue}%20` + 
+    const expectedQuery = testCommon.buildSOQL(metaModelAccountReply,
+      `NumberOfEmployees%20%3D%20${message.body.sTerm_1.fieldValue}%20` +
       `${message.body.link_1_2}%20` +
       `NumberOfEmployees%20%3E%20${message.body.sTerm_2.fieldValue}%20` +
       `%20LIMIT%20${message.body.limit}`);
@@ -430,11 +430,11 @@ describe("Lookup Objects (plural) module: processAction", () => {
       .reply(200, metaModelAccountReply)
       .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/query?q=${expectedQuery}`)
       .reply(200, { done: true, totalSize: testReply.results.length, records: testReply.results });
-    
+
     lookupObjects.process.call(testCommon, _.cloneDeep(message), testCommon.configuration);
     return new Promise(resolve => {
       testCommon.emitCallback = function(what, msg) {
-        if (what === 'data') { 
+        if (what === 'data') {
           chai.expect(msg.body).to.deep.equal({results: [testReply.results.shift()]});
           if (testReply.results.length === 1) {
             scope.done();
@@ -514,8 +514,8 @@ describe("Lookup Objects (plural) module: processAction", () => {
       ]
     };
 
-    const expectedQuery = testCommon.buildSOQL(metaModelAccountReply, 
-      `NumberOfEmployees%20%3D%20${message.body.sTerm_1.fieldValue}%20` + 
+    const expectedQuery = testCommon.buildSOQL(metaModelAccountReply,
+      `NumberOfEmployees%20%3D%20${message.body.sTerm_1.fieldValue}%20` +
       `${message.body.link_1_2}%20` +
       `NumberOfEmployees%20%3E%20${message.body.sTerm_2.fieldValue}%20` +
       `%20LIMIT%20${message.body.pageSize}`);
@@ -525,11 +525,11 @@ describe("Lookup Objects (plural) module: processAction", () => {
       .reply(200, metaModelAccountReply)
       .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/queryAll?q=${expectedQuery}`)
       .reply(200, { done: true, totalSize: testReply.results.length, records: testReply.results });
-    
+
     lookupObjects.process.call(testCommon, _.cloneDeep(message), testCommon.configuration);
     return new Promise(resolve => {
       testCommon.emitCallback = function(what, msg) {
-        if (what === 'data') { 
+        if (what === 'data') {
           chai.expect(msg.body).to.deep.equal({results: [testReply.results[0], testReply.results[1]]});
           scope.done();
           resolve();
@@ -613,8 +613,8 @@ describe("Lookup Objects (plural) module: processAction", () => {
       ]
     };
 
-    const expectedQuery = testCommon.buildSOQL(metaModelAccountReply, 
-      `NumberOfEmployees%20%3D%20${message.body.sTerm_1.fieldValue}%20` + 
+    const expectedQuery = testCommon.buildSOQL(metaModelAccountReply,
+      `NumberOfEmployees%20%3D%20${message.body.sTerm_1.fieldValue}%20` +
       `${message.body.link_1_2}%20` +
       `NumberOfEmployees%20%3E%20${message.body.sTerm_2.fieldValue}%20` +
       `${message.body.link_2_3}%20` +
@@ -627,11 +627,11 @@ describe("Lookup Objects (plural) module: processAction", () => {
       .reply(200, metaModelAccountReply)
       .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/query?q=${expectedQuery}`)
       .reply(200, { done: true, totalSize: testReply.results.length, records: testReply.results });
-    
+
     lookupObjects.process.call(testCommon, _.cloneDeep(message), testCommon.configuration);
     return new Promise(resolve => {
       testCommon.emitCallback = function(what, msg) {
-        if (what === 'data') { 
+        if (what === 'data') {
           chai.expect(msg.body).to.deep.equal({results: [testReply.results[0], testReply.results[1]]});
           scope.done();
           resolve();

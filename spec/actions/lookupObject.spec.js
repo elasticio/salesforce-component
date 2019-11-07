@@ -22,14 +22,14 @@ describe("Lookup Object (at most 1) module: objectTypes", () => {
     const scope = nock(testCommon.configuration.oauth.instance_url)
       .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects`)
       .reply(200, objectTypesReply);
-      
+
     const expectedResult = {};
     objectTypesReply.sobjects.forEach((object) => {
       if (object.queryable)
         expectedResult[object.name] = object.label;
     });
 
-    const result = await lookupObject.objectTypes(testCommon.configuration);
+    const result = await lookupObject.objectTypes.call(testCommon, testCommon.configuration);
     chai.expect(result).to.deep.equal(expectedResult);
 
     scope.done();
@@ -46,10 +46,10 @@ describe("Lookup Object (at most 1) module: getLookupFieldsModel", () => {
     nock(testCommon.refresh_token.url)
       .post('')
       .reply(200, testCommon.refresh_token.response);
-      
+
     const expectedResult = {};
-    getMetaModelReply.fields.forEach(field => { 
-      if (field.type === 'id' || field.unique) 
+    getMetaModelReply.fields.forEach(field => {
+      if (field.type === 'id' || field.unique)
         expectedResult[field.name] = `${field.label} (${field.name})`;
     });
 
@@ -75,7 +75,7 @@ describe("Lookup Object module: getMetaModel", () => {
     nock(testCommon.refresh_token.url)
       .post('')
       .reply(200, testCommon.refresh_token.response);
-      
+
     const expectedResult = {
       in: {
         type: "object",
@@ -123,7 +123,7 @@ describe("Lookup Object module: getMetaModel", () => {
 
       if (configuration.lookupField === field.name)
         expectedResult.in.properties[field.name] = { ...fieldDescriptor, required: !configuration.allowCriteriaToBeOmitted };
-        
+
       expectedResult.out.properties[field.name] = fieldDescriptor;
     });
 
@@ -139,7 +139,7 @@ describe("Lookup Object module: getMetaModel", () => {
     sobject: "Document",
     lookupField: "Id",
     allowCriteriaToBeOmitted: true
-  }, 
+  },
   metaModelDocumentReply));
 
   it(`Retrieves metadata for Account object`, testMetaData.bind(null, {
@@ -147,7 +147,7 @@ describe("Lookup Object module: getMetaModel", () => {
     sobject: "Account",
     lookupField: "Id",
     allowCriteriaToBeOmitted: true
-  }, 
+  },
   metaModelAccountReply));
 });
 
@@ -177,8 +177,8 @@ describe("Lookup Object module: processAction", () => {
       .reply(200, metaModelDocumentReply)
       .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/query?q=${testCommon.buildSOQL(metaModelDocumentReply, {Id: message.body.Id})}`)
       .reply(200, { done: true, totalSize: 1, records: [message.body] });
-    
-    
+
+
     const getResult = new Promise(resolve => {
       testCommon.emitCallback = function(what, msg) {
         if (what === 'data') resolve(msg);
@@ -220,7 +220,7 @@ describe("Lookup Object module: processAction", () => {
       .reply(200, JSON.stringify(message))
       .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/query?q=${testCommon.buildSOQL(metaModelDocumentReply, {Id: message.body.Id})}`)
       .reply(200, { done: true, totalSize: 1, records: [message.body] });
-    
+
     nock(testCommon.EXT_FILE_STORAGE).put('', JSON.stringify(message)).reply(200);
 
     const getResult = new Promise(resolve => {

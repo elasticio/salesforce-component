@@ -34,7 +34,7 @@ describe('Salesforce bulk', () => {
       }
     }
 
-    const result = await bulk.process(data.message, data.configuration);
+    const result = await bulk.process.call(testCommon, data.message, data.configuration);
 
     chai.expect(result.body).to.deep.equal(expectedResult);
 
@@ -61,7 +61,7 @@ describe('Salesforce bulk', () => {
       }
     }
 
-    const result = await bulk.process(data.message, data.configuration);
+    const result = await bulk.process.call(testCommon, data.message, data.configuration);
 
     chai.expect(result.body).to.deep.equal(expectedResult);
 
@@ -88,7 +88,7 @@ describe('Salesforce bulk', () => {
       }
     }
 
-    const result = await bulk.process(data.message, data.configuration);
+    const result = await bulk.process.call(testCommon, data.message, data.configuration);
 
     chai.expect(result.body).to.deep.equal(expectedResult);
 

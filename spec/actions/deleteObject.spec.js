@@ -35,7 +35,7 @@ describe('Salesforce delete object', () => {
 
     const deleteObject = require('../../lib/actions/deleteObject.js');
 
-    const response = await deleteObject.process(data.message, data.configuration);
+    const response = await deleteObject.process.call(testCommon, data.message, data.configuration);
 
     chai.expect(response.body.result).to.deep.equal(expectedResult);
 

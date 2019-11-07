@@ -21,14 +21,14 @@ describe("Create Object module: objectTypes", () => {
     const scope = nock(testCommon.configuration.oauth.instance_url)
       .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects`)
       .reply(200, objectTypesReply);
-      
+
     const expectedResult = {};
     objectTypesReply.sobjects.forEach((object) => {
       if (object.createable)
         expectedResult[object.name] = object.label;
     });
 
-    const result = await createObject.objectTypes(testCommon.configuration);
+    const result = await createObject.objectTypes.call(testCommon, testCommon.configuration);
     chai.expect(result).to.deep.equal(expectedResult);
 
     scope.done();
@@ -45,7 +45,7 @@ describe("Create Object module: getMetaModel", () => {
     const sfRefreshTokenScope = nock(testCommon.refresh_token.url)
       .post('')
       .reply(200, testCommon.refresh_token.response);
-      
+
     const expectedResult = {
       in: {
         description: object,
@@ -99,7 +99,7 @@ describe("Create Object module: getMetaModel", () => {
       chai.expect(data).to.deep.equal(expectedResult);
       sfScope.done();
       //sfRefreshTokenScope.done();
-    }); 
+    });
   }
 
   it(`Retrieves metadata for Document object`, testMetaData.bind(null, "Document", metaModelDocumentReply));
@@ -126,7 +126,7 @@ describe("Create Object module: createObject", () => {
 
     testCommon.configuration.sobject = "Account";
     const result = await createObject.process.call(testCommon, _.cloneDeep(message), testCommon.configuration);
-    
+
     message.body.id = "new_account_id";
     chai.expect(result.body).to.deep.equal(message.body);
   });
@@ -158,9 +158,9 @@ describe("Create Object module: createObject", () => {
 
     testCommon.configuration.sobject = "Document";
     testCommon.configuration.utilizeAttachment = false;
-    
+
     const result = await createObject.process.call(testCommon, _.cloneDeep(message), testCommon.configuration);
-    
+
     message.body.id = "new_document_id";
     chai.expect(result.body).to.deep.equal(message.body);
   });
@@ -204,7 +204,7 @@ describe("Create Object module: createObject", () => {
 
     testCommon.configuration.sobject = "Document";
     testCommon.configuration.utilizeAttachment = true;
-    
+
     const result = await createObject.process.call(testCommon, _.cloneDeep(message), testCommon.configuration);
 
     resultRequestBody.id = newDocID;

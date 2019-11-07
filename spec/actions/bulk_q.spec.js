@@ -34,7 +34,7 @@ describe('Salesforce bulk query', () => {
 
     const bulk = require('../../lib/actions/bulk_q.js');
 
-    const result = await bulk.process(data.message, data.configuration);
+    const result = await bulk.process.call(testCommon, data.message, data.configuration);
 
     chai.expect(result.attachments).to.deep.equal(expectedResult);
   });
