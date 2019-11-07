@@ -19,8 +19,8 @@ The component uses Salesforce - API Version 45.0, except:
 ### Authentication
 Authentication occurs via OAuth 2.0. 
 In the component repository you need to specify OAuth Client credentials as environment variables: 
-- ```SALESFORCE_KEY``` - your OAuth client key
-- ```SALESFORCE_SECRET``` - your OAuth client secret
+- ```OAUTH_CLIENT_ID``` - your OAuth client key
+- ```OAUTH_CLIENT_SECRET``` - your OAuth client secret
 
 ## Create new App in Salesforce
 
