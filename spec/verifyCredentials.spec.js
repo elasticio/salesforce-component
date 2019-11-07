@@ -13,6 +13,16 @@ const oauth = {
 let cfg;
 
 describe('Verify Credentials', () => {
+  before(() => {
+    if (!process.env.OAUTH_CLIENT_ID) {
+      process.env.OAUTH_CLIENT_ID = 'some';
+    }
+
+    if (!process.env.OAUTH_CLIENT_SECRET) {
+      process.env.OAUTH_CLIENT_SECRET = 'some';
+    }
+  });
+
   it('should return verified false without credentials in cfg', () => {
     cfg = {};
     verify(cfg, (err, data) => {
