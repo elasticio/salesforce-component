@@ -1,3 +1,7 @@
+## 1.1.2 (October 28, 2019)
+
+* Change Oauth values naming
+
 ## 1.1.1 (July 10, 2019)
 
 * Add support for `Create Attachment` feature
