@@ -18,6 +18,7 @@
       "description": "Salesforce API version to use for non deprecated methods. Default 46.0"
     }
   },
+  "useOAuthClient": true,
   "credentials": {
     "fields": {
       "prodEnv": {
