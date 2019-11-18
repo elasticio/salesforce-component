@@ -28,7 +28,7 @@
   "dependencies": {
     "debug": "2.6.9",
     "elasticio-node": "0.0.9",
-    "elasticio-sailor-nodejs": "2.3.0",
+    "elasticio-sailor-nodejs": "2.5.1",
     "hbs": "3.1.1",
     "jsforce": "1.9.1",
     "lodash": "4.17.11",
