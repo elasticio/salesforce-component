@@ -216,7 +216,15 @@ describe("Lookup Objects module: getMetaModel", () => {
     ...testCommon.configuration,
     sobject: "Document",
     outputMethod: "emitAll",
-    termNumber: 2
+    termNumber: "1"
+  },
+  metaModelDocumentReply));
+
+  it(`Retrieves metadata for Document object`, testMetaData.bind(null, {
+    ...testCommon.configuration,
+    sobject: "Document",
+    outputMethod: "emitAll",
+    termNumber: "2"
   },
   metaModelDocumentReply));
 
@@ -224,7 +232,7 @@ describe("Lookup Objects module: getMetaModel", () => {
     ...testCommon.configuration,
     sobject: "Account",
     outputMethod: "emitPage",
-    termNumber: 2
+    termNumber: "2"
   },
   metaModelAccountReply));
 });
@@ -236,7 +244,7 @@ describe("Lookup Objects (plural) module: processAction", () => {
     testCommon.configuration.sobject = "Document";
     testCommon.configuration.includeDeleted = false;
     testCommon.configuration.outputMethod = "emitAll";
-    testCommon.configuration.termNumber = 2;
+    testCommon.configuration.termNumber = "2";
 
     const message = {
       body: {
@@ -305,7 +313,7 @@ describe("Lookup Objects (plural) module: processAction", () => {
     testCommon.configuration.sobject = "Account";
     testCommon.configuration.includeDeleted = false;
     testCommon.configuration.outputMethod = "emitAll";
-    testCommon.configuration.termNumber = 2;
+    testCommon.configuration.termNumber = "2";
 
     const message = {
       body: {
@@ -372,7 +380,7 @@ describe("Lookup Objects (plural) module: processAction", () => {
     testCommon.configuration.sobject = "Account";
     testCommon.configuration.includeDeleted = false;
     testCommon.configuration.outputMethod = "emitIndividually";
-    testCommon.configuration.termNumber = 2;
+    testCommon.configuration.termNumber = "2";
 
     const message = {
       body: {
@@ -450,7 +458,7 @@ describe("Lookup Objects (plural) module: processAction", () => {
     testCommon.configuration.sobject = "Account";
     testCommon.configuration.includeDeleted = true;
     testCommon.configuration.outputMethod = "emitPage";
-    testCommon.configuration.termNumber = 2;
+    testCommon.configuration.termNumber = "2";
 
     const message = {
       body: {
@@ -543,7 +551,7 @@ describe("Lookup Objects (plural) module: processAction", () => {
     testCommon.configuration.sobject = "Account";
     testCommon.configuration.includeDeleted = false;
     testCommon.configuration.outputMethod = "emitPage";
-    testCommon.configuration.termNumber = 3;
+    testCommon.configuration.termNumber = "3";
 
     const message = {
       body: {
