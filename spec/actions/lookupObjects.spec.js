@@ -131,6 +131,8 @@ describe("Lookup Objects module: getMetaModel", () => {
       }
     });
 
+    filterableFields.sort();
+
     for (let i = 1; i <= configuration.termNumber; ++i) {
       expectedResult.in.properties[`sTerm_${i}`] = {
         title: `Search term ${i}`,
