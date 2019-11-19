@@ -307,7 +307,7 @@
       }
     },
     "lookupObjects": {
-      "title": "Lookup Objects (Plural)",
+      "title": "Lookup Objects",
       "main": "./lib/actions/lookupObjects.js",
       "description": "Look for objects satisfying specified criteria",
       "dynamicMetadata": true,

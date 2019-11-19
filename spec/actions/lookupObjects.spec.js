@@ -17,7 +17,7 @@ const COMPARISON_OPERATORS = ['=', '!=', '<', '<=', '>', '>=', 'LIKE', 'IN', 'NO
 // Disable real HTTP requests
 nock.disableNetConnect();
 
-describe("Lookup Objects (plural) module: objectTypes", () => {
+describe("Lookup Objects module: objectTypes", () => {
 
   it(`Retrieves the list of queryable sobjects`, async () => {
 
@@ -239,7 +239,7 @@ describe("Lookup Objects module: getMetaModel", () => {
   metaModelAccountReply));
 });
 
-describe("Lookup Objects (plural) module: processAction", () => {
+describe("Lookup Objects module: processAction", () => {
 
   it(`Gets Document objects: 2 string search terms, emitAll, limit`, () => {
 

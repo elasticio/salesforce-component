@@ -112,7 +112,7 @@ Action creates a single object. Input metadata is fetched dynamically from your 
 
 Metadata contains one field whose name, type and mandatoriness are generated according to the value of the configuration fields *Lookup by field* and *Allow criteria to be omitted*.
 
-### Lookup Objects (plural)
+### Lookup Objects
 Lookup a list of objects satisfying specified criteria.
 
 #### Input field description
