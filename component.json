@@ -308,7 +308,7 @@
       }
     },
     "lookupObjects": {
-      "title": "Lookup Objects (Plural)",
+      "title": "Lookup Objects",
       "main": "./lib/actions/lookupObjects.js",
       "description": "Look for objects satisfying specified criteria",
       "dynamicMetadata": true,
@@ -339,7 +339,8 @@
           "viewClass": "TextFieldView",
           "label": "Number of search terms",
           "required": true,
-          "placeholder": "Please specify a number of search terms (>=1)"
+          "placeholder": "Please specify a number of search terms",
+          "note": "Enter a positive integer number [1-99] or 0 to lookup all entities of chosen type"
         }
       }
     },

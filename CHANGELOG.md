@@ -2,7 +2,7 @@
 
 * Add support for `Bulk operations` feature (Create/Update/Delete and Query)
 * Add `Delete Object` action
-* Add `Lookup Objects (Plural)` action
+* Add `Lookup Objects` action
 * `Create object` action: add ability to utilize binary data attachment from previous step
 * `Upsert object` action: add ability to utilize binary data attachment from previous step
 * `Lookup Object (at most 1)` action: add ability to pass binary data (if found object has it) to the next component as a binary attachment
