@@ -23,7 +23,7 @@ describe('Salesforce bulk', () => {
     const data = testData.bulkInsertCase;
     data.configuration = { ...testCommon.configuration, ...data.configuration };
 
-    const expectedResult = [{ "id": "5002o00002E8FIIAA3", "success": true, "errors": [] }, { "id": "5002o00002E8FIJAA3", "success": true, "errors": [] }, { "id": "5002o00002E8FIKAA3", "success": true, "errors": [] }];
+    const expectedResult = { "result": [{ "id": "5002o00002E8FIIAA3", "success": true, "errors": [] }, { "id": "5002o00002E8FIJAA3", "success": true, "errors": [] }, { "id": "5002o00002E8FIKAA3", "success": true, "errors": [] }] };
 
     const scopes = [];
     for (let host in data.responses) {
@@ -50,7 +50,7 @@ describe('Salesforce bulk', () => {
     const data = testData.bulkUpdateCase;
     data.configuration = { ...testCommon.configuration, ...data.configuration };
 
-    const expectedResult = [{ "id": null, "success": false, "errors": ["ENTITY_IS_DELETED:entity is deleted:--"] }];
+    const expectedResult = { "result": [{ "id": null, "success": false, "errors": ["ENTITY_IS_DELETED:entity is deleted:--"] }] };
 
     const scopes = [];
     for (let host in data.responses) {
@@ -77,7 +77,7 @@ describe('Salesforce bulk', () => {
     const data = testData.bulkDeleteCase;
     data.configuration = { ...testCommon.configuration, ...data.configuration };
 
-    const expectedResult = [{ "id": "5002o00002BT0IUAA1", "success": true, "errors": [] }];
+    const expectedResult = { "result": [{ "id": "5002o00002BT0IUAA1", "success": true, "errors": [] }] };
 
     const scopes = [];
     for (let host in data.responses) {
