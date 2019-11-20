@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "properties": {
+    "result": {
+      "title": "name",
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "id",
+          "type": "string"
+        },
+        "success": {
+          "title": "success",
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

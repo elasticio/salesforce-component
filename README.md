@@ -155,10 +155,16 @@ Action takes a CSV file from the attachment as an input. CSV file format is desc
 * **Object** - dropdown list where you should choose the object type to perform bulk operation. E.g. `Case`.
 * **Timeout** - maximum time to wait until the server completes a bulk operation (default: `600` sec).
 
-Result is an array that contains objects with 3 fields.
+Result is an object with a property **result**: `array`. It contains objects with 3 fields.
 * **id** - `string`, salesforce object id
 * **success** - `boolean`, if operation was successful `true`
 * **errors** - `array`, if operation failed contains description of errors
+
+#### Limitations:
+* No errors thrown in case of failed Object Create/Update/Delete (`"success": "false"`).
+* Object ID is needed for Update and Delete.
+* Salesforce processes up to 10'000 records from the input CSV file.
+
 
 ### Bulk Query
 Fetches records to a CSV file.
