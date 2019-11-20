@@ -143,6 +143,8 @@ Field "Maximum number of records" - optional positive integer (default value 100
 *Output method* - "Emit individually":
 Field "Maximum number of records" - optional positive integer (default value 10000);
 
+Note that the number of records the component emits may affect the performance of the platform/component.
+
 Groups of fields for each search term go next:
 
 Field "Field name" - string represents object's field (a list of allowed values is available);
