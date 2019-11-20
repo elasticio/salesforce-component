@@ -70,6 +70,9 @@ In case of an **Attachment** object type you should specify `Body` in base64 enc
 
 This action will automatically retrieve all existing fields of chosen object type that available on your Salesforce organization
 
+#### Limitations
+When **Utilize data attachment from previous step (for objects with a binary field)** is checked and this action is used with Local Agent error would be thrown: 'getaddrinfo ENOTFOUND steward-service.platform.svc.cluster.local steward-service.platform.svc.cluster.local:8200'
+
 ### Delete Object
 Deletes a Selected Object.
 
@@ -96,6 +99,9 @@ Action creates a single object. Input metadata is fetched dynamically from your 
 You should specify **external** or **internal Id** for making some updates in salesforce object.
 If you want to create new Object you should always specify **Optional Upsert field** and value of ExternalId in input body structure.
 
+#### Limitations
+When **Utilize data attachment from previous step (for objects with a binary field)** is checked and this action is used with Local Agent error would be thrown: 'getaddrinfo ENOTFOUND steward-service.platform.svc.cluster.local steward-service.platform.svc.cluster.local:8200'
+
 ### Lookup Object (at most 1)
 Lookup an object by a selected field.
 Action creates a single object. Input metadata is fetched dynamically from your Salesforce account. Output metadata is the same as input metadata, so you may expect all fields that you mapped as input to be returned as output.
@@ -111,6 +117,9 @@ Action creates a single object. Input metadata is fetched dynamically from your 
 #### Metadata description
 
 Metadata contains one field whose name, type and mandatoriness are generated according to the value of the configuration fields *Lookup by field* and *Allow criteria to be omitted*.
+
+#### Limitations
+When **Pass binary data to the next component (if found object has it)** is checked and this action is used with Local Agent error would be thrown: 'getaddrinfo ENOTFOUND steward-service.platform.svc.cluster.local steward-service.platform.svc.cluster.local:8200'
 
 ### Lookup Objects
 Lookup a list of objects satisfying specified criteria.
@@ -160,7 +169,7 @@ Result is an object with a property **result**: `array`. It contains objects wit
 * **success** - `boolean`, if operation was successful `true`
 * **errors** - `array`, if operation failed contains description of errors
 
-#### Limitations:
+#### Limitations
 * No errors thrown in case of failed Object Create/Update/Delete (`"success": "false"`).
 * Object ID is needed for Update and Delete.
 * Salesforce processes up to 10'000 records from the input CSV file.
@@ -330,3 +339,6 @@ Trigger is `deprecated`. You can use [Get New and Updated Objects Polling](#get-
 Polls existing and updated Tasks (fetches a maximum of 1000 objects per execution)
 
 Trigger is `deprecated`. You can use [Get New and Updated Objects Polling](#get-new-and-updated-objects-polling) action instead.
+
+## Known limitations
+Attachments mechanism does not work with [Local Agent Installation](https://support.elastic.io/support/solutions/articles/14000076461-announcing-the-local-agent-)
