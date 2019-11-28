@@ -2,8 +2,8 @@
   "type": "object",
   "properties": {
     "result": {
-      "type": "string"
-      "title": "result",
+      "type": "string",
+      "title": "result"
     }
   }
 }
