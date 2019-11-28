@@ -458,7 +458,7 @@
       },
       "metadata": {
         "in": { },
-        "out": { }
+        "out": "./lib/schemas/bulk_cud.out.json"
       }
     },
     "bulk_q": {
@@ -467,7 +467,7 @@
       "description": "Bulk query with the results in CSV file",
       "metadata": {
         "in": "./lib/schemas/bulk_q.in.json",
-        "out": { }
+        "out": "./lib/schemas/bulk_q.out.json"
       }
     }
   }
