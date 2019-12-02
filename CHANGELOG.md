@@ -1,4 +1,4 @@
-## 1.2.0 (November 6, 2019)
+## 1.2.0 (December 2, 2019)
 
 * Add support for `Bulk operations` feature (Create/Update/Delete and Query)
 * Add `Delete Object` action
