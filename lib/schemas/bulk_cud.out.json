@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "properties": {
+    "result": {
+      "type": "array",
+      "properties": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "errors": {
+            "type": "array"
+          }
+        }
+      }
+    }
+  }
+}

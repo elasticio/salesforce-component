@@ -3,6 +3,7 @@
   "description": "Customer relationship management (CRM) software & cloud computing from the leader in CRM solutions for businesses large & small.",
   "docsUrl": "https://github.com/elasticio/salesforce-component",
   "url": "http://www.salesforce.com/",
+  "buildType": "docker",
   "envVars": {
     "OAUTH_CLIENT_ID": {
       "required": true,
@@ -14,7 +15,7 @@
     },
     "SALESFORCE_API_VERSION": {
       "required": true,
-      "description": "Salesforce API version to use for non deprecated methods. Default 45.0"
+      "description": "Salesforce API version to use for non deprecated methods. Default 46.0"
     }
   },
   "useOAuthClient": true,
@@ -179,6 +180,10 @@
         "allowResultAsSet": {
           "label": "Allow all results to be returned in a set (overwrites 'Optional batch size feature')",
           "viewClass": "CheckBoxView"
+        },
+        "includeDeleted": {
+          "viewClass": "CheckBoxView",
+          "label": "Include deleted"
         }
       },
       "metadata": {
@@ -215,22 +220,48 @@
           "required": false,
           "note": "Please make sure selected SObject has this field and it is marked as 'External ID'",
           "placeholder": "extID__c"
+        },
+        "utilizeAttachment": {
+          "viewClass": "CheckBoxView",
+          "label": "Utilize data attachment from previous step (for objects with a binary field)"
         }
       }
     },
-    "other": {
+    "create": {
       "title": "Create Object",
-      "main": "./lib/actions/other.js",
+      "main": "./lib/actions/createObject.js",
       "description": "Creates new Selected Object",
       "dynamicMetadata": true,
       "fields": {
-        "object": {
+        "sobject": {
+          "viewClass": "SelectView",
+          "label": "Object",
+          "required": true,
+          "model": "objectTypes",
+          "prompt": "Please select a Salesforce Object"
+        },
+        "utilizeAttachment": {
+          "viewClass": "CheckBoxView",
+          "label": "Utilize data attachment from previous step (for objects with a binary field)"
+        }
+      }
+    },
+    "delete": {
+      "title": "Delete Object",
+      "main": "./lib/actions/deleteObject.js",
+      "description": "Delete Selected Object",
+      "fields": {
+        "sobject": {
           "viewClass": "SelectView",
           "label": "Object",
           "required": true,
           "model": "objectTypes",
           "prompt": "Please select a Salesforce Object"
         }
+      },
+      "metadata": {
+        "in": "./lib/schemas/deleteObject.in.json",
+        "out": "./lib/schemas/deleteObject.out.json"
       }
     },
     "lookupObject": {
@@ -270,6 +301,47 @@
         "allowZeroResults": {
           "viewClass": "CheckBoxView",
           "label": "Allow zero results"
+        },
+        "passBinaryData": {
+          "viewClass": "CheckBoxView",
+          "label": "Pass binary data to the next component (if found object has it)"
+        }
+      }
+    },
+    "lookupObjects": {
+      "title": "Lookup Objects",
+      "main": "./lib/actions/lookupObjects.js",
+      "description": "Look for objects satisfying specified criteria",
+      "dynamicMetadata": true,
+      "fields": {
+        "sobject": {
+          "viewClass": "SelectView",
+          "label": "Object",
+          "required": true,
+          "model": "objectTypes",
+          "prompt": "Please select a Salesforce Object"
+        },
+        "includeDeleted": {
+          "viewClass": "CheckBoxView",
+          "label": "Include deleted"
+        },
+        "outputMethod": {
+          "viewClass": "SelectView",
+          "label": "Output method",
+          "required": true,
+          "model": {
+            "emitAll": "Emit all",
+            "emitPage": "Emit page",
+            "emitIndividually": "Emit individually"
+          },
+          "prompt": "Please select an output method"
+        },
+        "termNumber": {
+          "viewClass": "TextFieldView",
+          "label": "Number of search terms",
+          "required": true,
+          "placeholder": "Please specify a number of search terms",
+          "note": "Enter a positive integer number [1-99] or 0 to lookup all entities of chosen type"
         }
       }
     },
@@ -350,6 +422,52 @@
           "note": "A positive integer specifying batch size. If no batch size is specified then results of the query will be emitted one-by-one, otherwise query results will be emitted in array of maximum batch size.",
           "placeholder": "0"
         }
+      }
+    },
+    "bulk_cud": {
+      "title": "Bulk Create/Update/Delete",
+      "main": "./lib/actions/bulk_cud.js",
+      "description": "Bulk operations on objects in CSV file",
+      "fields": {
+        "operation": {
+          "viewClass": "SelectView",
+          "label": "Operation",
+          "required": true,
+          "model":  {
+            "insert": "Create",
+            "update": "Update",
+            "delete": "Delete"
+          },
+          "prompt": "Please select an operation"
+        },
+        "sobject": {
+          "viewClass": "SelectView",
+          "label": "Object",
+          "required": true,
+          "require": ["operation"],
+          "model": "objectTypes",
+          "prompt": "Please select a Salesforce Object"
+        },
+        "timeout": {
+          "viewClass": "TextFieldView",
+          "label": "Timeout for operation (sec)",
+          "required": true,
+          "note": "A positive integer specifying timeout in seconds. Maximum Salesforce's server timeout for the bulk operations is 10 min (600 sec).",
+          "placeholder": "600"
+        }
+      },
+      "metadata": {
+        "in": { },
+        "out": "./lib/schemas/bulk_cud.out.json"
+      }
+    },
+    "bulk_q": {
+      "title": "Bulk Query",
+      "main": "./lib/actions/bulk_q.js",
+      "description": "Bulk query with the results in CSV file",
+      "metadata": {
+        "in": "./lib/schemas/bulk_q.in.json",
+        "out": "./lib/schemas/bulk_q.out.json"
       }
     }
   }
