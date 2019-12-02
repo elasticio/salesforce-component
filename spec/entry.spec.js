@@ -6,6 +6,7 @@ const objectDescription = require('./testData/objectDescriptionForMetadata');
 const expectedMetadataOut = require('./testData/expectedMetadataOut');
 const objectsList = require('./testData/objectsList');
 const oAuthUtils = require('../lib/helpers/oauth-utils.js');
+const common = require("../lib/common.js");
 
 const { expect } = chai;
 let emitter;
@@ -31,11 +32,11 @@ describe('Test entry', () => {
     it('Get Out Metadata, other entity type', (done) => {
       nock('http://localhost:1234')
         .matchHeader('Authorization', 'Bearer aRefreshedToken')
-        .get('/services/data/v25.0/sobjects/Event/describe')
+        .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects/Event/describe`)
         .reply(200, JSON.stringify(objectDescription));
 
       const cfg = {
-        object: 'Event',
+        sobject: 'Event',
         oauth: {
           instance_url: 'http://localhost:1234',
           access_token: 'aToken',
@@ -59,7 +60,7 @@ describe('Test entry', () => {
     it('should return object types', (done) => {
       nock('http://localhost:1234')
         .matchHeader('Authorization', 'Bearer aRefreshedToken')
-        .get('/services/data/v25.0/sobjects')
+        .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects`)
         .reply(200, JSON.stringify(objectsList));
 
       const cfg = {
