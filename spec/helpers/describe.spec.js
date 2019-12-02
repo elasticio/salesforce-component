@@ -5,6 +5,7 @@ const { expect } = chai;
 const { describeObject, fetchObjectTypes } = require('../../lib/helpers/describe');
 const description = require('../testData/objectDescription.json');
 const objectLists = require('../testData/objectsList.json');
+const common = require("../../lib/common.js");
 
 const cfg = {
   oauth: {
@@ -12,14 +13,14 @@ const cfg = {
     refresh_token: '5Aep861rEpScxnNE66jGO6gqeJ82V9qXOs5YIxlkVZgWYMSJfjLeqYUwKNfA2R7cU04EyjVKE9_A.vqQY9kjgUg',
     instance_url: 'https://na9.salesforce.com',
   },
-  object: 'Contact',
-  apiVersion: 'v25.0',
+  sobject: 'Contact',
+  apiVersion: `v${common.globalConsts.SALESFORCE_API_VERSION}`,
 };
 
 describe('Describe helper', () => {
   it('describeObject should fetch a description for the specified object type', async () => {
     nock('https://na9.salesforce.com')
-      .get('/services/data/v25.0/sobjects/Contact/describe')
+      .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects/Contact/describe`)
       .reply(200, JSON.stringify(description));
 
     const result = await describeObject({ cfg });
@@ -28,7 +29,7 @@ describe('Describe helper', () => {
 
   it('should fetch a description for the specified object type', (done) => {
     nock('https://na9.salesforce.com')
-      .get('/services/data/v25.0/sobjects')
+      .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects`)
       .reply(200, objectLists);
 
     fetchObjectTypes(cfg, (err, result) => {

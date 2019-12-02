@@ -1,0 +1,50 @@
+{
+  "bulkQuery": {
+    "message": {
+      "body": {
+        "query": "SELECT Id, CaseNumber, SuppliedName FROM Case"
+      },
+      "id": "f4e0d892-2bd0-490f-a8c2-281ac0383ad8"
+    },
+    "responses": {
+      "https://test.salesforce.com": {
+        "/services/async/46.0/job": {
+          "method": "POST",
+          "response": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><jobInfo xmlns=\"http://www.force.com/2009/06/asyncapi/dataload\"> <id>7502o00000JrsqyAAB</id> <operation>query</operation> <object>Case</object> <createdById>0052o000008w0iqAAA</createdById> <createdDate>2019-09-26T13:29:12.000Z</createdDate> <systemModstamp>2019-09-26T13:29:12.000Z</systemModstamp> <state>Open</state> <concurrencyMode>Parallel</concurrencyMode> <contentType>CSV</contentType> <numberBatchesQueued>0</numberBatchesQueued> <numberBatchesInProgress>0</numberBatchesInProgress> <numberBatchesCompleted>0</numberBatchesCompleted> <numberBatchesFailed>0</numberBatchesFailed> <numberBatchesTotal>0</numberBatchesTotal> <numberRecordsProcessed>0</numberRecordsProcessed> <numberRetries>0</numberRetries> <apiVersion>46.0</apiVersion> <numberRecordsFailed>0</numberRecordsFailed> <totalProcessingTime>0</totalProcessingTime> <apiActiveProcessingTime>0</apiActiveProcessingTime> <apexProcessingTime>0</apexProcessingTime> </jobInfo>"
+        },
+        "/services/async/46.0/job/7502o00000JrsqyAAB/batch": {
+          "method": "POST",
+          "response": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><batchInfo xmlns=\"http://www.force.com/2009/06/asyncapi/dataload\"> <id>7512o00000QevBUAAZ</id> <jobId>7502o00000JrsqyAAB</jobId> <state>Queued</state> <createdDate>2019-09-26T13:29:12.000Z</createdDate> <systemModstamp>2019-09-26T13:29:12.000Z</systemModstamp> <numberRecordsProcessed>0</numberRecordsProcessed> <numberRecordsFailed>0</numberRecordsFailed> <totalProcessingTime>0</totalProcessingTime> <apiActiveProcessingTime>0</apiActiveProcessingTime> <apexProcessingTime>0</apexProcessingTime> </batchInfo>"
+        },
+        "/services/async/46.0/job/7502o00000JrsqyAAB/batch/7512o00000QevBUAAZ": {
+          "method": "GET",
+          "response": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><batchInfo xmlns=\"http://www.force.com/2009/06/asyncapi/dataload\"> <id>7512o00000QevBUAAZ</id> <jobId>7502o00000JrsqyAAB</jobId> <state>Completed</state> <createdDate>2019-09-26T13:29:12.000Z</createdDate> <systemModstamp>2019-09-26T13:29:13.000Z</systemModstamp> <numberRecordsProcessed>3</numberRecordsProcessed> <numberRecordsFailed>0</numberRecordsFailed> <totalProcessingTime>0</totalProcessingTime> <apiActiveProcessingTime>0</apiActiveProcessingTime> <apexProcessingTime>0</apexProcessingTime> </batchInfo>"
+        },
+        "/services/async/46.0/job/7502o00000JrsqyAAB/batch/7512o00000QevBUAAZ/result": {
+          "method": "GET",
+          "header": {
+            "content-type": "application/xml"
+          },
+          "response": "<result-list xmlns=\"http://www.force.com/2009/06/asyncapi/dataload\"><result>7522o000009ND4w</result></result-list>"
+        },
+        "/services/async/46.0/job/7502o00000JrsqyAAB/batch/7512o00000QevBUAAZ/result/7522o000009ND4w": {
+          "method": "GET",
+          "header": {
+            "content-type": "text/csv"
+          },
+          "response": "\"Id\",\"CaseNumber\",\"SuppliedName\"\n\"5002o00002BIlsXAAT\",\"00001020\",\"\"\n\"5002o00002BIlsWAAT\",\"00001019\",\"\"\n\"5002o00002BIlsYAAT\",\"00001021\",\"\""
+        },
+        "/services/async/46.0/job/7502o00000JrsqyAAB": {
+          "method": "POST",
+          "response": ""
+        }
+      },
+      "http://file.storage.server": {
+        "/file": {
+          "method": "PUT",
+          "response": "OK"
+        }
+      }
+    }
+  }
+}
