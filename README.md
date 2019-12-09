@@ -128,7 +128,7 @@ Lookup a list of objects satisfying specified criteria.
 * **Object** - dropdown list where you should choose the object type, which you want to find. E.g. `Account`.
 * **Include deleted** - checkbox, if checked - deleted records will be included into the result list.
 * **Output method** - dropdown list with following values: "Emit all", "Emit page", "Emit individually".
-* **Number of search terms** - text field where you can specify a number of search terms (not less than 0 and not greater than 42). Default value is 0 (if provided value is not allowed).
+* **Number of search terms** - text field to specify a number of search terms (positive integer number [1-99] or 0).
 
 #### Metadata description
 
