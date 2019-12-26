@@ -1,6 +1,6 @@
 {
   "name": "salesforce-component",
-  "version": "1.1.2",
+  "version": "1.2.1",
   "description": "elastic.io component that connects to Salesforce API (node.js)",
   "main": "index.js",
   "scripts": {
@@ -29,7 +29,7 @@
     "debug": "2.6.9",
     "elasticio-node": "0.0.9",
     "elasticio-rest-node": "1.2.3",
-    "elasticio-sailor-nodejs": "2.5.1",
+    "elasticio-sailor-nodejs": "2.5.4",
     "hbs": "3.1.1",
     "jsforce": "1.9.1",
     "lodash": "4.17.11",
@@ -37,7 +37,8 @@
     "node-uuid": "1.4.8",
     "q": "1.5.1",
     "request": "2.88.0",
-    "request-promise": "4.2.4"
+    "request-promise": "4.2.4",
+    "@elastic.io/component-logger": "0.0.1"
   },
   "devDependencies": {
     "chai": "4.2.0",

@@ -1,10 +1,9 @@
 const request = require('request');
 const fs = require('fs');
+const logger = require('@elastic.io/component-logger')();
 
 const NOT_ENABLED_ERROR = 'Salesforce respond with this error: "The REST API is not enabled for this Organization."';
 const VERSION = 'v32.0';
-const debug = require('debug')('verifyCredentials');
-const debugToken = require('debug')('token');
 
 if (fs.existsSync('.env')) {
   // eslint-disable-next-line global-require
@@ -20,7 +19,7 @@ module.exports = function verify(credentials, cb) {
     if (err) {
       return cb(err);
     }
-    debug('Salesforce response was: %s %j', response.statusCode, body);
+    logger.debug('Salesforce response was: %s %j', response.statusCode, body);
     if (response.statusCode === 401) {
       return cb(null, { verified: false });
     }
@@ -32,14 +31,14 @@ module.exports = function verify(credentials, cb) {
     }
     return cb(null, { verified: true });
   }
-  debugToken(credentials);
+  this.logger.debug(credentials);
   if (!credentials.oauth || credentials.oauth.error) {
     return cb(null, { verified: false });
   }
   const token = credentials.oauth.access_token;
   const url = `${credentials.oauth.instance_url}/services/data/${VERSION}/sobjects`;
 
-  debug('To verify credentials send request to %s', url);
+  this.logger.debug('To verify credentials send request to %s', url);
 
   const options = {
     url,

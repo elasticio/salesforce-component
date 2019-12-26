@@ -18,7 +18,6 @@ describe('Salesforce bulk', () => {
 
 
   it('action create', async () => {
-    console.log('action create');
 
     const data = testData.bulkInsertCase;
     data.configuration = { ...testCommon.configuration, ...data.configuration };
@@ -45,7 +44,6 @@ describe('Salesforce bulk', () => {
 
 
   it('action update', async () => {
-    console.log('action update');
 
     const data = testData.bulkUpdateCase;
     data.configuration = { ...testCommon.configuration, ...data.configuration };
@@ -72,7 +70,6 @@ describe('Salesforce bulk', () => {
 
 
   it('action delete', async () => {
-    console.log('action delete');
 
     const data = testData.bulkDeleteCase;
     data.configuration = { ...testCommon.configuration, ...data.configuration };

@@ -17,8 +17,6 @@ describe('Salesforce delete object', () => {
 
 
   it('action delete', async () => {
-    console.log('action delete');
-
     const data = testData.deleteObject;
     data.configuration = { ...testCommon.configuration, ...data.configuration };
 

@@ -17,7 +17,6 @@ describe('Salesforce bulk query', () => {
 
 
   it('action query', async () => {
-    console.log('action query');
 
     const data = testData.bulkQuery;
     data.configuration = { ...testCommon.configuration, ...data.configuration };
