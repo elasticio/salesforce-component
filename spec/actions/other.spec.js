@@ -1,6 +1,7 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
 const nock = require('nock');
+const logger = require('@elastic.io/component-logger')();
 const entry = require('../../lib/entry.js');
 
 const { SalesforceEntity } = entry;
@@ -32,18 +33,19 @@ describe('other Action Unit Test', () => {
   it('should emit three events', () => {
     const emitter = {
       emit: sinon.spy(),
+      logger,
     };
     const entity = new SalesforceEntity(emitter);
     const res = {
       message: 'some message from example.com',
       statusCode: 201,
     };
-    sinon.stub(oAuthUtils, 'refreshAppToken').callsFake((component, conf, next) => {
+    sinon.stub(oAuthUtils, 'refreshAppToken').callsFake((log, component, conf, next) => {
       const refreshedCfg = conf;
       refreshedCfg.oauth.access_token = 'aRefreshedToken';
       next(null, refreshedCfg);
     });
-    sinon.stub(httpUtils, 'getJSON').callsFake((params, next) => {
+    sinon.stub(httpUtils, 'getJSON').callsFake((log, params, next) => {
       next(null, res);
     });
     nock('https://example.com')
@@ -60,6 +62,7 @@ describe('other Action Unit Test', () => {
   it('should emit an error', () => {
     const emitter = {
       emit: sinon.spy(),
+      logger,
     };
     const entity = new SalesforceEntity(emitter);
     const error = {
@@ -67,10 +70,10 @@ describe('other Action Unit Test', () => {
       statusCode: 404,
       stack: 'some error stack',
     };
-    sinon.stub(oAuthUtils, 'refreshAppToken').callsFake((component, conf, next) => {
+    sinon.stub(oAuthUtils, 'refreshAppToken').callsFake((log, component, conf, next) => {
       next(error);
     });
-    entity.processAction(configuration.object, msg, configuration);
+    entity.processAction.call(emitter, configuration.object, msg, configuration);
     expect(emitter.emit.withArgs('error').callCount).to.equal(1);
     expect(emitter.emit.withArgs('end').callCount).to.equal(1);
     expect(emitter.emit.callCount).to.equal(2);

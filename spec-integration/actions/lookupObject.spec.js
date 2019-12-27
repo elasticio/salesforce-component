@@ -3,6 +3,7 @@ const fs = require('fs');
 const sinon = require('sinon');
 const { messages } = require('elasticio-node');
 const chai = require('chai');
+const logger = require('@elastic.io/component-logger')();
 const lookupObject = require('../../lib/actions/lookupObject');
 
 const { expect } = chai;
@@ -40,7 +41,7 @@ describe('lookupObject', () => {
     };
     message = {
       body: {
-        Id: '0032R000025bpDYQAY',
+        Id: '0032R000027DryfQAC',
       },
     };
   });
@@ -51,6 +52,7 @@ describe('lookupObject', () => {
 
   const emitter = {
     emit: sinon.spy(),
+    logger,
   };
 
   it('lookupObject Contacts ', async () => {
@@ -71,14 +73,14 @@ describe('lookupObject', () => {
       });
   });
   it('Contact objectTypes ', async () => {
-    await lookupObject.objectTypes(configuration)
+    await lookupObject.objectTypes.call(emitter, configuration)
       .then((result) => {
         expect(result.Account).to.be.eql('Account');
       });
   });
 
   it('Contact Lookup Meta', async () => {
-    await lookupObject.getMetaModel(configuration)
+    await lookupObject.getMetaModel.call(emitter, configuration)
       .then((result) => {
         expect(result.in).to.be.deep.eql({
           type: 'object',

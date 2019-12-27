@@ -1,5 +1,6 @@
 const sinon = require('sinon');
 const { expect } = require('chai');
+const logger = require('@elastic.io/component-logger')();
 const helper = require('../../lib/helpers/oauth-utils');
 const httpUtils = require('../../lib/helpers/http-utils');
 
@@ -32,11 +33,11 @@ describe('oauth-utils Unit Test', () => {
       access_token: 'newAccessToken',
       refresh_token: 'newRefreshToken',
     };
-    sinon.stub(httpUtils, 'getJSON').callsFake((params, next) => {
+    sinon.stub(httpUtils, 'getJSON').callsFake((log, params, next) => {
       next(null, refreshResponse);
     });
 
-    helper.refreshToken(serviceURI, clientIdKey, clientSecretKey, configuration,
+    helper.refreshToken(logger, serviceURI, clientIdKey, clientSecretKey, configuration,
       (error, newConf) => {
         expect(newConf.oauth.access_token).to.equal('newAccessToken');
         expect(newConf.oauth.refresh_token).to.equal('newRefreshToken');
@@ -48,11 +49,12 @@ describe('oauth-utils Unit Test', () => {
       message: 'some error thrown',
       statusCode: 404,
     };
-    sinon.stub(httpUtils, 'getJSON').callsFake((params, next) => {
+    sinon.stub(httpUtils, 'getJSON').callsFake((log, params, next) => {
       next(error);
     });
 
-    helper.refreshToken(serviceURI, clientIdKey, clientSecretKey, configuration, (error) => {
+    // eslint-disable-next-line max-len
+    helper.refreshToken(logger, serviceURI, clientIdKey, clientSecretKey, configuration, (error) => {
       expect(error.message).to.equal('some error thrown');
       expect(error.statusCode).to.equal(404);
     });

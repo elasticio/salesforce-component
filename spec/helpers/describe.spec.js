@@ -1,5 +1,6 @@
 const nock = require('nock');
 const chai = require('chai');
+const logger = require('@elastic.io/component-logger')();
 
 const { expect } = chai;
 const { describeObject, fetchObjectTypes } = require('../../lib/helpers/describe');
@@ -23,7 +24,7 @@ describe('Describe helper', () => {
       .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects/Contact/describe`)
       .reply(200, JSON.stringify(description));
 
-    const result = await describeObject({ cfg });
+    const result = await describeObject(logger, { cfg });
     expect(result).to.deep.equal(description);
   });
 
@@ -32,7 +33,7 @@ describe('Describe helper', () => {
       .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects`)
       .reply(200, objectLists);
 
-    fetchObjectTypes(cfg, (err, result) => {
+    fetchObjectTypes(logger, cfg, (err, result) => {
       try {
         expect(err).to.equal(null);
         expect(result).to.deep.equal({

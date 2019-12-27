@@ -1,12 +1,13 @@
 const nock = require('nock');
 const sinon = require('sinon');
 const chai = require('chai');
+const logger = require('@elastic.io/component-logger')();
 const entry = require('../lib/entry.js');
 const objectDescription = require('./testData/objectDescriptionForMetadata');
 const expectedMetadataOut = require('./testData/expectedMetadataOut');
 const objectsList = require('./testData/objectsList');
 const oAuthUtils = require('../lib/helpers/oauth-utils.js');
-const common = require("../lib/common.js");
+const common = require('../lib/common.js');
 
 const { expect } = chai;
 let emitter;
@@ -15,9 +16,10 @@ describe('Test entry', () => {
   beforeEach(() => {
     emitter = {
       emit: sinon.spy(),
+      logger,
     };
     sinon.stub(entry, 'SalesforceEntity').callsFake(() => new entry.SalesforceEntity(emitter));
-    sinon.stub(oAuthUtils, 'refreshAppToken').callsFake((component, conf, next) => {
+    sinon.stub(oAuthUtils, 'refreshAppToken').callsFake((log, component, conf, next) => {
       const refreshedCfg = conf;
       refreshedCfg.oauth.access_token = 'aRefreshedToken';
       next(null, refreshedCfg);
