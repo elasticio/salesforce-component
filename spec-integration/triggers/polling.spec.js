@@ -2,6 +2,7 @@
 const fs = require('fs');
 const sinon = require('sinon');
 const { messages } = require('elasticio-node');
+const logger = require('@elastic.io/component-logger')();
 const polling = require('../../lib/entry');
 
 describe('polling', () => {
@@ -44,6 +45,7 @@ describe('polling', () => {
 
   const emitter = {
     emit: sinon.spy(),
+    logger,
   };
 
   it('Account polling with empty snapshot', async () => {

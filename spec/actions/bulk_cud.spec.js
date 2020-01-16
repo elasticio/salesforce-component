@@ -18,19 +18,17 @@ describe('Salesforce bulk', () => {
 
 
   it('action create', async () => {
-    console.log('action create');
-
     const data = testData.bulkInsertCase;
     data.configuration = { ...testCommon.configuration, ...data.configuration };
 
-    const expectedResult = { "result": [{ "id": "5002o00002E8FIIAA3", "success": true, "errors": [] }, { "id": "5002o00002E8FIJAA3", "success": true, "errors": [] }, { "id": "5002o00002E8FIKAA3", "success": true, "errors": [] }] };
+    const expectedResult = { result: [{ id: '5002o00002E8FIIAA3', success: true, errors: [] }, { id: '5002o00002E8FIJAA3', success: true, errors: [] }, { id: '5002o00002E8FIKAA3', success: true, errors: [] }] };
 
     const scopes = [];
-    for (let host in data.responses) {
-      for (let path in data.responses[host]) {
-        scopes.push(nock(host).
-          intercept(path, data.responses[host][path].method).
-          reply(200, data.responses[host][path].response, data.responses[host][path].header));
+    for (const host in data.responses) {
+      for (const path in data.responses[host]) {
+        scopes.push(nock(host)
+          .intercept(path, data.responses[host][path].method)
+          .reply(200, data.responses[host][path].response, data.responses[host][path].header));
       }
     }
 
@@ -45,19 +43,17 @@ describe('Salesforce bulk', () => {
 
 
   it('action update', async () => {
-    console.log('action update');
-
     const data = testData.bulkUpdateCase;
     data.configuration = { ...testCommon.configuration, ...data.configuration };
 
-    const expectedResult = { "result": [{ "id": null, "success": false, "errors": ["ENTITY_IS_DELETED:entity is deleted:--"] }] };
+    const expectedResult = { result: [{ id: null, success: false, errors: ['ENTITY_IS_DELETED:entity is deleted:--'] }] };
 
     const scopes = [];
-    for (let host in data.responses) {
-      for (let path in data.responses[host]) {
-        scopes.push(nock(host).
-          intercept(path, data.responses[host][path].method).
-          reply(200, data.responses[host][path].response, data.responses[host][path].header));
+    for (const host in data.responses) {
+      for (const path in data.responses[host]) {
+        scopes.push(nock(host)
+          .intercept(path, data.responses[host][path].method)
+          .reply(200, data.responses[host][path].response, data.responses[host][path].header));
       }
     }
 
@@ -72,19 +68,17 @@ describe('Salesforce bulk', () => {
 
 
   it('action delete', async () => {
-    console.log('action delete');
-
     const data = testData.bulkDeleteCase;
     data.configuration = { ...testCommon.configuration, ...data.configuration };
 
-    const expectedResult = { "result": [{ "id": "5002o00002BT0IUAA1", "success": true, "errors": [] }] };
+    const expectedResult = { result: [{ id: '5002o00002BT0IUAA1', success: true, errors: [] }] };
 
     const scopes = [];
-    for (let host in data.responses) {
-      for (let path in data.responses[host]) {
-        scopes.push(nock(host).
-          intercept(path, data.responses[host][path].method).
-          reply(200, data.responses[host][path].response, data.responses[host][path].header));
+    for (const host in data.responses) {
+      for (const path in data.responses[host]) {
+        scopes.push(nock(host)
+          .intercept(path, data.responses[host][path].method)
+          .reply(200, data.responses[host][path].response, data.responses[host][path].header));
       }
     }
 
@@ -96,5 +90,4 @@ describe('Salesforce bulk', () => {
       scopes[i].done();
     }
   });
-
 });
