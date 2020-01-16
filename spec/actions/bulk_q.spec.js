@@ -4,6 +4,7 @@ const nock = require('nock');
 
 const testCommon = require('../common.js');
 const testData = require('./bulk_q.json');
+const bulk = require('../../lib/actions/bulk_q.js');
 
 nock.disableNetConnect();
 
@@ -17,26 +18,17 @@ describe('Salesforce bulk query', () => {
 
 
   it('action query', async () => {
-    console.log('action query');
-
     const data = testData.bulkQuery;
     data.configuration = { ...testCommon.configuration, ...data.configuration };
-
-    const expectedResult = { "bulk_query.csv": { "content-type": "text/csv", "url": testCommon.EXT_FILE_STORAGE } };
-
-    for (let host in data.responses) {
-      for (let path in data.responses[host]) {
-        nock(host).
-          intercept(path, data.responses[host][path].method).
-          reply(200, data.responses[host][path].response, data.responses[host][path].header);
+    const expectedResult = { 'bulk_query.csv': { 'content-type': 'text/csv', url: testCommon.EXT_FILE_STORAGE } };
+    for (const host in data.responses) {
+      for (const path in data.responses[host]) {
+        nock(host)
+          .intercept(path, data.responses[host][path].method)
+          .reply(200, data.responses[host][path].response, data.responses[host][path].header);
       }
     }
-
-    const bulk = require('../../lib/actions/bulk_q.js');
-
     const result = await bulk.process.call(testCommon, data.message, data.configuration);
-
     chai.expect(result.attachments).to.deep.equal(expectedResult);
   });
-
 });

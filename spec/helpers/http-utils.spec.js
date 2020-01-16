@@ -1,5 +1,6 @@
 const nock = require('nock');
 const chai = require('chai');
+const logger = require('@elastic.io/component-logger')();
 
 const { expect } = chai;
 const action = require('../../lib/helpers/http-utils');
@@ -17,7 +18,7 @@ describe('http-utils Unit Test', () => {
       .get('/testing')
       .reply(200, body);
 
-    action.getJSON(params, (error, result) => {
+    action.getJSON(logger, params, (error, result) => {
       expect(result.testMessage).to.equal('Pass test message');
     });
   });
@@ -34,7 +35,7 @@ describe('http-utils Unit Test', () => {
       .get('/testing')
       .reply(404, body);
 
-    action.getJSON(params, (error) => {
+    action.getJSON(logger, params, (error) => {
       expect(error.responseBody).to.equal(body);
       expect(error.statusCode).to.equal(404);
     });

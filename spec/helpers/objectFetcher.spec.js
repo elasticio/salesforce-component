@@ -1,5 +1,6 @@
 const nock = require('nock');
 const chai = require('chai');
+const logger = require('@elastic.io/component-logger')();
 
 const { expect } = chai;
 const objectFetcher = require('../../lib/helpers/objectFetcher');
@@ -28,7 +29,7 @@ describe('Fetching objects', () => {
         .get('/services/data/v25.0/query?q=select%20LastName%2CFirstName%2CSalutation%2COtherStreet%2COtherCity%2COtherState%2COtherPostalCode%2COtherCountry%2CMailingStreet%2CMailingCity%2CMailingState%2CMailingPostalCode%2CMailingCountry%2CPhone%2CFax%2CMobilePhone%2CHomePhone%2COtherPhone%2CAssistantPhone%2CEmail%2CTitle%2CDepartment%2CAssistantName%2CLeadSource%2CBirthdate%2CDescription%2CEmailBouncedReason%2CEmailBouncedDate%2CJigsaw%2CLevel__c%2CLanguages__c%20from%20Contact%20where%20SystemModstamp%20%3E%201978-04-06T11%3A00%3A00.000Z')
         .reply(200, []);
 
-      const result = await objectFetcher(params);
+      const result = await objectFetcher(logger, params);
       expect(result.objects).to.deep.equal(expectedResult);
     });
 
@@ -39,7 +40,7 @@ describe('Fetching objects', () => {
         .get('/services/data/v25.0/query?q=select%20LastName%2CFirstName%2CSalutation%2COtherStreet%2COtherCity%2COtherState%2COtherPostalCode%2COtherCountry%2CMailingStreet%2CMailingCity%2CMailingState%2CMailingPostalCode%2CMailingCountry%2CPhone%2CFax%2CMobilePhone%2CHomePhone%2COtherPhone%2CAssistantPhone%2CEmail%2CTitle%2CDepartment%2CAssistantName%2CLeadSource%2CBirthdate%2CDescription%2CEmailBouncedReason%2CEmailBouncedDate%2CJigsaw%2CLevel__c%2CLanguages__c%20from%20Contact%20where%20SystemModstamp%20%3E%201978-04-06T11%3A00%3A00.000Z')
         .reply(200, [{ one: 1 }, { two: 2 }]);
 
-      const result = await objectFetcher(params);
+      const result = await objectFetcher(logger, params);
       expect(result.objects).to.deep.equal(expectedResult);
     });
   });
@@ -48,25 +49,25 @@ describe('Fetching objects', () => {
     it('should throw an error if no snapshot provided', () => {
       params.snapshot = undefined;
 
-      expect(() => { objectFetcher(params); }).to.throw('Can\'t fetch objects without a predefined snapshot');
+      expect(() => { objectFetcher(logger, params); }).to.throw('Can\'t fetch objects without a predefined snapshot');
     });
 
     it('should throw an error if no cfg provided', () => {
       params.cfg = undefined;
 
-      expect(() => { objectFetcher(params); }).to.throw('Can\'t fetch objects without a configuration parameter');
+      expect(() => { objectFetcher(logger, params); }).to.throw('Can\'t fetch objects without a configuration parameter');
     });
 
     it('should throw an error if no apiVersion provided', () => {
       params.cfg.apiVersion = undefined;
 
-      expect(() => { objectFetcher(params); }).to.throw('Can\'t fetch objects without an apiVersion');
+      expect(() => { objectFetcher(logger, params); }).to.throw('Can\'t fetch objects without an apiVersion');
     });
 
     it('should throw an error if no object provided', () => {
       params.cfg.object = undefined;
 
-      expect(() => { objectFetcher(params); }).to.throw('Can\'t fetch objects without an object type');
+      expect(() => { objectFetcher(logger, params); }).to.throw('Can\'t fetch objects without an object type');
     });
   });
 });

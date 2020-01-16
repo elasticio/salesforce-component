@@ -1,5 +1,6 @@
 const nock = require('nock');
 const chai = require('chai');
+const logger = require('@elastic.io/component-logger')();
 
 const { expect } = chai;
 const fetchObjects = require('../../lib/helpers/objectFetcherQuery');
@@ -29,7 +30,7 @@ describe('Fetching objects', () => {
         .matchHeader('Authorization', `Bearer ${token}`)
         .reply(200, []);
 
-      const result = await fetchObjects(params);
+      const result = await fetchObjects(logger, params);
       expect(result.objects).to.deep.equal(expectedResult);
     });
   });
@@ -38,7 +39,7 @@ describe('Fetching objects', () => {
       delete params.cfg;
 
       expect(() => {
-        fetchObjects(params);
+        fetchObjects(logger, params);
       }).to.throw('Can\'t fetch objects without a configuration parameter');
     });
 
@@ -46,7 +47,7 @@ describe('Fetching objects', () => {
       params.cfg.apiVersion = undefined;
 
       expect(() => {
-        fetchObjects(params);
+        fetchObjects(logger, params);
       }).to.throw('Can\'t fetch objects without an apiVersion');
     });
 
@@ -54,7 +55,7 @@ describe('Fetching objects', () => {
       delete params.query;
 
       expect(() => {
-        fetchObjects(params);
+        fetchObjects(logger, params);
       }).to.throw('Can\'t fetch objects without a query');
     });
   });
