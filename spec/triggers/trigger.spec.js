@@ -2,6 +2,7 @@
 const sinon = require('sinon');
 const { expect } = require('chai');
 const jsforce = require('jsforce');
+const logger = require('@elastic.io/component-logger')();
 
 const polling = require('../../lib/entry');
 
@@ -27,6 +28,7 @@ describe('Polling trigger test', () => {
   beforeEach(() => {
     emitter = {
       emit: sinon.spy(),
+      logger,
     };
   });
 

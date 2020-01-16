@@ -1,3 +1,9 @@
+## 1.2.1 (December 27, 2019)
+
+* Update sailor version to 2.5.4
+* Refactor console.log to built in sailor logger
+* Change build type to `docker`
+
 ## 1.2.0 (December 2, 2019)
 
 * Add support for `Bulk operations` feature (Create/Update/Delete and Query)

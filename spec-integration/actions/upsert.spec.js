@@ -3,6 +3,7 @@ const fs = require('fs');
 const sinon = require('sinon');
 const { messages } = require('elasticio-node');
 const chai = require('chai');
+const logger = require('@elastic.io/component-logger')();
 const upsert = require('../../lib/actions/upsert');
 
 const { expect } = chai;
@@ -39,7 +40,7 @@ describe('upsert', () => {
     };
     message = {
       body: {
-        Id: '0034400001zyzMsAAI',
+        Id: '00344000020qT3KAAU',
         MobilePhone: '+3805077777',
         extID__c: '777777777777',
       },
@@ -52,6 +53,7 @@ describe('upsert', () => {
 
   const emitter = {
     emit: sinon.spy(),
+    logger,
   };
 
   it('upsert Contact by Id ', async () => {
