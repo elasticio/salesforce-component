@@ -1,3 +1,7 @@
+## 1.2.2 (January 25, 2020)
+
+* Add request caching for lookup actions
+
 ## 1.2.1 (December 27, 2019)
 
 * Update sailor version to 2.5.4
