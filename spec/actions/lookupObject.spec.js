@@ -151,7 +151,7 @@ describe('Lookup Object module: processAction', () => {
 
     const message = {
       body: {
-        Id: 'testObjId',
+        Id: 'testObjIdd',
         FolderId: 'xxxyyyzzz',
         Name: 'NotVeryImportantDoc',
         IsPublic: false,

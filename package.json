@@ -26,7 +26,6 @@
     "node": "8.x.x"
   },
   "dependencies": {
-    "debug": "2.6.9",
     "elasticio-node": "0.0.9",
     "elasticio-rest-node": "1.2.3",
     "elasticio-sailor-nodejs": "2.5.4",
