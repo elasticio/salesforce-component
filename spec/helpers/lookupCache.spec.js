@@ -1,6 +1,5 @@
 const chai = require('chai');
 
-process.env.HASH_LIMIT_TIME = 1000;
 const { lookupCache } = require('../../lib/helpers/lookupCache.js');
 
 describe('Lookup Cache class unit tests', () => {
