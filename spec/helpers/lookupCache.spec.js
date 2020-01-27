@@ -1,6 +1,5 @@
 const chai = require('chai');
 
-process.env.HASH_LIMIT_TIME = 1000;
 const { lookupCache } = require('../../lib/helpers/lookupCache.js');
 
 describe('Lookup Cache class unit tests', () => {
@@ -139,20 +138,5 @@ describe('Linked Limited Map class unit tests', () => {
     chai.expect(map.zeroNode.nextNode.value.letter).to.equal('a');
 
     chai.expect(map.size).to.equal(1);
-  });
-
-  it('cache expiration', async () => {
-    const map = lookupCache.getMap();
-    map.set('a', { letter: 'a' });
-    map.set('b', { letter: 'b' });
-    map.set('c', { letter: 'c' });
-
-    await new Promise((resolve) => { setTimeout(() => resolve(), 1500); });
-
-    chai.expect(lookupCache.getResponse('a')).to.equal(undefined);
-    chai.expect(lookupCache.getResponse('b')).to.equal(undefined);
-    chai.expect(lookupCache.getResponse('c')).to.equal(undefined);
-    chai.expect(lookupCache.getMap().size).to.equal(0);
-    process.env.HASH_LIMIT_TIME = undefined;
   });
 });
