@@ -7,6 +7,10 @@ describe('Lookup Cache class unit tests', () => {
     lookupCache.clear();
   });
 
+  beforeEach(() => {
+    lookupCache.enableCache();
+  });
+
   afterEach(() => {
     lookupCache.clear();
   });
