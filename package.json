@@ -1,0 +1,53 @@
+{
+  "name": "salesforce-component",
+  "version": "1.2.1",
+  "description": "elastic.io component that connects to Salesforce API (node.js)",
+  "main": "index.js",
+  "scripts": {
+    "test": "exit 0",
+    "integration-test": "exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elasticio/salesforce-component.git"
+  },
+  "keywords": [
+    "elasticio",
+    "salesforce",
+    "REST"
+  ],
+  "author": "elastic.io GmbH",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/elasticio/salesforce-component/issues"
+  },
+  "homepage": "https://github.com/elasticio/salesforce-component#readme",
+  "engines": {
+    "node": "8.x.x"
+  },
+  "dependencies": {
+    "debug": "2.6.9",
+    "elasticio-node": "0.0.9",
+    "elasticio-rest-node": "1.2.3",
+    "elasticio-sailor-nodejs": "2.5.4",
+    "hbs": "3.1.1",
+    "jsforce": "1.9.1",
+    "lodash": "4.17.11",
+    "mime-types": "2.1.24",
+    "node-uuid": "1.4.8",
+    "q": "1.5.1",
+    "request": "2.88.0",
+    "request-promise": "4.2.4"
+  },
+  "devDependencies": {
+    "@elastic.io/component-logger": "0.0.1",
+    "chai": "4.2.0",
+    "dotenv": "8.0.0",
+    "eslint": "5.16.0",
+    "eslint-config-airbnb-base": "13.1.0",
+    "eslint-plugin-import": "2.18.0",
+    "mocha": "6.1.4",
+    "nock": "10.0.6",
+    "sinon": "7.3.2"
+  }
+}
