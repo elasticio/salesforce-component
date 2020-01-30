@@ -1,10 +1,10 @@
 {
   "name": "salesforce-component",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "elastic.io component that connects to Salesforce API (node.js)",
   "main": "index.js",
   "scripts": {
-    "test": "eslint & mocha spec --recursive --timeout 50000",
+    "test": "eslint & mocha spec NODE_ENV=test --recursive --timeout 50000",
     "integration-test": "mocha spec-integration --recursive --timeout 50000"
   },
   "repository": {
@@ -26,7 +26,6 @@
     "node": "8.x.x"
   },
   "dependencies": {
-    "debug": "2.6.9",
     "elasticio-node": "0.0.9",
     "elasticio-rest-node": "1.2.3",
     "elasticio-sailor-nodejs": "2.5.4",
