@@ -10,6 +10,7 @@ const objectTypesReply = require("../sfObjects.json");
 const metaModelDocumentReply = require("../sfDocumentMetadata.json");
 const metaModelAccountReply = require("../sfAccountMetadata.json");
 
+process.env.HASH_LIMIT_TIME = 1000;
 const lookupObjects = require("../../lib/actions/lookupObjects.js");
 
 const COMPARISON_OPERATORS = ['=', '!=', '<', '<=', '>', '>=', 'LIKE', 'IN', 'NOT IN', 'INCLUDES', 'EXCLUDES'];
@@ -370,7 +371,7 @@ describe("Lookup Objects module: processAction", () => {
       .reply(200, { done: true, totalSize: testReply.results.length, records: testReply.results });
 
     lookupObjects.process.call(testCommon, _.cloneDeep(message), testCommon.configuration);
-    
+
     return new Promise(resolve => {
       testCommon.emitCallback = function(what, msg) {
         if (what === 'data') {
@@ -440,7 +441,7 @@ describe("Lookup Objects module: processAction", () => {
       .reply(200, { done: true, totalSize: testReply.results.length, records: testReply.results });
 
     lookupObjects.process.call(testCommon, _.cloneDeep(message), testCommon.configuration);
-    
+
     return new Promise(resolve => {
       testCommon.emitCallback = function(what, msg) {
         if (what === 'data') {
@@ -510,7 +511,7 @@ describe("Lookup Objects module: processAction", () => {
       .reply(200, { done: true, totalSize: testReply.results.length, records: testReply.results });
 
     lookupObjects.process.call(testCommon, _.cloneDeep(message), testCommon.configuration);
-    
+
     return new Promise(resolve => {
       testCommon.emitCallback = function(what, msg) {
         if (what === 'data') {
@@ -580,7 +581,7 @@ describe("Lookup Objects module: processAction", () => {
       .reply(200, { done: true, totalSize: testReply.results.length, records: testReply.results });
 
     lookupObjects.process.call(testCommon, _.cloneDeep(message), testCommon.configuration);
-    
+
     return new Promise(resolve => {
       testCommon.emitCallback = function(what, msg) {
         if (what === 'data') {

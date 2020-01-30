@@ -16,6 +16,14 @@
     "SALESFORCE_API_VERSION": {
       "required": true,
       "description": "Salesforce API version to use for non deprecated methods. Default 46.0"
+    },
+    "HASH_LIMIT_TIME": {
+      "required": false,
+      "description": "Hash expiration time in milis"
+    },
+    "HASH_LIMIT_ELEMENTS": {
+      "required": false,
+      "description": "Hash size number limit"
     }
   },
   "useOAuthClient": true,
@@ -305,6 +313,10 @@
         "passBinaryData": {
           "viewClass": "CheckBoxView",
           "label": "Pass binary data to the next component (if found object has it)"
+        },
+        "enableCacheUsage": {
+          "viewClass": "CheckBoxView",
+          "label": "Enable Cache Usage"
         }
       }
     },
@@ -342,6 +354,10 @@
           "required": true,
           "placeholder": "Please specify a number of search terms",
           "note": "Enter a positive integer number [1-99] or 0 to lookup all entities of chosen type"
+        },
+        "enableCacheUsage": {
+          "viewClass": "CheckBoxView",
+          "label": "Enable Cache Usage"
         }
       }
     },
