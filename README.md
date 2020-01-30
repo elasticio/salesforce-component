@@ -113,6 +113,7 @@ Action creates a single object. Input metadata is fetched dynamically from your 
 * **Allow criteria to be omitted** - checkbox, if checked - search criteria can be omitted and the empty object will be returned, else - search criteria are required.
 * **Allow zero results** - checkbox, if checked and nothing is found - empty object will be returned, else - action throw an error.
 * **Pass binary data to the next component (if found object has it)** - a checkbox, if it is checked and found object has a binary field (type of base64) then its data will be passed to the next component as a binary attachment.
+* **Enable Cache Usage** - Flag to enable cache usage.
 
 #### Metadata description
 
@@ -206,6 +207,7 @@ Action creates a single object. Input metadata is fetched dynamically from your 
 * **Optional batch size** - A positive integer specifying batch size. If no batch size is specified then results of the query will be emitted one-by-one, otherwise, query results will be emitted in an array of maximum batch size.
 * **Object** - Input field where you should choose the object type, which you want to find. E.g. `Account`
 * **Lookup field** - Input field where you should choose the lookup field which you want to use for result filtering. E.g. `Id`.
+* **Enable Cache Usage** - Flag to enable cache usage.
 
 ```For now, you can specify all unique, lookup, ExternalID/Id fields. ```
 
