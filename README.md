@@ -136,6 +136,7 @@ Lookup a list of objects satisfying specified criteria.
 * **Include deleted** - checkbox, if checked - deleted records will be included into the result list.
 * **Output method** - dropdown list with following values: "Emit all", "Emit page", "Emit individually".
 * **Number of search terms** - text field to specify a number of search terms (positive integer number [1-99] or 0).
+* **Enable Cache Usage** - Flag to enable cache usage.
 
 #### Note
 Action has caching mechanism. By default action stores last 10 request-response pairs for 10 min duration.
@@ -207,7 +208,6 @@ Action creates a single object. Input metadata is fetched dynamically from your 
 * **Optional batch size** - A positive integer specifying batch size. If no batch size is specified then results of the query will be emitted one-by-one, otherwise, query results will be emitted in an array of maximum batch size.
 * **Object** - Input field where you should choose the object type, which you want to find. E.g. `Account`
 * **Lookup field** - Input field where you should choose the lookup field which you want to use for result filtering. E.g. `Id`.
-* **Enable Cache Usage** - Flag to enable cache usage.
 
 ```For now, you can specify all unique, lookup, ExternalID/Id fields. ```
 
