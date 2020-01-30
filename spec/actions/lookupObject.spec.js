@@ -8,6 +8,7 @@ const objectTypesReply = require('../sfObjects.json');
 const metaModelDocumentReply = require('../sfDocumentMetadata.json');
 const metaModelAccountReply = require('../sfAccountMetadata.json');
 
+process.env.HASH_LIMIT_TIME = 1000;
 const lookupObject = require('../../lib/actions/lookupObject.js');
 
 // Disable real HTTP requests
@@ -151,7 +152,7 @@ describe('Lookup Object module: processAction', () => {
 
     const message = {
       body: {
-        Id: 'testObjId',
+        Id: 'testObjIdd',
         FolderId: 'xxxyyyzzz',
         Name: 'NotVeryImportantDoc',
         IsPublic: false,
