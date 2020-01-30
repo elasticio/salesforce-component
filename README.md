@@ -121,6 +121,12 @@ Metadata contains one field whose name, type and mandatoriness are generated acc
 #### Limitations
 When **Pass binary data to the next component (if found object has it)** is checked and this action is used with Local Agent error would be thrown: 'getaddrinfo ENOTFOUND steward-service.platform.svc.cluster.local steward-service.platform.svc.cluster.local:8200'
 
+#### Note
+Action has caching mechanism. By default action stores last 10 request-response pairs for 10 min duration.
+This parameters can be changed by setting environment variables:
+* **HASH_LIMIT_TIME** - Hash expiration time in milis
+* **HASH_LIMIT_ELEMENTS** - Hash size number limit
+
 ### Lookup Objects
 Lookup a list of objects satisfying specified criteria.
 
@@ -129,6 +135,12 @@ Lookup a list of objects satisfying specified criteria.
 * **Include deleted** - checkbox, if checked - deleted records will be included into the result list.
 * **Output method** - dropdown list with following values: "Emit all", "Emit page", "Emit individually".
 * **Number of search terms** - text field to specify a number of search terms (positive integer number [1-99] or 0).
+
+#### Note
+Action has caching mechanism. By default action stores last 10 request-response pairs for 10 min duration.
+This parameters can be changed by setting environment variables:
+* **HASH_LIMIT_TIME** - Hash expiration time in milis
+* **HASH_LIMIT_ELEMENTS** - Hash size number limit
 
 #### Metadata description
 

@@ -16,6 +16,14 @@
     "SALESFORCE_API_VERSION": {
       "required": true,
       "description": "Salesforce API version to use for non deprecated methods. Default 46.0"
+    },
+    "HASH_LIMIT_TIME": {
+      "required": false,
+      "description": "Hash expiration time in milis"
+    },
+    "HASH_LIMIT_ELEMENTS": {
+      "required": false,
+      "description": "Hash size number limit"
     }
   },
   "useOAuthClient": true,
