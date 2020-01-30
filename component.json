@@ -250,6 +250,7 @@
       "title": "Delete Object (at most 1)",
       "main": "./lib/actions/deleteObject.js",
       "description": "Delete Selected Object",
+      "dynamicMetadata": true,
       "fields": {
         "sobject": {
           "viewClass": "SelectView",
