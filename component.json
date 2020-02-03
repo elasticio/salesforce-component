@@ -275,14 +275,6 @@
           "required": true,
           "model": "getLookupFieldsModel",
           "note": "Please select the field which you want to use for lookup"
-        }, 
-        "allowCriteriaToBeOmitted": {
-          "viewClass": "CheckBoxView",
-          "label": "Allow criteria to be omitted"
-        },
-        "allowZeroResults": {
-          "viewClass": "CheckBoxView",
-          "label": "Allow zero results"
         }
       },
       "metadata": {
