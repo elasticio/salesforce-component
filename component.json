@@ -304,7 +304,7 @@
         },
         "linkedObjects": {
           "viewClass": "MultiSelectView",
-          "label": "Include linked objects",
+          "label": "Include referenced objects",
           "required": false,
           "model": "getLinkedObjectsModel",
           "note": "Please select the related objects you want included in your lookup"
