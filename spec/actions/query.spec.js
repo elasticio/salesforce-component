@@ -87,10 +87,11 @@ describe('Query module: processAction', () => {
     expect(context.emit.getCall(0).lastArg.body).to.deep.equal(testReply);
   });
 
-  it(`Gets objects batchSize=1, allowResultAsSet = false`, async () => {
+  it(`Gets objects batchSize=2, allowResultAsSet = false`, async () => {
 
     testCommon.configuration.includeDeleted = true;
     testCommon.configuration.allowResultAsSet = false;
+    testCommon.configuration.batchSize = 1;
 
     const message = {
       body: {
@@ -106,8 +107,8 @@ describe('Query module: processAction', () => {
     await queryObjects.process.call(context, message, testCommon.configuration);
     scope.done();
     expect(context.emit.getCalls().length).to.be.equal(2);
-    expect(context.emit.getCall(0).lastArg.body).to.deep.equal(testReply.result[0]);
-    expect(context.emit.getCall(1).lastArg.body).to.deep.equal(testReply.result[1]);
+    expect(context.emit.getCall(0).lastArg.body).to.deep.equal({ result: [testReply.result[0]] });
+    expect(context.emit.getCall(1).lastArg.body).to.deep.equal({ result: [testReply.result[1]] });
   });
 
   it(`Gets objects batchSize=1, allowResultAsSet = true`, async () => {
