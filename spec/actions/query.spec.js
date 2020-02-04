@@ -87,7 +87,7 @@ describe('Query module: processAction', () => {
     expect(context.emit.getCall(0).lastArg.body).to.deep.equal(testReply);
   });
 
-  it(`Gets objects batchSize=2, allowResultAsSet = false`, async () => {
+  it(`Gets objects batchSize=1, allowResultAsSet = false`, async () => {
 
     testCommon.configuration.includeDeleted = true;
     testCommon.configuration.allowResultAsSet = false;
