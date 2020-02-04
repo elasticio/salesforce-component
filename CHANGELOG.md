@@ -1,3 +1,7 @@
+## 1.2.3 (February 4, 2020)
+
+* Fix query action
+
 ## 1.2.2 (January 25, 2020)
 
 * Add request caching for lookup actions
