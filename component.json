@@ -283,8 +283,7 @@
           "label": "Object",
           "required": true,
           "model": "objectTypes",
-          "prompt": "Please select a Salesforce Object",
-          "order":8
+          "prompt": "Please select a Salesforce Object"
         },
         "typeOfSearch": {
           "viewClass": "SelectView",
@@ -294,43 +293,36 @@
             "uniqueFields": "Unique Fields",
             "allFields": "All Fields"
           },
-          "prompt": "Please select a type of search",
-          "order":7
+          "prompt": "Please select a type of search"
         },
         "lookupField": {
           "viewClass": "SelectView",
           "label": "Lookup by field",
           "required": true,
           "model": "getLookupFieldsModel",
-          "note": "Please select the field which you want to use for lookup",
-          "order":6
+          "note": "Please select the field which you want to use for lookup"
         },
         "linkedObjects": {
           "viewClass": "MultiSelectView",
           "label": "Include referenced objects",
           "model": "getLinkedObjectsModel",
-          "note": "Please select the related objects you want included in your lookup",
-          "order":5
+          "note": "Please select the related objects you want included in your lookup"
         },
         "allowCriteriaToBeOmitted": {
           "viewClass": "CheckBoxView",
-          "label": "Allow criteria to be omitted",
-          "order":4
+          "label": "Allow criteria to be omitted"
         },
         "allowZeroResults": {
           "viewClass": "CheckBoxView",
-          "label": "Allow zero results",
-          "order":3
+          "label": "Allow zero results"
         },
         "passBinaryData": {
           "viewClass": "CheckBoxView",
-          "label": "Pass binary data to the next component (if found object has it)",
-          "order":2
+          "label": "Pass binary data to the next component (if found object has it)"
         },
         "enableCacheUsage": {
           "viewClass": "CheckBoxView",
-          "label": "Enable Cache Usage",
-          "order":1
+          "label": "Enable Cache Usage"
         }
       }
     },
