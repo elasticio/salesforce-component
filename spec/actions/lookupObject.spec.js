@@ -59,6 +59,33 @@ describe('Lookup Object (at most 1) module: getLookupFieldsModel', () => {
   it('Retrieves the list of unique fields of specified sobject', testUniqueFields.bind(null, 'Document', metaModelDocumentReply));
 });
 
+describe('Lookup Object (at most 1) module: getLinkedObjectsModel', () => {
+  async function testLinkedObjects(object, getMetaModelReply) {
+    const sfScope = nock(testCommon.configuration.oauth.instance_url)
+      .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects/${object}/describe`)
+      .reply(200, getMetaModelReply);
+
+    nock(testCommon.refresh_token.url)
+      .post('')
+      .reply(200, testCommon.refresh_token.response);
+
+    const expectedResult = {};
+    getMetaModelReply.fields.forEach((field) => {
+      if (field.type === 'reference') expectedResult[field.relationshipName] = `${field.referenceTo.join(', ')} (${field.relationshipName})`;
+    });
+
+    testCommon.configuration.typeOfSearch = 'uniqueFields';
+    testCommon.configuration.sobject = object;
+
+    const result = await lookupObject.getLinkedObjectsModel.call(testCommon, testCommon.configuration);
+
+    chai.expect(result).to.deep.equal(expectedResult);
+    sfScope.done();
+  }
+
+  it('Retrieves the list of linked objects (their relationshipNames) from the specified object', testLinkedObjects.bind(null, 'Document', metaModelDocumentReply));
+});
+
 describe('Lookup Object module: getMetaModel', () => {
   function testMetaData(configuration, getMetaModelReply) {
     const sfScope = nock(testCommon.configuration.oauth.instance_url)
