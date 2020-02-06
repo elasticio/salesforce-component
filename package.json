@@ -4,8 +4,8 @@
   "description": "elastic.io component that connects to Salesforce API (node.js)",
   "main": "index.js",
   "scripts": {
-    "test-i": "eslint & mocha spec NODE_ENV=test --recursive --timeout 50000",
-    "test": "mocha spec-integration --recursive --timeout 50000"
+    "test": "eslint & mocha spec NODE_ENV=test --recursive --timeout 50000",
+    "test-integration": "mocha spec-integration --recursive --timeout 50000"
   },
   "repository": {
     "type": "git",
