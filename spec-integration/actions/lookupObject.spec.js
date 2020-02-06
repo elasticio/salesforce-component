@@ -72,6 +72,22 @@ describe('lookupObject', () => {
         });
       });
   });
+
+  it('Contact linked objects ', async () => {
+    await lookupObject.getLinkedObjectsModel(configuration)
+      .then((result) => {
+        expect(result).to.be.deep.eql({
+          MasterRecord: 'Contact (MasterRecord)',
+          Account: 'Account (Account)',
+          ReportsTo: 'Contact (ReportsTo)',
+          Owner: 'User (Owner)',
+          CreatedBy: 'User (CreatedBy)',
+          LastModifiedBy: 'User (LastModifiedBy)',
+          Individual: 'Individual (Individual)',
+        });
+      });
+  });
+
   it('Contact objectTypes ', async () => {
     await lookupObject.objectTypes.call(emitter, configuration)
       .then((result) => {
