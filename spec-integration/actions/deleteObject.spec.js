@@ -26,7 +26,7 @@ describe('lookupObject', () => {
 
     configuration = {
       oauth: {
-        instance_url: 'https://na38.salesforce.com',
+        instance_url: 'https://na98.salesforce.com',
         refresh_token: process.env.REFRESH_TOKEN,
         access_token: process.env.ACCESS_TOKEN,
       },
