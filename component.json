@@ -40,8 +40,8 @@
     "oauth2": {
       "client_id": "{{OAUTH_CLIENT_ID}}",
       "client_secret": "{{OAUTH_CLIENT_SECRET}}",
-      "auth_uri": "https://na38.salesforce.com/services/oauth2/authorize",
-      "token_uri": "https://na38.salesforce.com/services/oauth2/token"
+      "auth_uri": "https://{{prodEnv}}.salesforce.com/services/oauth2/authorize",
+      "token_uri": "https://{{prodEnv}}.salesforce.com/services/oauth2/token"
     }
   },
   "triggers": {
