@@ -274,7 +274,7 @@
           "label": "Lookup by field",
           "required": true,
           "model": "getLookupFieldsModel",
-          "note": "Please select the field to lookup the object to be deleted"
+          "prompt": "Please select the field which you want to use for lookup"
         }
       },
       "metadata": {
