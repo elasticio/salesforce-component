@@ -59,7 +59,7 @@ describe('Lookup Object (at most 1) module: getLookupFieldsModel', () => {
   it('Retrieves the list of unique fields of specified sobject', testUniqueFields.bind(null, 'Document', metaModelDocumentReply));
 });
 
-/*describe('Lookup Object (at most 1) module: getLinkedObjectsModel', () => {
+describe('Lookup Object (at most 1) module: getLinkedObjectsModel', () => {
   async function testLinkedObjects(object, getMetaModelReply) {
     const sfScope = nock(testCommon.configuration.oauth.instance_url)
       .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects/${object}/describe`)
@@ -99,7 +99,7 @@ describe('Lookup Object (at most 1) module: getLookupFieldsModel', () => {
   }
 
   it('Retrieves the list of linked objects (their relationshipNames) from the specified object', testLinkedObjects.bind(null, 'Document', metaModelDocumentReply));
-});*/
+});
 
 describe('Lookup Object module: getMetaModel', () => {
   function testMetaData(configuration, getMetaModelReply) {
