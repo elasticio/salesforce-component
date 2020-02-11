@@ -9,7 +9,7 @@ const deleteObjectData = require('./deleteObject.json');
 
 const { expect } = chai;
 
-describe('lookupObject Integration Functionality', () => {
+describe('Delete Object Integration Functionality', () => {
 
   before(async () => {
     // eslint-disable-next-line global-require
