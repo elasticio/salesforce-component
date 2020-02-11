@@ -70,9 +70,6 @@ describe('Lookup Object (at most 1) module: getLinkedObjectsModel', () => {
       .reply(200, testCommon.refresh_token.response);
 
     const expectedResult = {};
-    getMetaModelReply.fields.forEach((field) => {
-      if (field.type === 'reference') expectedResult[field.relationshipName] = `${field.referenceTo.join(', ')} (${field.relationshipName})`;
-    });
 
     Object.assign(expectedResult,
       getMetaModelReply.fields.filter(field => field.type === 'reference')
