@@ -10,22 +10,10 @@ const deleteObjectData = require('./deleteObject.json');
 const { expect } = chai;
 
 describe('lookupObject Integration Functionality', () => {
-  let lastCall;
-
-  beforeEach(async () => {
-    lastCall.reset();
-  });
 
   before(async () => {
     // eslint-disable-next-line global-require
     require('dotenv').config({path:__dirname+'/secrets.env'}); 
-
-    lastCall = sinon.stub(messages, 'newMessageWithBody')
-      .returns(Promise.resolve());
-  });
-
-  after(async () => {
-    messages.newMessageWithBody.restore();
   });
 
   const emitter = {
