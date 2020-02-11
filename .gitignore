@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-node_modules
-spec-integration/actions/secrets.env
-.gitignore
-=======
 # Logs
 logs
 *.log
@@ -37,4 +32,3 @@ node_modules
 .vscode
 
 salesforce-ext-local
->>>>>>> 865ca3a2219cbc12f479ab30f9a1ac8ea340852f

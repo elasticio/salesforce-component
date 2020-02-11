@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "cases": [
     {
       "id":"136f209f-ab46-4856-8fa8-96a116f91115",
@@ -39,25 +38,3 @@
     }
   ]
 }
-=======
-  "deleteObject": {
-    "message": {
-      "body": {
-        "id": "5002o00002E8F3NAAV"
-      },
-      "id": "f4e0d892-2bd0-490f-a8c2-281ac0383ad8"
-    },
-    "configuration": {
-      "sobject": "Case"
-    },
-    "responses": {
-      "https://test.salesforce.com": {
-        "/services/data/v46.0/sobjects/Case/5002o00002E8F3NAAV": {
-          "method": "DELETE",
-          "response": { "id": "5002o00002E8F3NAAV", "success": true, "errors": [] }
-        }
-      }
-    }
-  }
-}
->>>>>>> 865ca3a2219cbc12f479ab30f9a1ac8ea340852f

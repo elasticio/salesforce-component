@@ -10,10 +10,7 @@ const objectTypesReply = require("../sfObjects.json");
 const metaModelDocumentReply = require("../sfDocumentMetadata.json");
 const metaModelAccountReply = require("../sfAccountMetadata.json");
 
-<<<<<<< HEAD
-=======
 process.env.HASH_LIMIT_TIME = 1000;
->>>>>>> 865ca3a2219cbc12f479ab30f9a1ac8ea340852f
 const lookupObjects = require("../../lib/actions/lookupObjects.js");
 
 const COMPARISON_OPERATORS = ['=', '!=', '<', '<=', '>', '>=', 'LIKE', 'IN', 'NOT IN', 'INCLUDES', 'EXCLUDES'];
@@ -374,11 +371,6 @@ describe("Lookup Objects module: processAction", () => {
       .reply(200, { done: true, totalSize: testReply.results.length, records: testReply.results });
 
     lookupObjects.process.call(testCommon, _.cloneDeep(message), testCommon.configuration);
-<<<<<<< HEAD
-    
-=======
-
->>>>>>> 865ca3a2219cbc12f479ab30f9a1ac8ea340852f
     return new Promise(resolve => {
       testCommon.emitCallback = function(what, msg) {
         if (what === 'data') {
@@ -448,11 +440,6 @@ describe("Lookup Objects module: processAction", () => {
       .reply(200, { done: true, totalSize: testReply.results.length, records: testReply.results });
 
     lookupObjects.process.call(testCommon, _.cloneDeep(message), testCommon.configuration);
-<<<<<<< HEAD
-    
-=======
-
->>>>>>> 865ca3a2219cbc12f479ab30f9a1ac8ea340852f
     return new Promise(resolve => {
       testCommon.emitCallback = function(what, msg) {
         if (what === 'data') {
@@ -522,11 +509,6 @@ describe("Lookup Objects module: processAction", () => {
       .reply(200, { done: true, totalSize: testReply.results.length, records: testReply.results });
 
     lookupObjects.process.call(testCommon, _.cloneDeep(message), testCommon.configuration);
-<<<<<<< HEAD
-    
-=======
-
->>>>>>> 865ca3a2219cbc12f479ab30f9a1ac8ea340852f
     return new Promise(resolve => {
       testCommon.emitCallback = function(what, msg) {
         if (what === 'data') {
@@ -596,11 +578,6 @@ describe("Lookup Objects module: processAction", () => {
       .reply(200, { done: true, totalSize: testReply.results.length, records: testReply.results });
 
     lookupObjects.process.call(testCommon, _.cloneDeep(message), testCommon.configuration);
-<<<<<<< HEAD
-    
-=======
-
->>>>>>> 865ca3a2219cbc12f479ab30f9a1ac8ea340852f
     return new Promise(resolve => {
       testCommon.emitCallback = function(what, msg) {
         if (what === 'data') {
