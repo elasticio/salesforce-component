@@ -145,13 +145,16 @@ describe('Delete Object (at most 1) module: process', () => {
       .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/query?q=${testCommon.buildSOQL(metaModelDocumentReply, { Id: message.body.Id })}`)
       .reply(200, { done: true, totalSize: 1, records: [message.body] })
 
-    const deleteObjById = () => { return (new Promise((resolve) => {resolve()}))}
-    const spy = sinon.spy(deleteObjById)
-    testCommon.deleteObjById = spy;
+    const getResult = new Promise((resolve) => {
+      testCommon.emitCallback = function (what, msg) {
+        if (what === 'data') resolve(msg);
+      };
+    });
 
     await deleteObjectAction.process.call(testCommon, _.cloneDeep(message), testCommon.configuration);
+    let res = await getResult; 
 
-    chai.expect(spy.calledOnce).to.be.true;
+    chai.expect(res).to.be.not.undefined
     scope.done();
   });
 
@@ -178,13 +181,16 @@ describe('Delete Object (at most 1) module: process', () => {
 
     nock(testCommon.EXT_FILE_STORAGE).put('', JSON.stringify(message)).reply(200);
 
-    const deleteObjById = () => { return new Promise((resolve) => {resolve()})}
-    const spy = sinon.spy(deleteObjById)
-    testCommon.deleteObjById = spy;
+    const getResult = new Promise((resolve) => {
+      testCommon.emitCallback = function (what, msg) {
+        if (what === 'data') resolve(msg);
+      };
+    });
 
     await deleteObjectAction.process.call(testCommon, _.cloneDeep(message), testCommon.configuration);
+    let res = await getResult; 
 
-    chai.expect(spy.calledOnce).to.be.true;
+    chai.expect(res).to.be.not.undefined
     scope.done();
   });
 });
