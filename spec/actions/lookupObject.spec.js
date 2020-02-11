@@ -77,7 +77,7 @@ describe('Lookup Object (at most 1) module: getLinkedObjectsModel', () => {
     Object.assign(expectedResult,
       getMetaModelReply.fields.filter(field => field.type === 'reference')
         .reduce((obj, field) => {
-          if (!child.relationshipName) {
+          if (!field.relationshipName) {
             obj[field.relationshipName] = `${field.referenceTo.join(', ')} (${field.relationshipName})`;
           }
           return obj;
