@@ -15,7 +15,7 @@
                 "--timeout",
                 "999999",
                 "--colors",
-                "${workspaceFolder}/spec/actions/deleteObject.spec.js"
+                "${workspaceFolder}/spec-integration/actions/deleteObject.spec.js"
             ],
             "internalConsoleOptions": "openOnSessionStart",
             "skipFiles": [

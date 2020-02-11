@@ -15,7 +15,7 @@ const testCommon = require('../common.js');
 const objectTypesReply = require('../sfObjects.json');
 const testDeleteData = require('./deleteObject.json');
 const deleteObjectAction = require('../../lib/actions/deleteObject.js');
-const { deleteObjById } = require('../../lib/helpers/deleteObjectHelpers.js')
+const helpers = require('../../lib/helpers/deleteObjectHelpers.js')
 
 const metaModelDocumentReply = require('../sfDocumentMetadata.json');
 const metaModelAccountReply = require('../sfAccountMetadata.json');
@@ -145,16 +145,11 @@ describe('Delete Object (at most 1) module: process', () => {
       .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/query?q=${testCommon.buildSOQL(metaModelDocumentReply, { Id: message.body.Id })}`)
       .reply(200, { done: true, totalSize: 1, records: [message.body] })
 
-    const getResult = new Promise((resolve) => {
-      testCommon.emitCallback = function (what, msg) {
-        if (what === 'data') resolve(msg);
-      };
-    });
-
-    await deleteObjectAction.process.call(testCommon, _.cloneDeep(message), testCommon.configuration);
-    let res = await getResult; 
-
-    chai.expect(res).to.be.not.undefined
+    let stub = sinon.stub(helpers, "deleteObjById");
+    stub.resolves(true);
+  await deleteObjectAction.process.call(testCommon, _.cloneDeep(message), testCommon.configuration);
+    chai.expect(stub.calledOnce).to.be.true;
+    stub.restore();
     scope.done();
   });
 
@@ -181,16 +176,11 @@ describe('Delete Object (at most 1) module: process', () => {
 
     nock(testCommon.EXT_FILE_STORAGE).put('', JSON.stringify(message)).reply(200);
 
-    const getResult = new Promise((resolve) => {
-      testCommon.emitCallback = function (what, msg) {
-        if (what === 'data') resolve(msg);
-      };
-    });
-
+    let stub = sinon.stub(helpers, "deleteObjById");
+    stub.resolves(true);
     await deleteObjectAction.process.call(testCommon, _.cloneDeep(message), testCommon.configuration);
-    let res = await getResult; 
-
-    chai.expect(res).to.be.not.undefined
+    chai.expect(stub.calledOnce).to.be.true;
+    stub.restore();
     scope.done();
   });
 });
@@ -241,7 +231,7 @@ describe('Delete Object (at most 1) module: deleteObjById', () => {
       };
     });
 
-    await deleteObjById.call(testCommon, sfConn, id, objType)
+    await helpers.deleteObjById.call(testCommon, sfConn, id, objType)
     const actualRes = await getResult;
 
     chai.expect(actualRes).to.have.all.keys(expectedRes);
