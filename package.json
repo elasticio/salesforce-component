@@ -1,18 +1,10 @@
 {
   "name": "salesforce-component",
-<<<<<<< HEAD
-  "version": "1.2.1",
-  "description": "elastic.io component that connects to Salesforce API (node.js)",
-  "main": "index.js",
-  "scripts": {
-    "test": "eslint & mocha spec --recursive --timeout 50000",
-=======
   "version": "1.2.3",
   "description": "elastic.io component that connects to Salesforce API (node.js)",
   "main": "index.js",
   "scripts": {
     "test": "eslint & mocha spec NODE_ENV=test --recursive --timeout 50000",
->>>>>>> 865ca3a2219cbc12f479ab30f9a1ac8ea340852f
     "integration-test": "mocha spec-integration --recursive --timeout 50000"
   },
   "repository": {
@@ -31,22 +23,12 @@
   },
   "homepage": "https://github.com/elasticio/salesforce-component#readme",
   "engines": {
-<<<<<<< HEAD
-    "node": "8.x.x"
-  },
-  "dependencies": {
-    "debug": "2.6.9",
-    "elasticio-node": "0.0.9",
-    "elasticio-rest-node": "1.2.3",
-    "elasticio-sailor-nodejs": "2.5.4",
-=======
     "node": "12.3.0"
   },
   "dependencies": {
     "elasticio-node": "0.0.9",
     "elasticio-rest-node": "1.2.3",
     "elasticio-sailor-nodejs": "2.6.2",
->>>>>>> 865ca3a2219cbc12f479ab30f9a1ac8ea340852f
     "hbs": "3.1.1",
     "jsforce": "1.9.1",
     "lodash": "4.17.11",
@@ -63,11 +45,7 @@
     "eslint": "5.16.0",
     "eslint-config-airbnb-base": "13.1.0",
     "eslint-plugin-import": "2.18.0",
-<<<<<<< HEAD
-    "mocha": "^6.1.4",
-=======
     "mocha": "6.1.4",
->>>>>>> 865ca3a2219cbc12f479ab30f9a1ac8ea340852f
     "nock": "10.0.6",
     "sinon": "7.3.2"
   }

@@ -1,5 +1,4 @@
 /* eslint-disable no-return-assign */
-<<<<<<< HEAD
 /**
  * Note: The order of tests is congruent to their declaration in deleteObject.js action
  * Note: Most of the tests are adapted from the lookupObject.spec.js file as many 
@@ -263,43 +262,4 @@ describe('Delete Object (at most 1) module: deleteObjById', () => {
       )
     }
   );
-=======
-const chai = require('chai');
-const nock = require('nock');
-
-const testCommon = require('../common.js');
-const testData = require('./deleteObject.json');
-const deleteObject = require('../../lib/actions/deleteObject.js');
-
-nock.disableNetConnect();
-
-describe('Salesforce delete object', () => {
-  beforeEach(async () => {
-    nock(testCommon.refresh_token.url)
-      .post('')
-      .reply(200, testCommon.refresh_token.response);
-  });
-
-  it('action delete', async () => {
-    const data = testData.deleteObject;
-    data.configuration = { ...testCommon.configuration, ...data.configuration };
-
-    const expectedResult = { id: '5002o00002E8F3NAAV', success: true, errors: [] };
-
-    const scopes = [];
-    for (const host in data.responses) {
-      for (const path in data.responses[host]) {
-        scopes.push(nock(host)
-          .intercept(path, data.responses[host][path].method)
-          .reply(200, data.responses[host][path].response, data.responses[host][path].header));
-      }
-    }
-    const response = await deleteObject.process.call(testCommon, data.message, data.configuration);
-    chai.expect(response.body.result).to.deep.equal(expectedResult);
-
-    for (let i = 0; i < scopes.length; i++) {
-      scopes[i].done();
-    }
-  });
->>>>>>> 865ca3a2219cbc12f479ab30f9a1ac8ea340852f
 });

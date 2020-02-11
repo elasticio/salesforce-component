@@ -16,8 +16,6 @@
     "SALESFORCE_API_VERSION": {
       "required": true,
       "description": "Salesforce API version to use for non deprecated methods. Default 46.0"
-<<<<<<< HEAD
-=======
     },
     "HASH_LIMIT_TIME": {
       "required": false,
@@ -26,7 +24,6 @@
     "HASH_LIMIT_ELEMENTS": {
       "required": false,
       "description": "Hash size number limit"
->>>>>>> 865ca3a2219cbc12f479ab30f9a1ac8ea340852f
     }
   },
   "useOAuthClient": true,
@@ -258,16 +255,10 @@
       }
     },
     "delete": {
-<<<<<<< HEAD
       "title": "Delete Object (at most 1)",
       "main": "./lib/actions/deleteObject.js",
       "description": "Delete Selected Object",
       "dynamicMetadata": true,
-=======
-      "title": "Delete Object",
-      "main": "./lib/actions/deleteObject.js",
-      "description": "Delete Selected Object",
->>>>>>> 865ca3a2219cbc12f479ab30f9a1ac8ea340852f
       "fields": {
         "sobject": {
           "viewClass": "SelectView",
@@ -275,7 +266,6 @@
           "required": true,
           "model": "objectTypes",
           "prompt": "Please select a Salesforce Object"
-<<<<<<< HEAD
         }, 
         "typeOfSearch": {
           "viewClass": "SelectView",
@@ -296,12 +286,6 @@
         }
       },
       "metadata": {
-=======
-        }
-      },
-      "metadata": {
-        "in": "./lib/schemas/deleteObject.in.json",
->>>>>>> 865ca3a2219cbc12f479ab30f9a1ac8ea340852f
         "out": "./lib/schemas/deleteObject.out.json"
       }
     },
@@ -346,13 +330,10 @@
         "passBinaryData": {
           "viewClass": "CheckBoxView",
           "label": "Pass binary data to the next component (if found object has it)"
-<<<<<<< HEAD
-=======
         },
         "enableCacheUsage": {
           "viewClass": "CheckBoxView",
           "label": "Enable Cache Usage"
->>>>>>> 865ca3a2219cbc12f479ab30f9a1ac8ea340852f
         }
       }
     },
@@ -390,13 +371,10 @@
           "required": true,
           "placeholder": "Please specify a number of search terms",
           "note": "Enter a positive integer number [1-99] or 0 to lookup all entities of chosen type"
-<<<<<<< HEAD
-=======
         },
         "enableCacheUsage": {
           "viewClass": "CheckBoxView",
           "label": "Enable Cache Usage"
->>>>>>> 865ca3a2219cbc12f479ab30f9a1ac8ea340852f
         }
       }
     },

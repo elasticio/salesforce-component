@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 ## 1.2.3 (February 4, 2020)
 
 * Fix query action
@@ -8,7 +6,6 @@
 
 * Add request caching for lookup actions
 
->>>>>>> 865ca3a2219cbc12f479ab30f9a1ac8ea340852f
 ## 1.2.1 (December 27, 2019)
 
 * Update sailor version to 2.5.4
