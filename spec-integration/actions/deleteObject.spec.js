@@ -29,32 +29,36 @@ describe('Delete Object Integration Functionality', () => {
   })
 
   it('Correctly identifies a lack of response on a non-existent Contact', async () => {
-    if (!( testObj = await testObjGen.next() )) {
-      throw Error('test data was not sucessfully created');
+    testObj = await testObjGen.next() 
+    if (!( testObj.value )) {
+      throw Error('Test data was not sucessfully created');
     }
     await deleteObject.process.call(emitter, testObj.message, testObj.config)
     expect(emitter.emit.args[2][1].body).to.be.empty;
   });
 
   it('Correctly deletes an existent Contact', async () => {
-    if (!(testObj = await testDataFactory())) {
-      throw Error('test data was not sucessfully created');
+    testObj = await testObjGen.next() 
+    if (!( testObj.value )) {
+      throw Error('Test data was not sucessfully created');
     }
     await deleteObject.process.call(emitter, testObj.message, testObj.config)
     expect(emitter.emit.args[2][1].body).to.be.deep.equal(testObj.response);
   });
 
   it('Correctly identifies when more than one object is found and throws', async () => {
-    if (!(testObj = await testDataFactory())) {
-      throw Error('test data was not sucessfully created');
+    testObj = await testObjGen.next() 
+    if (!( testObj.value )) {
+      throw Error('Test data was not sucessfully created');
     }
     await deleteObject.process.call(emitter, testObj.message, testObj.config)
     expect(emitter.emit.args[2][1]).to.be.instanceOf(Error);
   });
 
   it('Correctly deletes based on different criteria: allFields ( Date/Time )', async () => {
-    if (!(testObj = await testDataFactory())) {
-      throw Error('test data was not sucessfully created');
+    testObj = await testObjGen.next() 
+    if (!( testObj.value )) {
+      throw Error('Test data was not sucessfully created');
     }
     await deleteObject.process.call(emitter, testObj.message, testObj.config)
     expect(emitter.emit.args[2][1].body).to.be.deep.equal(testObj.response);
