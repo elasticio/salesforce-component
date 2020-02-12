@@ -73,14 +73,13 @@ This action will automatically retrieve all existing fields of chosen object typ
 #### Limitations
 When **Utilize data attachment from previous step (for objects with a binary field)** is checked and this action is used with Local Agent error would be thrown: 'getaddrinfo ENOTFOUND steward-service.platform.svc.cluster.local steward-service.platform.svc.cluster.local:8200'
 
-### Delete Object
-Deletes a Selected Object.
+### Delete Object (at most 1)
+Deletes an object by a selected field. One can filter by either unique fields or all fields of that sobject. Input metadata is fetched dynamically from your Salesforce account. 
 
 #### Input field description
-* **Object** - Input field where you should choose the object type, which you want to delete. E.g. `Account`
-
-#### Metadata description
-* **id** - `string`, salesforce object id
+* **Object** - dropdown list where you should choose the object type, which you want to find. E.g. `Account`.
+* **Type Of Search** -  dropdown list with two values: `Unique Fields` and `All Fields`.
+* **Lookup by field** - dropdown list with all fields on the selected object, if on *Type Of Search* is chosen `All Fields`, or with all fields on the selected object where `type` is `id` or `unique` is `true` , if on *Type Of Search* is chosen `Unique Fields` then all searchable fields both custom and standard will be available for selection. 
 
 Result is an object with 3 fields.
 * **id** - `string`, salesforce object id
@@ -113,10 +112,7 @@ Action creates a single object. Input metadata is fetched dynamically from your 
 * **Allow criteria to be omitted** - checkbox, if checked - search criteria can be omitted and the empty object will be returned, else - search criteria are required.
 * **Allow zero results** - checkbox, if checked and nothing is found - empty object will be returned, else - action throw an error.
 * **Pass binary data to the next component (if found object has it)** - a checkbox, if it is checked and found object has a binary field (type of base64) then its data will be passed to the next component as a binary attachment.
-<<<<<<< HEAD
-=======
 * **Enable Cache Usage** - Flag to enable cache usage.
->>>>>>> 865ca3a2219cbc12f479ab30f9a1ac8ea340852f
 
 #### Metadata description
 
@@ -125,15 +121,12 @@ Metadata contains one field whose name, type and mandatoriness are generated acc
 #### Limitations
 When **Pass binary data to the next component (if found object has it)** is checked and this action is used with Local Agent error would be thrown: 'getaddrinfo ENOTFOUND steward-service.platform.svc.cluster.local steward-service.platform.svc.cluster.local:8200'
 
-<<<<<<< HEAD
-=======
 #### Note
 Action has caching mechanism. By default action stores last 10 request-response pairs for 10 min duration.
 This parameters can be changed by setting environment variables:
 * **HASH_LIMIT_TIME** - Hash expiration time in milis
 * **HASH_LIMIT_ELEMENTS** - Hash size number limit
 
->>>>>>> 865ca3a2219cbc12f479ab30f9a1ac8ea340852f
 ### Lookup Objects
 Lookup a list of objects satisfying specified criteria.
 
@@ -142,8 +135,6 @@ Lookup a list of objects satisfying specified criteria.
 * **Include deleted** - checkbox, if checked - deleted records will be included into the result list.
 * **Output method** - dropdown list with following values: "Emit all", "Emit page", "Emit individually".
 * **Number of search terms** - text field to specify a number of search terms (positive integer number [1-99] or 0).
-<<<<<<< HEAD
-=======
 * **Enable Cache Usage** - Flag to enable cache usage.
 
 #### Note
@@ -151,7 +142,6 @@ Action has caching mechanism. By default action stores last 10 request-response 
 This parameters can be changed by setting environment variables:
 * **HASH_LIMIT_TIME** - Hash expiration time in milis
 * **HASH_LIMIT_ELEMENTS** - Hash size number limit
->>>>>>> 865ca3a2219cbc12f479ab30f9a1ac8ea340852f
 
 #### Metadata description
 
