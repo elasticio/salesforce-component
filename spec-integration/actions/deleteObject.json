@@ -7,15 +7,14 @@
                 },
                 "prodEnv": "login",
                 "sobject": "Contact",
-                "account": "5be195b7c99b61001068e1d0",
                 "lookupField": "Id",
                 "typeOfSearch": "uniqueFields"
             },
             "message": {
-                "body": {
-                  "Id": "0032R000027DryfQAC"
+                "body" : {
+                    "Id":"*"
                 }
-            }
+            } 
         }, 
         {
             "config" : {
@@ -24,51 +23,15 @@
             },
             "prodEnv": "login",
             "sobject": "Contact",
-            "account": "5be195b7c99b61001068e1d0",
             "lookupField": "Id",
             "typeOfSearch": "uniqueFields"
             },
             "message": {
-                "body": {
-                  "Id": "0012R0000283V3A"
+                "body" : {
+                    "Id":"*"
                 }
-            },
-            "response": { "id": "0012R0000283V3A", "success": true, "errors": [] }
-        }, 
-        {
-            "config" : {
-                "oauth": {
-                    "instance_url": "https://na98.salesforce.com"
-                },
-                "prodEnv": "login",
-                "sobject": "Parent__c",
-                "account": "5be195b7c99b61001068e1d0",
-                "lookupField": "Id",
-                "typeOfSearch": "uniqueFields"
-            },
-            "message": {
-                "body": {
-                  "Id": "0012R0000283R06QAE"
-                }
-            },
-            "response": { "id": "0012R0000283R06QAE", "success": true, "errors": [] }
-        }, 
-        {
-            "config": {
-                "oauth": {
-                    "instance_url": "https://na98.salesforce.com"
-                },
-                "prodEnv": "login",
-                "sobject": "Parent__c",
-                "account": "5be195b7c99b61001068e1d0",
-                "lookupField": "Id",
-                "typeOfSearch": "uniqueFields"
-            },
-            "message": {
-                "body": {
-                  "Id": "0014400001ytQRqAAM"
-                }
-            }
+            }, 
+            "response": { "id": "*", "success": true, "errors": [] }
         }, 
         {
             "config": {
@@ -77,15 +40,14 @@
                 },
                 "prodEnv": "login",
                 "sobject": "Account",
-                "account": "5be195b7c99b61001068e1d0",
                 "lookupField": "Name",
                 "typeOfSearch": "allFields"
             },
             "message": {
-                "body": {
-                  "Name": "White House"
+                "body" : {
+                    "Name":"White House"
                 }
-            }
+            } 
         }, 
         {
             "config": {
@@ -94,34 +56,15 @@
                 },
                 "prodEnv": "login",
                 "sobject": "Account",
-                "account": "5be195b7c99b61001068e1d0",
-                "lookupField": "CreatedDate",
+                "lookupField": "test_datetime__c",
                 "typeOfSearch": "uniqueFields"
             },
             "message": {
-                "body": {
-                  "CreatedDate": "2019-11-13T11:00:54.000Z"
+                "body" : {
+                    "test_datetime__c":"2019-11-13T11:00:54.000Z"
                 }
-            },
-            "response": { "id": "0012R000026cVtwQAE", "success": true, "errors": [] }
-        }, 
-        {
-            "config": {
-                "oauth": {
-                    "instance_url": "https://na98.salesforce.com"
-                },
-                "prodEnv": "login",
-                "sobject": "Child__c",
-                "account": "5be195b7c99b61001068e1d0",
-                "lookupField": "parentLU__c",
-                "typeOfSearch": "uniqueFields"
-            },
-            "message": {
-                "body": {
-                  "parentLU__c": "0012R000026cVuBQAU"
-                }
-            },
-            "response": { "id": "0012R00002834VfQAI", "success": true, "errors": [] }
+            }, 
+            "response": { "id": "*", "success": true, "errors": [] }
         }
     ]
 }
