@@ -10,8 +10,8 @@ const { expect } = chai;
 describe('Delete Object Integration Functionality', () => {
 
   var emitter;
-  let testObj;
-  let testObjGen;
+  let testObjLst;
+
   before(async () => {
     // eslint-disable-next-line global-require
     require('dotenv').config({path:__dirname+'/secrets.env'}); 
@@ -21,7 +21,9 @@ describe('Delete Object Integration Functionality', () => {
       logger,
     };
 
-    testObjGen = testDataFactory.call(emitter);
+    if (!( testObjLst = testDataFactory.call(emitter) )) {
+      throw Error('Test data was not sucessfully created');
+    }
   });
 
   beforeEach(() => {
@@ -29,11 +31,7 @@ describe('Delete Object Integration Functionality', () => {
   })
 
   it('Correctly identifies a lack of response on a non-existent Contact', async () => {
-    testObj = await testObjGen.next() 
-    if (!( testObj.value )) {
-      throw Error('Test data was not sucessfully created');
-    }
-    await deleteObject.process.call(emitter, testObj.message, testObj.config)
+    await deleteObject.process.call(emitter, testObjLst[0].message, testObjLst[0].config)
     expect(emitter.emit.args[2][1].body).to.be.empty;
   });
 
@@ -42,7 +40,7 @@ describe('Delete Object Integration Functionality', () => {
     if (!( testObj.value )) {
       throw Error('Test data was not sucessfully created');
     }
-    await deleteObject.process.call(emitter, testObj.message, testObj.config)
+    await deleteObject.process.call(emitter, testObjLst[1].message, testObjLst[1].config)
     expect(emitter.emit.args[2][1].body).to.be.deep.equal(testObj.response);
   });
 
@@ -51,7 +49,7 @@ describe('Delete Object Integration Functionality', () => {
     if (!( testObj.value )) {
       throw Error('Test data was not sucessfully created');
     }
-    await deleteObject.process.call(emitter, testObj.message, testObj.config)
+    await deleteObject.process.call(emitter, testObjLst[2].message, testObjLst[2].config)
     expect(emitter.emit.args[2][1]).to.be.instanceOf(Error);
   });
 
@@ -60,7 +58,7 @@ describe('Delete Object Integration Functionality', () => {
     if (!( testObj.value )) {
       throw Error('Test data was not sucessfully created');
     }
-    await deleteObject.process.call(emitter, testObj.message, testObj.config)
+    await deleteObject.process.call(emitter, testObjLst[3].message, testObjLst[3].config)
     expect(emitter.emit.args[2][1].body).to.be.deep.equal(testObj.response);
   });
 });
