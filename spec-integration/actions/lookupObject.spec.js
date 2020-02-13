@@ -147,4 +147,15 @@ describe('lookupObject', () => {
       },
     });
   });
+
+  it('throws a special error when a binary field is queried as a linked object', async () => {
+    try {
+      await lookupObject.process.call(emitter, message,
+        Object.assign(configuration, { linkedObjects: ['!Attachments'] }));
+    } catch (e) {
+      expect(e.message).to.equal('Binary fields cannot be selected in join queries. '
+      + 'Instead of querying objects with binary fields as linked objects '
+      + '(such as children Attachments), try querying them directly.');
+    }
+  });
 });
