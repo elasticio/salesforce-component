@@ -56,21 +56,17 @@ describe('lookupObject', () => {
   };
 
   it('looks up Contact Object ', async () => {
-    await lookupObject.process.call(emitter, message, configuration)
-      .then(() => {
-        expect(lastCall.lastCall.args[0].attributes.type).to.eql('Contact');
-      });
+    await lookupObject.process.call(emitter, message, configuration);
+    expect(lastCall.lastCall.args[0].attributes.type).to.eql('Contact');
   });
 
   it('Contact Lookup fields ', async () => {
-    await lookupObject.getLookupFieldsModel(configuration)
-      .then((result) => {
-        expect(result).to.be.deep.eql({
-          Demo_Email__c: 'Demo Email (Demo_Email__c)',
-          Id: 'Contact ID (Id)',
-          extID__c: 'extID (extID__c)',
-        });
-      });
+    const result = await lookupObject.getLookupFieldsModel(configuration);
+    expect(result).to.be.deep.eql({
+      Demo_Email__c: 'Demo Email (Demo_Email__c)',
+      Id: 'Contact ID (Id)',
+      extID__c: 'extID (extID__c)',
+    });
   });
 
   it('Contact linked objects ', async () => {
@@ -133,26 +129,22 @@ describe('lookupObject', () => {
   });
 
   it('Contact objectTypes ', async () => {
-    await lookupObject.objectTypes.call(emitter, configuration)
-      .then((result) => {
-        expect(result.Account).to.be.eql('Account');
-      });
+    const result = await lookupObject.objectTypes.call(emitter, configuration);
+    expect(result.Account).to.be.eql('Account');
   });
 
   it('Contact Lookup Meta', async () => {
-    await lookupObject.getMetaModel.call(emitter, configuration)
-      .then((result) => {
-        expect(result.in).to.be.deep.eql({
-          type: 'object',
-          properties: {
-            Id: {
-              type: 'string',
-              required: true,
-              title: 'Contact ID',
-              default: null,
-            },
-          },
-        });
-      });
+    const result = await lookupObject.getMetaModel.call(emitter, configuration);
+    expect(result.in).to.be.deep.eql({
+      type: 'object',
+      properties: {
+        Id: {
+          type: 'string',
+          required: true,
+          title: 'Contact ID',
+          default: null,
+        },
+      },
+    });
   });
 });
