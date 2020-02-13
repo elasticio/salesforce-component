@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "eslint & mocha spec NODE_ENV=test --recursive --timeout 50000",
-    "test-integration": "mocha spec-integration --recursive --timeout 50000"
+    "integration-test": "mocha spec-integration --recursive --timeout 50000"
   },
   "repository": {
     "type": "git",
