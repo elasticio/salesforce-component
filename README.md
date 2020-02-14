@@ -107,12 +107,12 @@ Lookup an object by a selected field.
 Action creates a single object. Input metadata is fetched dynamically from your Salesforce account. Output metadata is the same as input metadata, so you may expect all fields that you mapped as input to be returned as output.
 
 #### Input field description
-* **Object** - dropdown list where you should choose the object type, which you want to find. E.g. `Account`.
-* **Type Of Search** -  dropdown list with two values: `Unique Fields` and `All Fields`.
-* **Lookup by field** - dropdown list with all fields on the selected object, if on *Type Of Search* is chosen `All Fields`, or with all fields on the selected object where `type` is `id` or `unique` is `true` , if on *Type Of Search* is chosen `Unique Fields`.
-* **Allow criteria to be omitted** - checkbox, if checked - search criteria can be omitted and the empty object will be returned, else - search criteria are required.
-* **Allow zero results** - checkbox, if checked and nothing is found - empty object will be returned, else - action throw an error.
-* **Pass binary data to the next component (if found object has it)** - a checkbox, if it is checked and found object has a binary field (type of base64) then its data will be passed to the next component as a binary attachment.
+* **Object** - Dropdown list displaying all searchable object types. Select one type to query, e.g. `Account`.
+* **Type Of Search** - Dropdown list with two values: `Unique Fields` and `All Fields`.
+* **Lookup by field** - Dropdown list with all fields on the selected object if the *Type Of Search* is `All Fields`. If the *Type Of Search* is `Unique Fields`, the dropdown lists instead all fields on the selected object where `type` is `id` or `unique` is `true`.
+* **Include linked objects** - Multiselect dropdown list with all the related child and parent objects of the selected object type. List entries are given as `Object Name/Reference To (Relationship Name)`. Select one or more related objects, which will be join queried and included in the response from your Salesforce Organization. Please see the **Limitations** section below for use case advisories.
+* **Allow zero results** - Checkbox. If checked and nothing is found in your Salesforce Organization, an empty object will be returned. If not checked and nothing is found, the action will throw an error.
+* **Pass binary data to the next component (if found object has it)** - Checkbox. If it is checked and the found object record has a binary field (primitive type `base64`), then its data will be passed to the next component as a binary attachment.
 * **Enable Cache Usage** - Flag to enable cache usage.
 
 #### Metadata description
@@ -120,7 +120,9 @@ Action creates a single object. Input metadata is fetched dynamically from your 
 Metadata contains one field whose name, type and mandatoriness are generated according to the value of the configuration fields *Lookup by field* and *Allow criteria to be omitted*.
 
 #### Limitations
-When **Pass binary data to the next component (if found object has it)** is checked and this action is used with Local Agent error would be thrown: 'getaddrinfo ENOTFOUND steward-service.platform.svc.cluster.local steward-service.platform.svc.cluster.local:8200'
+When a binary field (primitive type `base64`, e.g. Documents, Attachments, etc) is selected on **Include linked objects**, an error will be thrown: 'MALFORMED_QUERY: Binary fields cannot be selected in join queries. Instead of querying objects with binary fields as linked objects (such as children Attachments), try querying them directly.' As well, due to a bug with multiselect dropdowns, it is recommended to deselect all of the elements in this field before you change your selection in the *Object* dropdown list.
+
+When **Pass binary data to the next component (if found object has it)** is checked and this action is used with Local Agent, and error will be thrown: 'getaddrinfo ENOTFOUND steward-service.platform.svc.cluster.local steward-service.platform.svc.cluster.local:8200'
 
 #### Note
 Action has caching mechanism. By default action stores last 10 request-response pairs for 10 min duration.
