@@ -3,7 +3,7 @@ const sinon = require('sinon');
 const chai = require('chai');
 const logger = require('@elastic.io/component-logger')();
 const deleteObject = require('../../lib/actions/deleteObject');
-const { testDataFactory } = require('../../lib/helpers/deleteObjectHelpers');
+const { testDataFactory } = require('../../lib/helpers/deleteObjectHelpers.js');
 
 const { expect } = chai;
 
