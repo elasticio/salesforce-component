@@ -70,21 +70,20 @@ describe('Lookup Object (at most 1) module: getLinkedObjectsModel', () => {
       .reply(200, testCommon.refresh_token.response);
 
     const expectedResult = {};
-
-    Object.assign(expectedResult,
-      getMetaModelReply.fields.filter(field => field.type === 'reference')
-        .reduce((obj, field) => {
-          if (field.relationshipName !== null) {
-            obj[field.relationshipName] = `${field.referenceTo.join(', ')} (${field.relationshipName})`;
-          }
-          return obj;
-        }, {}),
-      getMetaModelReply.childRelationships.reduce((obj, child) => {
-        if (child.relationshipName !== null) {
-          obj[`!${child.relationshipName}`] = `${child.childSObject} (${child.relationshipName})`;
+    const parents = getMetaModelReply.fields.filter(field => field.type === 'reference')
+      .reduce((obj, field) => {
+        if (field.relationshipName !== null) {
+          obj[field.relationshipName] = `${field.referenceTo.join(', ')} (${field.relationshipName})`;
         }
         return obj;
-      }, {}));
+      }, {});
+    const children = getMetaModelReply.childRelationships.reduce((obj, child) => {
+      if (child.relationshipName) {
+        obj[`!${child.relationshipName}`] = `${child.childSObject} (${child.relationshipName})`;
+      }
+      return obj;
+    }, {});
+    Object.assign(expectedResult, parents, children);
 
     testCommon.configuration.typeOfSearch = 'uniqueFields';
     testCommon.configuration.sobject = object;
