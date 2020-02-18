@@ -270,7 +270,7 @@
         "typeOfSearch": {
           "viewClass": "SelectView",
           "label": "Type Of Search",
-          "required": true,
+          "required": false,
           "model": {
             "uniqueFields": "Unique Fields",
             "allFields": "All Fields"
@@ -280,7 +280,7 @@
         "lookupField": {
           "viewClass": "SelectView",
           "label": "Lookup by field",
-          "required": true,
+          "required": false,
           "model": "getLookupFieldsModel",
           "prompt": "Please select the field which you want to use for lookup"
         }
