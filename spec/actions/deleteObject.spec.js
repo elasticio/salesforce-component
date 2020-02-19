@@ -90,16 +90,14 @@ describe('Delete Object (at most 1) module: getMetaModel', () => {
   it('Retrieves metadata for Document object', testMetaData.bind(null, {
     ...testCommon.configuration,
     sobject: 'Document',
-    lookupField: 'Id',
-    allowCriteriaToBeOmitted: true,
+    lookupField: 'Id'
   },
   metaModelDocumentReply));
 
   it('Retrieves metadata for Account object', testMetaData.bind(null, {
     ...testCommon.configuration,
     sobject: 'Account',
-    lookupField: 'Id',
-    allowCriteriaToBeOmitted: true,
+    lookupField: 'Id'
   },
   metaModelAccountReply));
 });
