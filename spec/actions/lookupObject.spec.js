@@ -69,21 +69,12 @@ describe('Lookup Object (at most 1) module: getLinkedObjectsModel', () => {
       .post('')
       .reply(200, testCommon.refresh_token.response);
 
-    const expectedResult = {};
-    const parents = getMetaModelReply.fields.filter(field => field.type === 'reference')
-      .reduce((obj, field) => {
-        if (field.relationshipName !== null) {
-          obj[field.relationshipName] = `${field.referenceTo.join(', ')} (${field.relationshipName})`;
-        }
-        return obj;
-      }, {});
-    const children = getMetaModelReply.childRelationships.reduce((obj, child) => {
-      if (child.relationshipName) {
-        obj[`!${child.relationshipName}`] = `${child.childSObject} (${child.relationshipName})`;
-      }
-      return obj;
-    }, {});
-    Object.assign(expectedResult, parents, children);
+    const expectedResult = {
+      Folder: 'Folder, User (Folder)',
+      Author: 'User (Author)',
+      CreatedBy: 'User (CreatedBy)',
+      LastModifiedBy: 'User (LastModifiedBy)',
+    };
 
     testCommon.configuration.typeOfSearch = 'uniqueFields';
     testCommon.configuration.sobject = object;
