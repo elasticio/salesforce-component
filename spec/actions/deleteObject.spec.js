@@ -12,7 +12,6 @@ const sinon = require('sinon');
 
 const common = require('../../lib/common.js');
 const testCommon = require('../common.js');
-const objectTypesReply = require('../sfObjects.json');
 const testDeleteData = require('./deleteObject.json');
 const deleteObjectAction = require('../../lib/actions/deleteObject.js');
 const helpers = require('../../lib/helpers/deleteObjectHelpers.js')
@@ -21,24 +20,6 @@ const metaModelDocumentReply = require('../sfDocumentMetadata.json');
 const metaModelAccountReply = require('../sfAccountMetadata.json');
 
 nock.disableNetConnect();
-
-describe('Delete Object (at most 1) module: objectTypes', () => {
-  it('Retrieves the list of queryable sobjects', async () => {
-    const scope = nock(testCommon.configuration.oauth.instance_url)
-      .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects`)
-      .reply(200, objectTypesReply);
-
-    const expectedResult = {};
-    objectTypesReply.sobjects.forEach((object) => {
-      if (object.queryable) expectedResult[object.name] = object.label;
-    });
-
-    const result = await deleteObjectAction.objectTypes.call(testCommon, testCommon.configuration);
-    chai.expect(result).to.deep.equal(expectedResult);
-
-    scope.done();
-  });
-});
 
 describe('Delete Object (at most 1) module: getMetaModel', () => {
   function testMetaData(configuration, getMetaModelReply) {
