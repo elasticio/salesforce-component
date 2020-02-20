@@ -50,7 +50,8 @@ describe('Lookup Object (at most 1) module: getLookupFieldsModel', () => {
     testCommon.configuration.typeOfSearch = 'uniqueFields';
     testCommon.configuration.sobject = object;
 
-    const result = await lookupObject.getLookupFieldsModel.call(testCommon, testCommon.configuration);
+    const result = await lookupObject.getLookupFieldsModel
+      .call(testCommon, testCommon.configuration);
 
     chai.expect(result).to.deep.equal(expectedResult);
     sfScope.done();
@@ -79,7 +80,8 @@ describe('Lookup Object (at most 1) module: getLinkedObjectsModel', () => {
     testCommon.configuration.typeOfSearch = 'uniqueFields';
     testCommon.configuration.sobject = object;
 
-    const result = await lookupObject.getLinkedObjectsModel.call(testCommon, testCommon.configuration);
+    const result = await lookupObject.getLinkedObjectsModel
+      .call(testCommon, testCommon.configuration);
 
     chai.expect(result).to.deep.equal(expectedResult);
     sfScope.done();
@@ -137,12 +139,16 @@ describe('Lookup Object module: getMetaModel', () => {
 
       if (field.type === 'textarea') fieldDescriptor.maxLength = 1000;
 
-      if (field.picklistValues != undefined && field.picklistValues.length != 0) {
+      if (field.picklistValues !== undefined && field.picklistValues.length !== 0) {
         fieldDescriptor.enum = [];
         field.picklistValues.forEach((pick) => { fieldDescriptor.enum.push(pick.value); });
       }
 
-      if (configuration.lookupField === field.name) expectedResult.in.properties[field.name] = { ...fieldDescriptor, required: !configuration.allowCriteriaToBeOmitted };
+      if (configuration.lookupField === field.name) {
+        expectedResult.in.properties[field.name] = {
+          ...fieldDescriptor, required: !configuration.allowCriteriaToBeOmitted,
+        };
+      }
 
       expectedResult.out.properties[field.name] = fieldDescriptor;
     });
@@ -198,7 +204,7 @@ describe('Lookup Object module: processAction', () => {
 
 
     const getResult = new Promise((resolve) => {
-      testCommon.emitCallback = function (what, msg) {
+      testCommon.emitCallback = (what, msg) => {
         if (what === 'data') resolve(msg);
       };
     });
@@ -241,7 +247,7 @@ describe('Lookup Object module: processAction', () => {
     nock(testCommon.EXT_FILE_STORAGE).put('', JSON.stringify(message)).reply(200);
 
     const getResult = new Promise((resolve) => {
-      testCommon.emitCallback = function (what, msg) {
+      testCommon.emitCallback = (what, msg) => {
         if (what === 'data') resolve(msg);
       };
     });

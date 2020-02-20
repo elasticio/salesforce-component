@@ -1,4 +1,4 @@
-/* eslint-disable no-return-assign */
+/* eslint-disable no-restricted-syntax,guard-for-in */
 const chai = require('chai');
 const nock = require('nock');
 
@@ -32,7 +32,7 @@ describe('Salesforce delete object', () => {
     const response = await deleteObject.process.call(testCommon, data.message, data.configuration);
     chai.expect(response.body.result).to.deep.equal(expectedResult);
 
-    for (let i = 0; i < scopes.length; i++) {
+    for (let i = 0; i < scopes.length; i += 1) {
       scopes[i].done();
     }
   });

@@ -1,4 +1,4 @@
-'use strict'
+
 
 const chai = require('chai');
 const nock = require('nock');
@@ -26,7 +26,7 @@ describe('Query module: processAction', () => {
         Name: 'NotVeryImportantDoc',
         IsPublic: false,
         Body: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Everest_kalapatthar.jpg/800px-Everest_kalapatthar.jpg',
-        ContentType: 'imagine/noHeaven'
+        ContentType: 'imagine/noHeaven',
       },
       {
         Id: 'testObjId',
@@ -34,24 +34,23 @@ describe('Query module: processAction', () => {
         Name: 'VeryImportantDoc',
         IsPublic: true,
         Body: 'wikipedia.org',
-        ContentType: 'imagine/noHell'
-      }
-    ]
+        ContentType: 'imagine/noHell',
+      },
+    ],
   };
 
   afterEach(() => {
     context.emit.resetHistory();
   });
 
-  it(`Gets objects not including deleted`, async () => {
-
+  it('Gets objects not including deleted', async () => {
     testCommon.configuration.includeDeleted = false;
     testCommon.configuration.allowResultAsSet = true;
 
     const message = {
       body: {
-        query: 'select name, id from account where name = \'testtest\''
-      }
+        query: 'select name, id from account where name = \'testtest\'',
+      },
     };
 
     const expectedQuery = 'select%20name%2C%20id%20from%20account%20where%20name%20%3D%20%27testtest%27';
@@ -65,15 +64,14 @@ describe('Query module: processAction', () => {
     expect(context.emit.getCall(0).lastArg.body).to.deep.equal(testReply);
   });
 
-  it(`Gets objects including deleted`, async () => {
-
+  it('Gets objects including deleted', async () => {
     testCommon.configuration.includeDeleted = true;
     testCommon.configuration.allowResultAsSet = true;
 
     const message = {
       body: {
-        query: 'select name, id from account where name = \'testtest\''
-      }
+        query: 'select name, id from account where name = \'testtest\'',
+      },
     };
 
     const expectedQuery = 'select%20name%2C%20id%20from%20account%20where%20name%20%3D%20%27testtest%27';
@@ -87,16 +85,15 @@ describe('Query module: processAction', () => {
     expect(context.emit.getCall(0).lastArg.body).to.deep.equal(testReply);
   });
 
-  it(`Gets objects batchSize=1, allowResultAsSet = false`, async () => {
-
+  it('Gets objects batchSize=1, allowResultAsSet = false', async () => {
     testCommon.configuration.includeDeleted = true;
     testCommon.configuration.allowResultAsSet = false;
     testCommon.configuration.batchSize = 1;
 
     const message = {
       body: {
-        query: 'select name, id from account where name = \'testtest\''
-      }
+        query: 'select name, id from account where name = \'testtest\'',
+      },
     };
     const expectedQuery = 'select%20name%2C%20id%20from%20account%20where%20name%20%3D%20%27testtest%27';
 
@@ -111,14 +108,13 @@ describe('Query module: processAction', () => {
     expect(context.emit.getCall(1).lastArg.body).to.deep.equal({ result: [testReply.result[1]] });
   });
 
-  it(`Gets objects batchSize=1, allowResultAsSet = true`, async () => {
-
+  it('Gets objects batchSize=1, allowResultAsSet = true', async () => {
     testCommon.configuration.includeDeleted = true;
     testCommon.configuration.allowResultAsSet = true;
     const message = {
       body: {
-        query: 'select name, id from account where name = \'testtest\''
-      }
+        query: 'select name, id from account where name = \'testtest\'',
+      },
     };
     const expectedQuery = 'select%20name%2C%20id%20from%20account%20where%20name%20%3D%20%27testtest%27';
     const scope = nock(testCommon.configuration.oauth.instance_url, { encodedQueryParams: true })
@@ -131,15 +127,14 @@ describe('Query module: processAction', () => {
     expect(context.emit.getCall(0).lastArg.body).to.deep.equal(testReply);
   });
 
-  it(`Gets objects batchSize=0, allowResultAsSet = false`, async () => {
-
+  it('Gets objects batchSize=0, allowResultAsSet = false', async () => {
     testCommon.configuration.includeDeleted = true;
     testCommon.configuration.allowResultAsSet = undefined;
     testCommon.configuration.batchSize = 0;
     const message = {
       body: {
-        query: 'select name, id from account where name = \'testtest\''
-      }
+        query: 'select name, id from account where name = \'testtest\'',
+      },
     };
     const expectedQuery = 'select%20name%2C%20id%20from%20account%20where%20name%20%3D%20%27testtest%27';
     const scope = nock(testCommon.configuration.oauth.instance_url, { encodedQueryParams: true })
@@ -152,5 +147,4 @@ describe('Query module: processAction', () => {
     expect(context.emit.getCall(0).lastArg.body).to.deep.equal(testReply.result[0]);
     expect(context.emit.getCall(1).lastArg.body).to.deep.equal(testReply.result[1]);
   });
-
 });

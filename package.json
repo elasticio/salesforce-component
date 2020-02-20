@@ -4,7 +4,8 @@
   "description": "elastic.io component that connects to Salesforce API (node.js)",
   "main": "index.js",
   "scripts": {
-    "test": "eslint & mocha spec NODE_ENV=test --recursive --timeout 50000",
+    "pretest": "eslint lib spec spec-integration verifyCredentials.js --fix",
+    "test": "mocha spec NODE_ENV=test --recursive --timeout 50000",
     "integration-test": "mocha spec-integration --recursive --timeout 50000"
   },
   "repository": {
@@ -26,6 +27,7 @@
     "node": "12.3.0"
   },
   "dependencies": {
+    "dotenv": "8.0.0",
     "elasticio-node": "0.0.9",
     "elasticio-rest-node": "1.2.3",
     "elasticio-sailor-nodejs": "2.6.2",
@@ -41,7 +43,6 @@
   "devDependencies": {
     "@elastic.io/component-logger": "0.0.1",
     "chai": "4.2.0",
-    "dotenv": "8.0.0",
     "eslint": "5.16.0",
     "eslint-config-airbnb-base": "13.1.0",
     "eslint-plugin-import": "2.18.0",

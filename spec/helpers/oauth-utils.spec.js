@@ -54,9 +54,9 @@ describe('oauth-utils Unit Test', () => {
     });
 
     // eslint-disable-next-line max-len
-    helper.refreshToken(logger, serviceURI, clientIdKey, clientSecretKey, configuration, (error) => {
-      expect(error.message).to.equal('some error thrown');
-      expect(error.statusCode).to.equal(404);
+    helper.refreshToken(logger, serviceURI, clientIdKey, clientSecretKey, configuration, (err) => {
+      expect(err.message).to.equal('some error thrown');
+      expect(err.statusCode).to.equal(404);
     });
   });
 });
