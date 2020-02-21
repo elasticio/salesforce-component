@@ -131,6 +131,7 @@ describe('Lookup Objects module: getMetaModel', () => {
 
     filterableFields.sort();
 
+    // eslint-disable-next-line no-plusplus
     for (let i = 1; i <= configuration.termNumber; i += 1) {
       expectedResult.in.properties[`sTerm_${i}`] = {
         title: `Search term ${i}`,
@@ -157,7 +158,7 @@ describe('Lookup Objects module: getMetaModel', () => {
         },
       };
 
-      if (i !== configuration.termNumber) {
+      if (i !== parseInt(configuration.termNumber, 10)) {
         expectedResult.in.properties[`link_${i}_${i + 1}`] = {
           title: 'Logical operator',
           type: 'string',
@@ -224,7 +225,7 @@ describe('Lookup Objects module: getMetaModel', () => {
   },
   metaModelDocumentReply));
 
-  it('Retrieves metadata for Document object', testMetaData.bind(null, {
+  it('Retrieves metadata for Document object 2 terms', testMetaData.bind(null, {
     ...testCommon.configuration,
     sobject: 'Document',
     outputMethod: 'emitAll',
@@ -814,7 +815,7 @@ describe('Lookup Objects module: processAction', () => {
       testCommon.emitCallback = (what, msg) => {
         if (what === 'data') {
           chai.expect(msg.body).to.deep.equal({
-            esults: [testReply.results[0], testReply.results[1]],
+            results: [testReply.results[0], testReply.results[1]],
           });
           scope.done();
           resolve();
