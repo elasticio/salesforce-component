@@ -297,7 +297,8 @@
           "label": "Object",
           "required": true,
           "model": "objectTypes",
-          "prompt": "Please select a Salesforce Object"
+          "prompt": "Please select a Salesforce Object",
+          "order": 8
         },
         "typeOfSearch": {
           "viewClass": "SelectView",
@@ -307,30 +308,43 @@
             "uniqueFields": "Unique Fields",
             "allFields": "All Fields"
           },
-          "prompt": "Please select a type of search"
+          "prompt": "Please select a type of search",
+          "order": 7
         },
         "lookupField": {
           "viewClass": "SelectView",
           "label": "Lookup by field",
           "required": true,
           "model": "getLookupFieldsModel",
-          "note": "Please select the field which you want to use for lookup"
+          "note": "Please select the field which you want to use for lookup",
+          "order": 6
+        },
+        "linkedObjects": {
+          "viewClass": "MultiSelectView",
+          "label": "Include referenced objects",
+          "model": "getLinkedObjectsModel",
+          "note": "Please select the related objects you want included in your lookup",
+          "order": 5
         },
         "allowCriteriaToBeOmitted": {
           "viewClass": "CheckBoxView",
-          "label": "Allow criteria to be omitted"
+          "label": "Allow criteria to be omitted",
+          "order": 4
         },
         "allowZeroResults": {
           "viewClass": "CheckBoxView",
-          "label": "Allow zero results"
+          "label": "Allow zero results",
+          "order": 3
         },
         "passBinaryData": {
           "viewClass": "CheckBoxView",
-          "label": "Pass binary data to the next component (if found object has it)"
+          "label": "Pass binary data to the next component (if found object has it)",
+          "order": 2
         },
         "enableCacheUsage": {
           "viewClass": "CheckBoxView",
-          "label": "Enable Cache Usage"
+          "label": "Enable Cache Usage",
+          "order": 1
         }
       }
     },

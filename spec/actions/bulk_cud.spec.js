@@ -1,4 +1,4 @@
-/* eslint-disable no-return-assign */
+/* eslint-disable guard-for-in,no-restricted-syntax */
 const chai = require('chai');
 const nock = require('nock');
 
@@ -21,7 +21,13 @@ describe('Salesforce bulk', () => {
     const data = testData.bulkInsertCase;
     data.configuration = { ...testCommon.configuration, ...data.configuration };
 
-    const expectedResult = { result: [{ id: '5002o00002E8FIIAA3', success: true, errors: [] }, { id: '5002o00002E8FIJAA3', success: true, errors: [] }, { id: '5002o00002E8FIKAA3', success: true, errors: [] }] };
+    const expectedResult = {
+      result: [
+        { id: '5002o00002E8FIIAA3', success: true, errors: [] },
+        { id: '5002o00002E8FIJAA3', success: true, errors: [] },
+        { id: '5002o00002E8FIKAA3', success: true, errors: [] },
+      ],
+    };
 
     const scopes = [];
     for (const host in data.responses) {
@@ -36,7 +42,7 @@ describe('Salesforce bulk', () => {
 
     chai.expect(result.body).to.deep.equal(expectedResult);
 
-    for (let i = 0; i < scopes.length; i++) {
+    for (let i = 0; i < scopes.length; i += 1) {
       scopes[i].done();
     }
   });
@@ -61,7 +67,7 @@ describe('Salesforce bulk', () => {
 
     chai.expect(result.body).to.deep.equal(expectedResult);
 
-    for (let i = 0; i < scopes.length; i++) {
+    for (let i = 0; i < scopes.length; i += 1) {
       scopes[i].done();
     }
   });
@@ -86,7 +92,7 @@ describe('Salesforce bulk', () => {
 
     chai.expect(result.body).to.deep.equal(expectedResult);
 
-    for (let i = 0; i < scopes.length; i++) {
+    for (let i = 0; i < scopes.length; i += 1) {
       scopes[i].done();
     }
   });

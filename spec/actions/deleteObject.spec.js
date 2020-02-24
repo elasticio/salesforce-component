@@ -1,10 +1,5 @@
-/* eslint-disable no-return-assign,func-names */
-/**
- * Note: The order of tests is congruent to their declaration in deleteObject.js action
- * Note: Most of the tests are adapted from the lookupObject.spec.js file as many
- * of the functions are resued
- * Adapted by C.J.V
- */
+/* eslint-disable no-restricted-syntax,guard-for-in */
+
 const _ = require('lodash');
 const chai = require('chai');
 const nock = require('nock');
