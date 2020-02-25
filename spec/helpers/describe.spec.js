@@ -6,7 +6,7 @@ const { expect } = chai;
 const { describeObject, fetchObjectTypes } = require('../../lib/helpers/describe');
 const description = require('../testData/objectDescription.json');
 const objectLists = require('../testData/objectsList.json');
-const common = require("../../lib/common.js");
+const common = require('../../lib/common.js');
 
 const cfg = {
   oauth: {

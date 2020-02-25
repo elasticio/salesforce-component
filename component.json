@@ -255,9 +255,10 @@
       }
     },
     "delete": {
-      "title": "Delete Object",
+      "title": "Delete Object (at most 1)",
       "main": "./lib/actions/deleteObject.js",
       "description": "Delete Selected Object",
+      "dynamicMetadata": true,
       "fields": {
         "sobject": {
           "viewClass": "SelectView",
@@ -265,11 +266,24 @@
           "required": true,
           "model": "objectTypes",
           "prompt": "Please select a Salesforce Object"
+        }, 
+        "typeOfSearch": {
+          "viewClass": "SelectView",
+          "label": "Type Of Search",
+          "required": false,
+          "model": {
+            "uniqueFields": "Unique Fields",
+            "allFields": "All Fields"
+          },
+          "prompt": "Please select a type of search"
+        },
+        "lookupField": {
+          "viewClass": "SelectView",
+          "label": "Lookup by field",
+          "required": false,
+          "model": "getLookupFieldsModel",
+          "prompt": "Please select the field which you want to use for lookup"
         }
-      },
-      "metadata": {
-        "in": "./lib/schemas/deleteObject.in.json",
-        "out": "./lib/schemas/deleteObject.out.json"
       }
     },
     "lookupObject": {
