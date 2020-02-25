@@ -275,14 +275,14 @@
             "uniqueFields": "Unique Fields",
             "allFields": "All Fields"
           },
-          "prompt": "Please select a type of search"
+          "prompt": "Please select a type of search. By default - All Fields"
         },
         "lookupField": {
           "viewClass": "SelectView",
           "label": "Lookup by field",
           "required": false,
           "model": "getLookupFieldsModel",
-          "prompt": "Please select the field which you want to use for lookup"
+          "prompt": "Please select the field which you want to use for lookup. By default - Object ID"
         }
       }
     },

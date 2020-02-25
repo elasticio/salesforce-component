@@ -86,16 +86,8 @@ Result is an object with 3 fields.
 * **success** - `boolean`, if operation was successful `true`
 * **errors** - `array`, if operation fails, it will contain description of errors
 
-#### Input field description
-* **Object** - Input field where you should choose the object type, which you want to delete. E.g. `Account`
-
 #### Metadata description
-* **id** - `string`, salesforce object id
-
-Result is an object with 3 fields.
-* **id** - `string`, salesforce object id
-* **success** - `boolean`, if operation was successful `true`
-* **errors** - `array`, if operation fails, it will contain description of errors
+Metadata for each particular `Object type` + `Lookup by field` is generating dynamically.
 
 ### Upsert Object
 Creates or Updates Selected Object.
