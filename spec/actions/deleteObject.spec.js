@@ -1,4 +1,4 @@
-/* eslint-disable no-restricted-syntax,guard-for-in */
+/* eslint-disable no-restricted-syntax,guard-for-in,func-names */
 
 const _ = require('lodash');
 const chai = require('chai');
