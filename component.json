@@ -266,7 +266,7 @@
           "required": true,
           "model": "objectTypes",
           "prompt": "Please select a Salesforce Object"
-        }, 
+        },
         "typeOfSearch": {
           "viewClass": "SelectView",
           "label": "Type Of Search",
