@@ -266,7 +266,7 @@
           "required": true,
           "model": "objectTypes",
           "prompt": "Please select a Salesforce Object"
-        }, 
+        },
         "typeOfSearch": {
           "viewClass": "SelectView",
           "label": "Type Of Search",
@@ -275,14 +275,14 @@
             "uniqueFields": "Unique Fields",
             "allFields": "All Fields"
           },
-          "prompt": "Please select a type of search. By default - All Fields"
+          "prompt": "Please select a type of search"
         },
         "lookupField": {
           "viewClass": "SelectView",
           "label": "Lookup by field",
           "required": false,
           "model": "getLookupFieldsModel",
-          "prompt": "Please select the field which you want to use for lookup. By default - Object ID"
+          "prompt": "Please select the field which you want to use for lookup"
         }
       }
     },
