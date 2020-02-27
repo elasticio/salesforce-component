@@ -316,14 +316,13 @@
           "label": "Lookup by field",
           "required": true,
           "model": "getLookupFieldsModel",
-          "note": "Please select the field which you want to use for lookup",
+          "prompt": "Please select the field which you want to use for lookup",
           "order": 6
         },
         "linkedObjects": {
           "viewClass": "MultiSelectView",
           "label": "Include referenced objects",
           "model": "getLinkedObjectsModel",
-          "note": "Please select the related objects you want included in your lookup",
           "order": 5,
           "prompt": "Please select the related objects you want included in your lookup"
       },
