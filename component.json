@@ -324,8 +324,7 @@
           "label": "Include referenced objects",
           "model": "getLinkedObjectsModel",
           "note": "Please select the related objects you want included in your lookup",
-          "order": 5
-        },
+          "order": 5,
           "prompt": "Please select the related objects you want included in your lookup"
       },
         "allowCriteriaToBeOmitted": {
