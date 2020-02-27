@@ -326,6 +326,8 @@
           "note": "Please select the related objects you want included in your lookup",
           "order": 5
         },
+          "prompt": "Please select the related objects you want included in your lookup"
+      },
         "allowCriteriaToBeOmitted": {
           "viewClass": "CheckBoxView",
           "label": "Allow criteria to be omitted",
