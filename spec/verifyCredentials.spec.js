@@ -1,6 +1,8 @@
 /* eslint-disable consistent-return */
 const chai = require('chai');
 const nock = require('nock');
+const logger = require('@elastic.io/component-logger')();
+
 const verify = require('../verifyCredentials');
 
 const { expect } = chai;
@@ -25,7 +27,7 @@ describe('Verify Credentials', () => {
 
   it('should return verified false without credentials in cfg', () => {
     cfg = {};
-    verify(cfg, (err, data) => {
+    verify.call({ logger }, cfg, (err, data) => {
       expect(err).to.equal(null);
       expect(data).to.deep.equal({ verified: false });
     });
@@ -36,7 +38,7 @@ describe('Verify Credentials', () => {
     nock(BASE_URL)
       .get(path)
       .reply(401, '');
-    verify(cfg, (err, data) => {
+    verify.call({ logger }, cfg, (err, data) => {
       if (err) return done(err);
 
       expect(err).to.equal(null);
@@ -50,7 +52,7 @@ describe('Verify Credentials', () => {
     nock(BASE_URL)
       .get(path)
       .reply(403, '');
-    verify(cfg, (err, data) => {
+    verify.call({ logger }, cfg, (err, data) => {
       if (err) return done(err);
 
       expect(err).to.equal(null);
@@ -64,7 +66,7 @@ describe('Verify Credentials', () => {
     nock(BASE_URL)
       .get(path)
       .reply(200, '');
-    verify(cfg, (err, data) => {
+    verify.call({ logger }, cfg, (err, data) => {
       if (err) return done(err);
       expect(err).to.equal(null);
       expect(data).to.deep.equal({ verified: true });
@@ -77,7 +79,7 @@ describe('Verify Credentials', () => {
     nock(BASE_URL)
       .get(path)
       .reply(500, 'Super Error');
-    verify(cfg, (err) => {
+    verify.call({ logger }, cfg, (err) => {
       expect(err.message).to.equal('Salesforce respond with 500');
       done();
     });
@@ -91,7 +93,7 @@ describe('Verify Credentials', () => {
         message: 'something awful happened',
         code: 'AWFUL_ERROR',
       });
-    verify(cfg, (err) => {
+    verify.call({ logger }, cfg, (err) => {
       expect(err.message).to.equal('something awful happened');
       done();
     });

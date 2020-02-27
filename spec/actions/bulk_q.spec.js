@@ -1,4 +1,4 @@
-/* eslint-disable no-return-assign */
+/* eslint-disable guard-for-in,no-restricted-syntax */
 const chai = require('chai');
 const nock = require('nock');
 

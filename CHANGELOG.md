@@ -1,3 +1,8 @@
+## 1.3.0 (February 27, 2020)
+
+* Add Delete Object (at most 1) Action
+* Add new optional field in the Lookup Object Action
+
 ## 1.2.3 (February 4, 2020)
 
 * Fix query action
