@@ -67,6 +67,16 @@
           "required": true,
           "viewClass": "TextAreaView"
         }
+      },
+      "outputMethod": {
+        "viewClass": "SelectView",
+        "label": "Output method",
+        "required": true,
+        "model": {
+          "emitAll": "Emit all",
+          "emitIndividually": "Emit individually"
+        },
+        "prompt": "Please select an output method"
       }
     },
     "entry": {
@@ -113,6 +123,16 @@
             "no": "no"
           },
           "prompt": "Process single page per execution:"
+        },
+        "outputMethod": {
+          "viewClass": "SelectView",
+          "label": "Output method",
+          "required": true,
+          "model": {
+            "emitAll": "Emit all",
+            "emitIndividually": "Emit individually"
+          },
+          "prompt": "Please select an output method"
         }
       }
     },

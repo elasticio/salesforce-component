@@ -4,7 +4,7 @@ const { expect } = require('chai');
 const jsforce = require('jsforce');
 const logger = require('@elastic.io/component-logger')();
 
-const polling = require('../../lib/entry');
+const query = require('../../lib/entry');
 
 const configuration = {
   apiVersion: '39.0',
@@ -13,7 +13,7 @@ const configuration = {
     refresh_token: 'refresh_token',
     access_token: 'access_token',
   },
-  object: 'Contact',
+  query: 'SELECT ID, Name from Contact',
 };
 const message = {
   body: {},
@@ -24,7 +24,7 @@ let conn;
 const records = require('../testData/trigger.results.json');
 
 
-describe('Polling trigger test', () => {
+describe('Query trigger test', () => {
   beforeEach(() => {
     emitter = {
       emit: sinon.spy(),
@@ -63,8 +63,8 @@ describe('Polling trigger test', () => {
 
     configuration.outputMethod = 'emitAll';
 
-    await polling
-      .process.call(emitter, message, configuration, snapshot);
+    await query
+      .processQuery.call(emitter, configuration.query, configuration);
     expect(emitter.emit.withArgs('data').callCount).to.be.equal(1);
     expect(emitter.emit.withArgs('snapshot').callCount).to.be.equal(1);
     expect(emitter.emit.withArgs('snapshot').getCall(0).args[1].previousLastModified).to.be.equal(records[records.length - 1].LastModifiedDate);
@@ -97,8 +97,8 @@ describe('Polling trigger test', () => {
 
     configuration.outputMethod = 'emitIndividually';
 
-    await polling
-      .process.call(emitter, message, configuration, snapshot);
+    await query
+      .processQuery.call(emitter, configuration.query, configuration);
     expect(emitter.emit.withArgs('data').callCount).to.be.equal(records.length);
     expect(emitter.emit.withArgs('snapshot').callCount).to.be.equal(1);
     expect(emitter.emit.withArgs('snapshot').getCall(0).args[1].previousLastModified).to.be.equal(records[records.length - 1].LastModifiedDate);
@@ -128,8 +128,8 @@ describe('Polling trigger test', () => {
       };
       return connStub;
     });
-    await polling
-      .process.call(emitter, message, configuration, snapshot);
+    await query
+      .processQuery.call(emitter, configuration.query, configuration);
     expect(emitter.emit.withArgs('data').callCount).to.be.equal(0);
     expect(emitter.emit.withArgs('snapshot').callCount).to.be.equal(0);
   });
@@ -159,8 +159,8 @@ describe('Polling trigger test', () => {
       return connStub;
     });
     snapshot.previousLastModified = '2019-28-03T00:00:00.000Z';
-    await polling
-      .process.call(emitter, message, configuration, snapshot);
+    await query
+      .processQuery.call(emitter, configuration.query, configuration);
     expect(emitter.emit.withArgs('data').callCount).to.be.equal(0);
     expect(emitter.emit.withArgs('snapshot').callCount).to.be.equal(0);
   });
@@ -191,8 +191,8 @@ describe('Polling trigger test', () => {
     });
     snapshot.previousLastModified = '2019-28-03T00:00:00.000Z';
     configuration.sizeOfPollingPage = 'test';
-    await polling
-      .process.call(emitter, message, configuration, snapshot);
+    await query
+      .processQuery.call(emitter, configuration.query, configuration);
     expect(emitter.emit.withArgs('error').callCount).to.be.equal(1);
     expect(emitter.emit.withArgs('data').callCount).to.be.equal(0);
     expect(emitter.emit.withArgs('snapshot').callCount).to.be.equal(0);
