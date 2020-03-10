@@ -66,17 +66,17 @@
           "label": "SOQL Query",
           "required": true,
           "viewClass": "TextAreaView"
-        }
-      },
-      "outputMethod": {
-        "viewClass": "SelectView",
-        "label": "Output method",
-        "required": true,
-        "model": {
-          "emitAll": "Emit all",
-          "emitIndividually": "Emit individually"
         },
-        "prompt": "Please select an output method"
+        "outputMethod": {
+          "viewClass": "SelectView",
+          "label": "Output method",
+          "required": false,
+          "model": {
+            "emitAll": "Emit all",
+            "emitIndividually": "Emit individually"
+          },
+          "prompt": "Please select an output method"
+        }
       }
     },
     "entry": {
@@ -127,7 +127,7 @@
         "outputMethod": {
           "viewClass": "SelectView",
           "label": "Output method",
-          "required": true,
+          "required": false,
           "model": {
             "emitAll": "Emit all",
             "emitIndividually": "Emit individually"
@@ -286,7 +286,7 @@
           "required": true,
           "model": "objectTypes",
           "prompt": "Please select a Salesforce Object"
-        }, 
+        },
         "typeOfSearch": {
           "viewClass": "SelectView",
           "label": "Type Of Search",
