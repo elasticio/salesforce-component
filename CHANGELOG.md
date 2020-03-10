@@ -1,3 +1,7 @@
+## 1.3.1 (March 11, 2020)
+
+* Add new optional field `Output method` in triggers: `Query` and `Get New and Updated Objects Polling`
+
 ## 1.3.0 (February 27, 2020)
 
 * Add Delete Object (at most 1) Action
