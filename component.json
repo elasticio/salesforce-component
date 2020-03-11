@@ -75,7 +75,7 @@
             "emitAll": "Emit all",
             "emitIndividually": "Emit individually"
           },
-          "prompt": "Please select an output method"
+          "prompt": "Please select an output method. Defaults to: Emit individually"
         }
       }
     },
@@ -132,7 +132,7 @@
             "emitAll": "Emit all",
             "emitIndividually": "Emit individually"
           },
-          "prompt": "Please select an output method"
+          "prompt": "Please select an output method. Defaults to: Emit individually"
         }
       }
     },
