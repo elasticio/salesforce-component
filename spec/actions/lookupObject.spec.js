@@ -50,13 +50,44 @@ describe('Lookup Object (at most 1) module: getLookupFieldsModel', () => {
     testCommon.configuration.typeOfSearch = 'uniqueFields';
     testCommon.configuration.sobject = object;
 
-    const result = await lookupObject.getLookupFieldsModel.call(testCommon, testCommon.configuration);
+    const result = await lookupObject.getLookupFieldsModel
+      .call(testCommon, testCommon.configuration);
 
     chai.expect(result).to.deep.equal(expectedResult);
     sfScope.done();
   }
 
   it('Retrieves the list of unique fields of specified sobject', testUniqueFields.bind(null, 'Document', metaModelDocumentReply));
+});
+
+describe('Lookup Object (at most 1) module: getLinkedObjectsModel', () => {
+  async function testLinkedObjects(object, getMetaModelReply) {
+    const sfScope = nock(testCommon.configuration.oauth.instance_url)
+      .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects/${object}/describe`)
+      .reply(200, getMetaModelReply);
+
+    nock(testCommon.refresh_token.url)
+      .post('')
+      .reply(200, testCommon.refresh_token.response);
+
+    const expectedResult = {
+      Folder: 'Folder, User (Folder)',
+      Author: 'User (Author)',
+      CreatedBy: 'User (CreatedBy)',
+      LastModifiedBy: 'User (LastModifiedBy)',
+    };
+
+    testCommon.configuration.typeOfSearch = 'uniqueFields';
+    testCommon.configuration.sobject = object;
+
+    const result = await lookupObject.getLinkedObjectsModel
+      .call(testCommon, testCommon.configuration);
+
+    chai.expect(result).to.deep.equal(expectedResult);
+    sfScope.done();
+  }
+
+  it('Retrieves the list of linked objects (their relationshipNames) from the specified object', testLinkedObjects.bind(null, 'Document', metaModelDocumentReply));
 });
 
 describe('Lookup Object module: getMetaModel', () => {
@@ -108,12 +139,16 @@ describe('Lookup Object module: getMetaModel', () => {
 
       if (field.type === 'textarea') fieldDescriptor.maxLength = 1000;
 
-      if (field.picklistValues != undefined && field.picklistValues.length != 0) {
+      if (field.picklistValues !== undefined && field.picklistValues.length !== 0) {
         fieldDescriptor.enum = [];
         field.picklistValues.forEach((pick) => { fieldDescriptor.enum.push(pick.value); });
       }
 
-      if (configuration.lookupField === field.name) expectedResult.in.properties[field.name] = { ...fieldDescriptor, required: !configuration.allowCriteriaToBeOmitted };
+      if (configuration.lookupField === field.name) {
+        expectedResult.in.properties[field.name] = {
+          ...fieldDescriptor, required: !configuration.allowCriteriaToBeOmitted,
+        };
+      }
 
       expectedResult.out.properties[field.name] = fieldDescriptor;
     });
@@ -169,7 +204,7 @@ describe('Lookup Object module: processAction', () => {
 
 
     const getResult = new Promise((resolve) => {
-      testCommon.emitCallback = function (what, msg) {
+      testCommon.emitCallback = (what, msg) => {
         if (what === 'data') resolve(msg);
       };
     });
@@ -212,7 +247,7 @@ describe('Lookup Object module: processAction', () => {
     nock(testCommon.EXT_FILE_STORAGE).put('', JSON.stringify(message)).reply(200);
 
     const getResult = new Promise((resolve) => {
-      testCommon.emitCallback = function (what, msg) {
+      testCommon.emitCallback = (what, msg) => {
         if (what === 'data') resolve(msg);
       };
     });

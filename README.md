@@ -7,7 +7,7 @@
 Salesforce component is designed for Salesforce API integration.
 
 ###  Completeness Matrix
-![Salesforse-component Completeness Matrix](https://user-images.githubusercontent.com/36419533/70322291-6a5afa00-1832-11ea-8f45-8cfc66bcccfc.png)
+![Salesforse-component Completeness Matrix](https://user-images.githubusercontent.com/36419533/75436046-9a5ef880-595c-11ea-838f-32660c119972.png)
 
 [Salesforse-component Completeness Matrix](https://docs.google.com/spreadsheets/d/1_4vvDLdQeXqs3c8OxFYE80CvpeSC8e3Wmwl1dcEGO2Q/edit?usp=sharing)
 
@@ -73,19 +73,21 @@ This action will automatically retrieve all existing fields of chosen object typ
 #### Limitations
 When **Utilize data attachment from previous step (for objects with a binary field)** is checked and this action is used with Local Agent error would be thrown: 'getaddrinfo ENOTFOUND steward-service.platform.svc.cluster.local steward-service.platform.svc.cluster.local:8200'
 
-### Delete Object
-Deletes a Selected Object.
+### Delete Object (at most 1)
+Deletes an object by a selected field. One can filter by either unique fields or all fields of that sobject. Input metadata is fetched dynamically from your Salesforce account. 
 
 #### Input field description
-* **Object** - Input field where you should choose the object type, which you want to delete. E.g. `Account`
-
-#### Metadata description
-* **id** - `string`, salesforce object id
+* **Object** - dropdown list where you should choose the object type, which you want to find. E.g. `Account`.
+* **Type Of Search** -  dropdown list with two values: `Unique Fields` and `All Fields`.
+* **Lookup by field** - dropdown list with all fields on the selected object, if on *Type Of Search* is chosen `All Fields`, or with all fields on the selected object where `type` is `id` or `unique` is `true` , if on *Type Of Search* is chosen `Unique Fields` then all searchable fields both custom and standard will be available for selection. 
 
 Result is an object with 3 fields.
 * **id** - `string`, salesforce object id
 * **success** - `boolean`, if operation was successful `true`
 * **errors** - `array`, if operation fails, it will contain description of errors
+
+#### Metadata description
+Metadata for each particular `Object type` + `Lookup by field` is generating dynamically.
 
 ### Upsert Object
 Creates or Updates Selected Object.
@@ -107,12 +109,12 @@ Lookup an object by a selected field.
 Action creates a single object. Input metadata is fetched dynamically from your Salesforce account. Output metadata is the same as input metadata, so you may expect all fields that you mapped as input to be returned as output.
 
 #### Input field description
-* **Object** - dropdown list where you should choose the object type, which you want to find. E.g. `Account`.
-* **Type Of Search** -  dropdown list with two values: `Unique Fields` and `All Fields`.
-* **Lookup by field** - dropdown list with all fields on the selected object, if on *Type Of Search* is chosen `All Fields`, or with all fields on the selected object where `type` is `id` or `unique` is `true` , if on *Type Of Search* is chosen `Unique Fields`.
-* **Allow criteria to be omitted** - checkbox, if checked - search criteria can be omitted and the empty object will be returned, else - search criteria are required.
-* **Allow zero results** - checkbox, if checked and nothing is found - empty object will be returned, else - action throw an error.
-* **Pass binary data to the next component (if found object has it)** - a checkbox, if it is checked and found object has a binary field (type of base64) then its data will be passed to the next component as a binary attachment.
+* **Object** - Dropdown list displaying all searchable object types. Select one type to query, e.g. `Account`.
+* **Type Of Search** - Dropdown list with two values: `Unique Fields` and `All Fields`.
+* **Lookup by field** - Dropdown list with all fields on the selected object if the *Type Of Search* is `All Fields`. If the *Type Of Search* is `Unique Fields`, the dropdown lists instead all fields on the selected object where `type` is `id` or `unique` is `true`.
+* **Include linked objects** - Multiselect dropdown list with all the related child and parent objects of the selected object type. List entries are given as `Object Name/Reference To (Relationship Name)`. Select one or more related objects, which will be join queried and included in the response from your Salesforce Organization. Please see the **Limitations** section below for use case advisories.
+* **Allow zero results** - Checkbox. If checked and nothing is found in your Salesforce Organization, an empty object will be returned. If not checked and nothing is found, the action will throw an error.
+* **Pass binary data to the next component (if found object has it)** - Checkbox. If it is checked and the found object record has a binary field (primitive type `base64`), then its data will be passed to the next component as a binary attachment.
 * **Enable Cache Usage** - Flag to enable cache usage.
 
 #### Metadata description
@@ -120,7 +122,9 @@ Action creates a single object. Input metadata is fetched dynamically from your 
 Metadata contains one field whose name, type and mandatoriness are generated according to the value of the configuration fields *Lookup by field* and *Allow criteria to be omitted*.
 
 #### Limitations
-When **Pass binary data to the next component (if found object has it)** is checked and this action is used with Local Agent error would be thrown: 'getaddrinfo ENOTFOUND steward-service.platform.svc.cluster.local steward-service.platform.svc.cluster.local:8200'
+When a binary field (primitive type `base64`, e.g. Documents, Attachments, etc) is selected on **Include linked objects**, an error will be thrown: 'MALFORMED_QUERY: Binary fields cannot be selected in join queries. Instead of querying objects with binary fields as linked objects (such as children Attachments), try querying them directly.' There is also a limit to the number of linked objects that you can query at once - beyond two or three, depending on the number of fields in the linked objects, Salesforce could potentially return a Status Code 431 or 414 error, meaning the query is too long. Finally, due to a bug with multiselect dropdowns, it is recommended to deselect all of the elements in this field before you change your selection in the *Object* dropdown list.
+
+When **Pass binary data to the next component (if found object has it)** is checked and this action is used with Local Agent, an error will be thrown: 'getaddrinfo ENOTFOUND steward-service.platform.svc.cluster.local steward-service.platform.svc.cluster.local:8200'
 
 #### Note
 Action has caching mechanism. By default action stores last 10 request-response pairs for 10 min duration.
@@ -290,6 +294,7 @@ Use the Salesforce Object Query Language (SOQL) to search your organization’s 
 #### List of Expected Config fields
 
 * **SOQL Query** - Input field for your SOQL Query
+* **Output method** - dropdown list with options: `Emit all` - all found records will be emitted in one array `records`, and `Emit individually` - each found object will be emitted individual. Optional field, defaults to: `Emit individually`.
 
 ### Get New and Updated Objects Polling
 Polls existing and updated objects. You can select any custom or built-in object for your Salesforce instance.
@@ -302,7 +307,7 @@ Polls existing and updated objects. You can select any custom or built-in object
 * **Process single page per execution** - You can select on of options (defaults to `yes`):
    1. `yes` - if the number of changed records exceeds the maximum number of results in a page, wait until the next flow start to fetch the next page;
    2. `no` - if the number of changed records exceeds the maximum number of results in a page, the next pages will fetching in the same execution.
-
+* **Output method** - dropdown list with options: `Emit all` - all found records will be emitted in one array `records`, and `Emit individually` - each found object will be emitted individual. Optional field, defaults to: `Emit individually`.
 For example, you have 234 “Contact” objects, 213 of them were changed from 2019-01-01.
 You want to select all “Contacts” that were changed from 2019-01-01, set the page size to 100 and process single page per execution.
 For you purpose you need to specify following fields:

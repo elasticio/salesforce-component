@@ -36,7 +36,7 @@ describe('Create Object module: getMetaModel', () => {
       .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects/${object}/describe`)
       .reply(200, getMetaModelReply);
 
-    const sfRefreshTokenScope = nock(testCommon.refresh_token.url)
+    nock(testCommon.refresh_token.url)
       .post('')
       .reply(200, testCommon.refresh_token.response);
 
@@ -65,7 +65,7 @@ describe('Create Object module: getMetaModel', () => {
           readonly: field.calculated || !field.updateable,
         };
 
-        if (field.picklistValues != undefined && field.picklistValues.length != 0) {
+        if (field.picklistValues !== undefined && field.picklistValues.length !== 0) {
           fieldDescriptor.enum = [];
           field.picklistValues.forEach((pick) => { fieldDescriptor.enum.push(pick.value); });
         }
@@ -116,7 +116,8 @@ describe('Create Object module: createObject', () => {
       });
 
     testCommon.configuration.sobject = 'Account';
-    const result = await createObject.process.call(testCommon, _.cloneDeep(message), testCommon.configuration);
+    const result = await createObject.process
+      .call(testCommon, _.cloneDeep(message), testCommon.configuration);
 
     message.body.id = 'new_account_id';
     chai.expect(result.body).to.deep.equal(message.body);
@@ -149,7 +150,8 @@ describe('Create Object module: createObject', () => {
     testCommon.configuration.sobject = 'Document';
     testCommon.configuration.utilizeAttachment = false;
 
-    const result = await createObject.process.call(testCommon, _.cloneDeep(message), testCommon.configuration);
+    const result = await createObject.process
+      .call(testCommon, _.cloneDeep(message), testCommon.configuration);
 
     message.body.id = 'new_document_id';
     chai.expect(result.body).to.deep.equal(message.body);
@@ -194,7 +196,8 @@ describe('Create Object module: createObject', () => {
     testCommon.configuration.sobject = 'Document';
     testCommon.configuration.utilizeAttachment = true;
 
-    const result = await createObject.process.call(testCommon, _.cloneDeep(message), testCommon.configuration);
+    const result = await createObject.process
+      .call(testCommon, _.cloneDeep(message), testCommon.configuration);
 
     resultRequestBody.id = newDocID;
     delete resultRequestBody.Body;

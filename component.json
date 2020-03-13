@@ -66,6 +66,16 @@
           "label": "SOQL Query",
           "required": true,
           "viewClass": "TextAreaView"
+        },
+        "outputMethod": {
+          "viewClass": "SelectView",
+          "label": "Output method",
+          "required": false,
+          "model": {
+            "emitAll": "Emit all",
+            "emitIndividually": "Emit individually"
+          },
+          "prompt": "Please select an output method. Defaults to: Emit individually"
         }
       }
     },
@@ -113,6 +123,16 @@
             "no": "no"
           },
           "prompt": "Process single page per execution:"
+        },
+        "outputMethod": {
+          "viewClass": "SelectView",
+          "label": "Output method",
+          "required": false,
+          "model": {
+            "emitAll": "Emit all",
+            "emitIndividually": "Emit individually"
+          },
+          "prompt": "Please select an output method. Defaults to: Emit individually"
         }
       }
     },
@@ -255,9 +275,10 @@
       }
     },
     "delete": {
-      "title": "Delete Object",
+      "title": "Delete Object (at most 1)",
       "main": "./lib/actions/deleteObject.js",
       "description": "Delete Selected Object",
+      "dynamicMetadata": true,
       "fields": {
         "sobject": {
           "viewClass": "SelectView",
@@ -265,11 +286,24 @@
           "required": true,
           "model": "objectTypes",
           "prompt": "Please select a Salesforce Object"
+        },
+        "typeOfSearch": {
+          "viewClass": "SelectView",
+          "label": "Type Of Search",
+          "required": false,
+          "model": {
+            "uniqueFields": "Unique Fields",
+            "allFields": "All Fields"
+          },
+          "prompt": "Please select a type of search. By default - All Fields"
+        },
+        "lookupField": {
+          "viewClass": "SelectView",
+          "label": "Lookup by field",
+          "required": false,
+          "model": "getLookupFieldsModel",
+          "prompt": "Please select the field which you want to use for lookup. By default - Object ID"
         }
-      },
-      "metadata": {
-        "in": "./lib/schemas/deleteObject.in.json",
-        "out": "./lib/schemas/deleteObject.out.json"
       }
     },
     "lookupObject": {
@@ -283,7 +317,8 @@
           "label": "Object",
           "required": true,
           "model": "objectTypes",
-          "prompt": "Please select a Salesforce Object"
+          "prompt": "Please select a Salesforce Object",
+          "order": 8
         },
         "typeOfSearch": {
           "viewClass": "SelectView",
@@ -293,30 +328,43 @@
             "uniqueFields": "Unique Fields",
             "allFields": "All Fields"
           },
-          "prompt": "Please select a type of search"
+          "prompt": "Please select a type of search",
+          "order": 7
         },
         "lookupField": {
           "viewClass": "SelectView",
           "label": "Lookup by field",
           "required": true,
           "model": "getLookupFieldsModel",
-          "note": "Please select the field which you want to use for lookup"
+          "prompt": "Please select the field which you want to use for lookup",
+          "order": 6
         },
+        "linkedObjects": {
+          "viewClass": "MultiSelectView",
+          "label": "Include referenced objects",
+          "model": "getLinkedObjectsModel",
+          "order": 5,
+          "prompt": "Please select the related objects you want included in your lookup"
+      },
         "allowCriteriaToBeOmitted": {
           "viewClass": "CheckBoxView",
-          "label": "Allow criteria to be omitted"
+          "label": "Allow criteria to be omitted",
+          "order": 4
         },
         "allowZeroResults": {
           "viewClass": "CheckBoxView",
-          "label": "Allow zero results"
+          "label": "Allow zero results",
+          "order": 3
         },
         "passBinaryData": {
           "viewClass": "CheckBoxView",
-          "label": "Pass binary data to the next component (if found object has it)"
+          "label": "Pass binary data to the next component (if found object has it)",
+          "order": 2
         },
         "enableCacheUsage": {
           "viewClass": "CheckBoxView",
-          "label": "Enable Cache Usage"
+          "label": "Enable Cache Usage",
+          "order": 1
         }
       }
     },

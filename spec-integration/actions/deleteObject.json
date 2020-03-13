@@ -1,0 +1,71 @@
+{
+    "cases": [
+        {
+            "config" : {
+                "oauth": {
+                    "instance_url": "https://na98.salesforce.com"
+                },
+                "prodEnv": "login",
+                "sobject": "Contact",
+                "lookupField": "Id",
+                "typeOfSearch": "uniqueFields"
+            },
+            "message": {
+                "body" : {
+                    "Id":"*"
+                }
+            } 
+        }, 
+        {
+            "config" : {
+            "oauth": {
+                "instance_url": "https://na98.salesforce.com"
+            },
+            "prodEnv": "login",
+            "sobject": "Contact",
+            "lookupField": "Id",
+            "typeOfSearch": "uniqueFields"
+            },
+            "message": {
+                "body" : {
+                    "Id":"*"
+                }
+            }, 
+            "response": { "id": "*", "success": true, "errors": [] }
+        }, 
+        {
+            "config": {
+                "oauth": {
+                    "instance_url": "https://na98.salesforce.com"
+                },
+                "prodEnv": "login",
+                "sobject": "Account",
+                "lookupField": "Name",
+                "typeOfSearch": "allFields"
+            },
+            "message": {
+                "body" : {
+                    "Name":"White House"
+                }
+            } 
+        }, 
+        {
+            "config": {
+                "oauth": {
+                    "instance_url": "https://na98.salesforce.com"
+                },
+                "prodEnv": "login",
+                "sobject": "Account",
+                "lookupField": "test_datetime__c",
+                "typeOfSearch": "uniqueFields"
+            },
+            "message": {
+                "body" : {
+                    "test_datetime__c":"2019-11-13T11:00:54.000Z"
+                }
+            }, 
+            "response": { "id": "*", "success": true, "errors": [] }
+        }
+    ]
+}
+  
