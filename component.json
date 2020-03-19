@@ -125,7 +125,7 @@
           "prompt": "Process single page per execution:"
         },
         "linkedObjects": {
-          "label": "Include selected linked objects in query",
+          "label": "Include linked objects",
           "viewClass": "MultiSelectView",
           "required": false,
           "model": "linkedObjectTypes",
