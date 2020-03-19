@@ -124,6 +124,13 @@
           },
           "prompt": "Process single page per execution:"
         },
+        "linkedObjects": {
+          "label": "Include selected linked objects in query",
+          "viewClass": "MultiSelectView",
+          "required": false,
+          "model": "linkedObjectTypes",
+          "prompt": "Please select any linked objects that should be included in the query"
+        },
         "outputMethod": {
           "viewClass": "SelectView",
           "label": "Output method",
