@@ -87,11 +87,13 @@ describe('Test entry', () => {
     });
   });
 
-  /*describe('Test linkedObjectTypes', () => {
+  /*
+  describe('Test linkedObjectTypes', () => {
     it('should return linked object types', (done) => {
       nock('http://localhost:1234')
         .matchHeader('Authorization', 'Bearer aRefreshedToken')
-        .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects/Event/describe`)
+        .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}
+        /sobjects/Event/describe`)
         .reply(200, JSON.stringify(objectFullDescription));
 
       const cfg = {
@@ -145,5 +147,6 @@ describe('Test entry', () => {
         }
       });
     });
-  });*/
+  });
+  */
 });
