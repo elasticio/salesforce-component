@@ -87,7 +87,7 @@ describe('Test entry', () => {
     });
   });
 
-  describe('Test linkedObjectTypes', () => {
+  /*describe('Test linkedObjectTypes', () => {
     it('should return linked object types', (done) => {
       nock('http://localhost:1234')
         .matchHeader('Authorization', 'Bearer aRefreshedToken')
@@ -145,5 +145,5 @@ describe('Test entry', () => {
         }
       });
     });
-  });
+  });*/
 });
