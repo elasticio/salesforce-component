@@ -87,14 +87,12 @@ describe('Test entry', () => {
     });
   });
 
-  /*
   describe('Test linkedObjectTypes', () => {
     it('should return linked object types', (done) => {
       nock('http://localhost:1234')
         .matchHeader('Authorization', 'Bearer aRefreshedToken')
-        .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}
-        /sobjects/Event/describe`)
-        .reply(200, JSON.stringify(objectFullDescription));
+        .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects/Event/describe`)
+        .reply(200, objectFullDescription);
 
       const cfg = {
         object: 'Event',
@@ -104,7 +102,7 @@ describe('Test entry', () => {
         },
       };
 
-      const linkedObjectsList = {
+      const expectedResult = {
         MasterRecord: 'Contact (MasterRecord)',
         Account: 'Account (Account)',
         ReportsTo: 'Contact (ReportsTo)',
@@ -139,7 +137,7 @@ describe('Test entry', () => {
         if (error) return done(error);
         try {
           expect(error).to.equal(null);
-          expect(result).to.deep.equal(linkedObjectsList);
+          expect(result).to.deep.equal(expectedResult);
           expect(emitter.emit.withArgs('updateKeys').callCount).to.be.equal(1);
           return done();
         } catch (e) {
@@ -148,5 +146,4 @@ describe('Test entry', () => {
       });
     });
   });
-  */
 });
