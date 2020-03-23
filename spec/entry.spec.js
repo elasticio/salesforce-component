@@ -4,6 +4,7 @@ const chai = require('chai');
 const logger = require('@elastic.io/component-logger')();
 const entry = require('../lib/entry.js');
 const objectDescription = require('./testData/objectDescriptionForMetadata');
+const objectFullDescription = require('./testData/objectDescription');
 const expectedMetadataOut = require('./testData/expectedMetadataOut');
 const objectsList = require('./testData/objectsList');
 const oAuthUtils = require('../lib/helpers/oauth-utils.js');
@@ -91,7 +92,7 @@ describe('Test entry', () => {
       nock('http://localhost:1234')
         .matchHeader('Authorization', 'Bearer aRefreshedToken')
         .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects/Event/describe`)
-        .reply(200, JSON.stringify(objectDescription));
+        .reply(200, JSON.stringify(objectFullDescription));
 
       const cfg = {
         object: 'Event',
