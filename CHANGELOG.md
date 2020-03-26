@@ -1,3 +1,7 @@
+## 1.3.2 (March 26, 2020)
+
+* Add new optional field `Include linked objects` in trigger: `Get New and Updated Objects Polling`
+
 ## 1.3.1 (March 11, 2020)
 
 * Add new optional field `Output method` in triggers: `Query` and `Get New and Updated Objects Polling`
