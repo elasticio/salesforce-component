@@ -1,3 +1,7 @@
+## 1.3.3 (May 5, 2020)
+
+* Fix bug with 1,000 objects limit in Query, Lookup Object, Lookup Objects actions, Get New and Updated Objects Polling and Query triggers
+
 ## 1.3.2 (March 26, 2020)
 
 * Add new optional field `Include linked objects` in trigger: `Get New and Updated Objects Polling`
