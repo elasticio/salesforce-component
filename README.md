@@ -341,6 +341,8 @@ You can find more detail information in the [Platform Events Intro Documentation
 
 2. `LOG_LEVEL` - `trace` | `debug` | `info` | `warning` | `error` controls logger level
 
+3. `MAX_FETCH_COUNT` - limit for a number of messages that can be fetched for triggers and actions. 1,000 is the default value when the variable is not set.
+
 #### Limitations:
 At the moment this trigger can be used only for **"Realtime"** flows.
 
