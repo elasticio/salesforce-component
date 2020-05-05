@@ -49,6 +49,8 @@ You can get error `refresh token has been expired` if the same user account was 
 Executing a SOQL Query that may return many objects. Each resulting object is emitted one-by-one. Use the Salesforce Object Query Language (SOQL) to search your organization’s Salesforce data for specific information. SOQL is similar to the SELECT statement in the widely used Structured Query Language (SQL) but is designed specifically for Salesforce data. This action allows you to interact with your data using SOQL.
 Empty object will be returned, if query doesn't find any data.
 
+Please pay attention to the environment variable `MAX_FETCH_COUNT` to configure the action correctly (see [Environment variables section for the details](#environment-variables) for the details).
+
 #### Input fields description
 * **Include deleted** - checkbox, if checked - deleted records will be included into the result list.
 
@@ -135,6 +137,8 @@ This parameters can be changed by setting environment variables:
 ### Lookup Objects
 Lookup a list of objects satisfying specified criteria.
 
+Please pay attention to the environment variable `MAX_FETCH_COUNT` to configure the action correctly (see [Environment variables section for the details](#environment-variables) for the details).
+
 #### Input field description
 * **Object** - dropdown list where you should choose the object type, which you want to find. E.g. `Account`.
 * **Include deleted** - checkbox, if checked - deleted records will be included into the result list.
@@ -207,6 +211,8 @@ Result is a CSV file in the attachment.
 ### Lookup Object (deprecated)
 Lookup an object by a selected field.
 Action creates a single object. Input metadata is fetched dynamically from your Salesforce account. Output metadata is the same as input metadata, so you may expect all fields that you mapped as input to be returned as output.
+
+Please pay attention to the environment variable `MAX_FETCH_COUNT` to configure the action correctly (see [Environment variables section for the details](#environment-variables) for the details).
 
 #### Input field description
 * **Optional batch size** - A positive integer specifying batch size. If no batch size is specified then results of the query will be emitted one-by-one, otherwise, query results will be emitted in an array of maximum batch size.
@@ -291,6 +297,8 @@ Action is `deprecated`. You can use [Create Object](#create-object) action inste
 Continuously runs the same SOQL Query and emits results one-by-one.
 Use the Salesforce Object Query Language (SOQL) to search your organization’s Salesforce data for specific information. SOQL is similar to the SELECT statement in the widely used Structured Query Language (SQL) but is designed specifically for Salesforce data. This action allows you to interact with your data using SOQL.
 
+Please pay attention to the environment variable `MAX_FETCH_COUNT` to configure the trigger correctly (see [Environment variables section for the details](#environment-variables) for the details).
+
 #### List of Expected Config fields
 
 * **SOQL Query** - Input field for your SOQL Query
@@ -298,6 +306,8 @@ Use the Salesforce Object Query Language (SOQL) to search your organization’s 
 
 ### Get New and Updated Objects Polling
 Polls existing and updated objects. You can select any custom or built-in object for your Salesforce instance.
+
+Please pay attention to the environment variable `MAX_FETCH_COUNT` to configure the trigger correctly (see [Environment variables section for the details](#environment-variables) for the details).
 
 #### Input field description
 * **Object** - Input field where you should select the type of object which updates you want to get. E.g. `Account`;
