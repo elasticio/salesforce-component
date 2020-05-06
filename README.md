@@ -49,9 +49,6 @@ You can get error `refresh token has been expired` if the same user account was 
 Executing a SOQL Query that may return many objects. Each resulting object is emitted one-by-one. Use the Salesforce Object Query Language (SOQL) to search your organization’s Salesforce data for specific information. SOQL is similar to the SELECT statement in the widely used Structured Query Language (SQL) but is designed specifically for Salesforce data. This action allows you to interact with your data using SOQL.
 Empty object will be returned, if query doesn't find any data.
 
-Please pay attention to the environment variable `MAX_FETCH_COUNT` to configure the action correctly (see [Environment variables section for the details](#environment-variables) for the details).
-Be careful! For 'Query' action Salesforce platform limit is 2000!
-
 #### Input fields description
 * **Include deleted** - checkbox, if checked - deleted records will be included into the result list.
 
@@ -59,6 +56,7 @@ Be careful! For 'Query' action Salesforce platform limit is 2000!
 * **Optional batch size** - A positive integer specifying batch size. If no batch size is specified then results of the query will be emitted one-by-one, otherwise, query results will be emitted in an array of maximum batch size.
 * **Allow all results to be returned in a set** - checkbox which allows emitting query results in a single array. `Optional batch size` option is ignored in this case.
 * **SOQL Query** - Input field where you should type the SOQL query. E.g. `"SELECT ID, Name from Contact where Name like 'John Smi%'"`
+* **Max Fetch Count** - limit for a number of messages that can be fetched. 1,000 is the default value when the variable is not set. Max possible to fetch is 2000.
 
 ### Create Object
 Creates a new Selected Object.
@@ -138,14 +136,13 @@ This parameters can be changed by setting environment variables:
 ### Lookup Objects
 Lookup a list of objects satisfying specified criteria.
 
-Please pay attention to the environment variable `MAX_FETCH_COUNT` to configure the action correctly (see [Environment variables section for the details](#environment-variables) for the details).
-
 #### Input field description
 * **Object** - dropdown list where you should choose the object type, which you want to find. E.g. `Account`.
 * **Include deleted** - checkbox, if checked - deleted records will be included into the result list.
 * **Output method** - dropdown list with following values: "Emit all", "Emit page", "Emit individually".
 * **Number of search terms** - text field to specify a number of search terms (positive integer number [1-99] or 0).
 * **Enable Cache Usage** - Flag to enable cache usage.
+* **Max Fetch Count** - limit for a number of messages that can be fetched. 1,000 is the default value when the variable is not set.
 
 #### Note
 Action has caching mechanism. By default action stores last 10 request-response pairs for 10 min duration.
@@ -213,12 +210,11 @@ Result is a CSV file in the attachment.
 Lookup an object by a selected field.
 Action creates a single object. Input metadata is fetched dynamically from your Salesforce account. Output metadata is the same as input metadata, so you may expect all fields that you mapped as input to be returned as output.
 
-Please pay attention to the environment variable `MAX_FETCH_COUNT` to configure the action correctly (see [Environment variables section for the details](#environment-variables) for the details).
-
 #### Input field description
 * **Optional batch size** - A positive integer specifying batch size. If no batch size is specified then results of the query will be emitted one-by-one, otherwise, query results will be emitted in an array of maximum batch size.
 * **Object** - Input field where you should choose the object type, which you want to find. E.g. `Account`
 * **Lookup field** - Input field where you should choose the lookup field which you want to use for result filtering. E.g. `Id`.
+* **Max Fetch Count** - limit for a number of messages that can be fetched. 1,000 is the default value when the variable is not set.
 
 ```For now, you can specify all unique, lookup, ExternalID/Id fields. ```
 
@@ -298,17 +294,14 @@ Action is `deprecated`. You can use [Create Object](#create-object) action inste
 Continuously runs the same SOQL Query and emits results one-by-one.
 Use the Salesforce Object Query Language (SOQL) to search your organization’s Salesforce data for specific information. SOQL is similar to the SELECT statement in the widely used Structured Query Language (SQL) but is designed specifically for Salesforce data. This action allows you to interact with your data using SOQL.
 
-Please pay attention to the environment variable `MAX_FETCH_COUNT` to configure the trigger correctly (see [Environment variables section for the details](#environment-variables) for the details).
-
 #### List of Expected Config fields
 
 * **SOQL Query** - Input field for your SOQL Query
 * **Output method** - dropdown list with options: `Emit all` - all found records will be emitted in one array `records`, and `Emit individually` - each found object will be emitted individual. Optional field, defaults to: `Emit individually`.
+* **Max Fetch Count** - limit for a number of messages that can be fetched. 1,000 is the default value when the variable is not set. Max possible to fetch is 2000.
 
 ### Get New and Updated Objects Polling
 Polls existing and updated objects. You can select any custom or built-in object for your Salesforce instance.
-
-Please pay attention to the environment variable `MAX_FETCH_COUNT` to configure the trigger correctly (see [Environment variables section for the details](#environment-variables) for the details).
 
 #### Input field description
 * **Object** - Input field where you should select the type of object which updates you want to get. E.g. `Account`;
@@ -320,6 +313,7 @@ Please pay attention to the environment variable `MAX_FETCH_COUNT` to configure 
    2. `no` - if the number of changed records exceeds the maximum number of results in a page, the next pages will fetching in the same execution.
 * **Include linked objects** - Multiselect dropdown list with all the related child and parent objects of the selected object type. List entries are given as `Object Name/Reference To (Relationship Name)`. Select one or more related objects, which will be join queried and included in the response from your Salesforce Organization. Please see the **Limitations** section below for use case advisories.
 * **Output method** - dropdown list with options: `Emit all` - all found records will be emitted in one array `records`, and `Emit individually` - each found object will be emitted individual. Optional field, defaults to: `Emit individually`.
+* **Max Fetch Count** - limit for a number of messages that can be fetched. 1,000 is the default value when the variable is not set.
 For example, you have 234 “Contact” objects, 213 of them were changed from 2019-01-01.
 You want to select all “Contacts” that were changed from 2019-01-01, set the page size to 100 and process single page per execution.
 For you purpose you need to specify following fields:
@@ -351,8 +345,6 @@ You can find more detail information in the [Platform Events Intro Documentation
 1. `SALESFORCE_API_VERSION` - API version for not deprecated actions and triggers e.g(46.0), default value 45.0
 
 2. `LOG_LEVEL` - `trace` | `debug` | `info` | `warning` | `error` controls logger level
-
-3. `MAX_FETCH_COUNT` - limit for a number of messages that can be fetched for triggers and actions. 1,000 is the default value when the variable is not set.
 
 #### Limitations:
 At the moment this trigger can be used only for **"Realtime"** flows.
