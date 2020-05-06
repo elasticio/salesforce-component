@@ -50,6 +50,7 @@ Executing a SOQL Query that may return many objects. Each resulting object is em
 Empty object will be returned, if query doesn't find any data.
 
 Please pay attention to the environment variable `MAX_FETCH_COUNT` to configure the action correctly (see [Environment variables section for the details](#environment-variables) for the details).
+Be careful! For 'Query' action Salesforce platform limit is 2000!
 
 #### Input fields description
 * **Include deleted** - checkbox, if checked - deleted records will be included into the result list.

@@ -24,6 +24,10 @@
     "HASH_LIMIT_ELEMENTS": {
       "required": false,
       "description": "Hash size number limit"
+    },
+    "MAX_FETCH_COUNT": {
+      "required": false,
+      "description": "Limit for a number of messages that can be fetched for triggers and actions, 1,000 by default"
     }
   },
   "useOAuthClient": true,
