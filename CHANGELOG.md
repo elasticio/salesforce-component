@@ -1,4 +1,4 @@
-## 1.3.3 (May 5, 2020)
+## 1.3.3 (May 8, 2020)
 
 * Fix bug with 1,000 objects limit in actions:
   - Query
