@@ -56,7 +56,7 @@ Empty object will be returned, if query doesn't find any data.
 * **Optional batch size** - A positive integer specifying batch size. If no batch size is specified then results of the query will be emitted one-by-one, otherwise, query results will be emitted in an array of maximum batch size.
 * **Allow all results to be returned in a set** - checkbox which allows emitting query results in a single array. `Optional batch size` option is ignored in this case.
 * **SOQL Query** - Input field where you should type the SOQL query. E.g. `"SELECT ID, Name from Contact where Name like 'John Smi%'"`
-* **Max Fetch Count** - limit for a number of messages that can be fetched. 1,000 is the default value when the variable is not set. Max possible to fetch is 2000.
+* **Max Fetch Count** - limit for a number of messages that can be fetched. 1,000 is the default value when the variable is not set.
 
 ### Create Object
 Creates a new Selected Object.
@@ -298,7 +298,8 @@ Use the Salesforce Object Query Language (SOQL) to search your organization’s 
 
 * **SOQL Query** - Input field for your SOQL Query
 * **Output method** - dropdown list with options: `Emit all` - all found records will be emitted in one array `records`, and `Emit individually` - each found object will be emitted individual. Optional field, defaults to: `Emit individually`.
-* **Max Fetch Count** - limit for a number of messages that can be fetched. 1,000 is the default value when the variable is not set. Max possible to fetch is 2000.
+
+NOTE: Max possible fetch size is 2000 objects per execution.
 
 ### Get New and Updated Objects Polling
 Polls existing and updated objects. You can select any custom or built-in object for your Salesforce instance.
