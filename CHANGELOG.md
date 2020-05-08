@@ -1,6 +1,14 @@
-## 1.3.3 (May 5, 2020)
+## 1.3.3 (May 8, 2020)
 
-* Fix bug with 1,000 objects limit in Query, Lookup Object, Lookup Objects actions, Get New and Updated Objects Polling and Query triggers. New configuration field `Max Fetch Count` added to configure the limit. Please see the README.md for the details
+* Fix bug with 1,000 objects limit in actions:
+  - Query
+  - Lookup Object
+  - Lookup Objects 
+  
+  and trigger:
+  - Get New and Updated Objects Polling. 
+  
+New configuration field `Max Fetch Count` added to configure the limit. Please see the README.md for the details
 
 ## 1.3.2 (March 26, 2020)
 
