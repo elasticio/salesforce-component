@@ -76,13 +76,6 @@
             "emitIndividually": "Emit individually"
           },
           "prompt": "Please select an output method. Defaults to: Emit individually"
-        },
-        "maxFetch": {
-          "label": "Max Fetch Count",
-          "required": false,
-          "viewClass": "TextFieldView",
-          "placeholder": "1000",
-          "note": "Limit for a number of messages that can be fetched, 1,000 by default, up to 2000"
         }
       }
     },
