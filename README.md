@@ -298,7 +298,6 @@ Use the Salesforce Object Query Language (SOQL) to search your organization’s 
 
 * **SOQL Query** - Input field for your SOQL Query
 * **Output method** - dropdown list with options: `Emit all` - all found records will be emitted in one array `records`, and `Emit individually` - each found object will be emitted individual. Optional field, defaults to: `Emit individually`.
-* **Max Fetch Count** - limit for a number of messages that can be fetched. 1,000 is the default value when the variable is not set. Max possible to fetch is 2000.
 
 NOTE: Max possible fetch size is 2000 objects per execution.
 
