@@ -1,3 +1,6 @@
+## 1.3.4 (May 8, 2020)
+* Hotfix: removed `Max Fetch Count` field from Query trigger, as it does not work
+
 ## 1.3.3 (May 8, 2020)
 
 * Fix bug with 1,000 objects limit in actions:
