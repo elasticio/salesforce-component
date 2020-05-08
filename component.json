@@ -76,6 +76,13 @@
             "emitIndividually": "Emit individually"
           },
           "prompt": "Please select an output method. Defaults to: Emit individually"
+        },
+        "maxFetch": {
+          "label": "Max Fetch Count",
+          "required": false,
+          "viewClass": "TextFieldView",
+          "placeholder": "1000",
+          "note": "Limit for a number of messages that can be fetched, 1,000 by default, up to 2000"
         }
       }
     },
@@ -140,6 +147,13 @@
             "emitIndividually": "Emit individually"
           },
           "prompt": "Please select an output method. Defaults to: Emit individually"
+        },
+        "maxFetch": {
+          "label": "Max Fetch Count",
+          "required": false,
+          "viewClass": "TextFieldView",
+          "placeholder": "1000",
+          "note": "Limit for a number of messages that can be fetched, 1,000 by default"
         }
       }
     },
@@ -219,6 +233,13 @@
         "includeDeleted": {
           "viewClass": "CheckBoxView",
           "label": "Include deleted"
+        },
+        "maxFetch": {
+          "label": "Max Fetch Count",
+          "required": false,
+          "viewClass": "TextFieldView",
+          "placeholder": "1000",
+          "note": "Limit for a number of messages that can be fetched, 1,000 by default, up to 2000"
         }
       },
       "metadata": {
@@ -413,6 +434,13 @@
         "enableCacheUsage": {
           "viewClass": "CheckBoxView",
           "label": "Enable Cache Usage"
+        },
+        "maxFetch": {
+          "label": "Max Fetch Count",
+          "required": false,
+          "viewClass": "TextFieldView",
+          "placeholder": "1000",
+          "note": "Limit for a number of messages that can be fetched, 1,000 by default"
         }
       }
     },
@@ -492,6 +520,13 @@
           "required": false,
           "note": "A positive integer specifying batch size. If no batch size is specified then results of the query will be emitted one-by-one, otherwise query results will be emitted in array of maximum batch size.",
           "placeholder": "0"
+        },
+        "maxFetch": {
+          "label": "Max Fetch Count",
+          "required": false,
+          "viewClass": "TextFieldView",
+          "placeholder": "1000",
+          "note": "Limit for a number of messages that can be fetched, 1,000 by default"
         }
       }
     },

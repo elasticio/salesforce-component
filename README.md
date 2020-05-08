@@ -56,6 +56,7 @@ Empty object will be returned, if query doesn't find any data.
 * **Optional batch size** - A positive integer specifying batch size. If no batch size is specified then results of the query will be emitted one-by-one, otherwise, query results will be emitted in an array of maximum batch size.
 * **Allow all results to be returned in a set** - checkbox which allows emitting query results in a single array. `Optional batch size` option is ignored in this case.
 * **SOQL Query** - Input field where you should type the SOQL query. E.g. `"SELECT ID, Name from Contact where Name like 'John Smi%'"`
+* **Max Fetch Count** - limit for a number of messages that can be fetched. 1,000 is the default value when the variable is not set.
 
 ### Create Object
 Creates a new Selected Object.
@@ -141,6 +142,7 @@ Lookup a list of objects satisfying specified criteria.
 * **Output method** - dropdown list with following values: "Emit all", "Emit page", "Emit individually".
 * **Number of search terms** - text field to specify a number of search terms (positive integer number [1-99] or 0).
 * **Enable Cache Usage** - Flag to enable cache usage.
+* **Max Fetch Count** - limit for a number of messages that can be fetched. 1,000 is the default value when the variable is not set.
 
 #### Note
 Action has caching mechanism. By default action stores last 10 request-response pairs for 10 min duration.
@@ -212,6 +214,7 @@ Action creates a single object. Input metadata is fetched dynamically from your 
 * **Optional batch size** - A positive integer specifying batch size. If no batch size is specified then results of the query will be emitted one-by-one, otherwise, query results will be emitted in an array of maximum batch size.
 * **Object** - Input field where you should choose the object type, which you want to find. E.g. `Account`
 * **Lookup field** - Input field where you should choose the lookup field which you want to use for result filtering. E.g. `Id`.
+* **Max Fetch Count** - limit for a number of messages that can be fetched. 1,000 is the default value when the variable is not set.
 
 ```For now, you can specify all unique, lookup, ExternalID/Id fields. ```
 
@@ -296,6 +299,8 @@ Use the Salesforce Object Query Language (SOQL) to search your organization’s 
 * **SOQL Query** - Input field for your SOQL Query
 * **Output method** - dropdown list with options: `Emit all` - all found records will be emitted in one array `records`, and `Emit individually` - each found object will be emitted individual. Optional field, defaults to: `Emit individually`.
 
+NOTE: Max possible fetch size is 2000 objects per execution.
+
 ### Get New and Updated Objects Polling
 Polls existing and updated objects. You can select any custom or built-in object for your Salesforce instance.
 
@@ -309,6 +314,7 @@ Polls existing and updated objects. You can select any custom or built-in object
    2. `no` - if the number of changed records exceeds the maximum number of results in a page, the next pages will fetching in the same execution.
 * **Include linked objects** - Multiselect dropdown list with all the related child and parent objects of the selected object type. List entries are given as `Object Name/Reference To (Relationship Name)`. Select one or more related objects, which will be join queried and included in the response from your Salesforce Organization. Please see the **Limitations** section below for use case advisories.
 * **Output method** - dropdown list with options: `Emit all` - all found records will be emitted in one array `records`, and `Emit individually` - each found object will be emitted individual. Optional field, defaults to: `Emit individually`.
+* **Max Fetch Count** - limit for a number of messages that can be fetched. 1,000 is the default value when the variable is not set.
 For example, you have 234 “Contact” objects, 213 of them were changed from 2019-01-01.
 You want to select all “Contacts” that were changed from 2019-01-01, set the page size to 100 and process single page per execution.
 For you purpose you need to specify following fields:
