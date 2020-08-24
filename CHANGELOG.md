@@ -1,3 +1,6 @@
+## 1.3.5 (August 24, 2020)
+* Add `Bulk Upsert` feature
+
 ## 1.3.4 (May 8, 2020)
 * Hotfix: removed `Max Fetch Count` field from Query trigger, as it does not work
 

@@ -177,7 +177,7 @@ Field "Logical operator" - one of the following: "AND", "OR";
 
 Output data is an object, with a field "results" that is an array of objects.
 
-### Bulk Create/Update/Delete
+### Bulk Create/Update/Delete/Upsert
 Bulk API provides a simple interface for quickly loading large amounts of data from CSV file into Salesforce (up to 10'000 records).
 Action takes a CSV file from the attachment as an input. CSV file format is described in the [Salesforce documentatio](https://developer.salesforce.com/docs/atlas.en-us.api_bulk_v2.meta/api_bulk_v2/datafiles.htm)
 
@@ -186,14 +186,18 @@ Action takes a CSV file from the attachment as an input. CSV file format is desc
 * **Object** - dropdown list where you should choose the object type to perform bulk operation. E.g. `Case`.
 * **Timeout** - maximum time to wait until the server completes a bulk operation (default: `600` sec).
 
+#### Metadata description
+* **External ID Field** - a name of the External ID field for `Upsert` operation. E.g. `my_external_id__c`
+
 Result is an object with a property **result**: `array`. It contains objects with 3 fields.
 * **id** - `string`, salesforce object id
 * **success** - `boolean`, if operation was successful `true`
 * **errors** - `array`, if operation failed contains description of errors
 
 #### Limitations
-* No errors thrown in case of failed Object Create/Update/Delete (`"success": "false"`).
+* No errors thrown in case of failed Object Create/Update/Delete/Upsert (`"success": "false"`).
 * Object ID is needed for Update and Delete.
+* External ID is needed for Upsert.
 * Salesforce processes up to 10'000 records from the input CSV file.
 
 
