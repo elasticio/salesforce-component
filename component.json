@@ -524,7 +524,7 @@
       }
     },
     "bulk_cud": {
-      "title": "Bulk Create/Update/Delete",
+      "title": "Bulk Create/Update/Delete/Upsert",
       "main": "./lib/actions/bulk_cud.js",
       "description": "Bulk operations on objects in CSV file",
       "fields": {
@@ -535,7 +535,8 @@
           "model":  {
             "insert": "Create",
             "update": "Update",
-            "delete": "Delete"
+            "delete": "Delete",
+            "upsert": "Upsert"
           },
           "prompt": "Please select an operation"
         },
@@ -555,10 +556,7 @@
           "placeholder": "600"
         }
       },
-      "metadata": {
-        "in": { },
-        "out": "./lib/schemas/bulk_cud.out.json"
-      }
+      "dynamicMetadata": true
     },
     "bulk_q": {
       "title": "Bulk Query",
