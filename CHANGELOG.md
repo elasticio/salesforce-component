@@ -1,7 +1,11 @@
-## 1.3.5 (August 24, 2020)
+
+## 1.3.5 (August 21, 2020)
+
+* Fix issue "404 - "File's metadata is not found" with bulk cud action
 * Add `Bulk Upsert` feature
 
 ## 1.3.4 (May 8, 2020)
+
 * Hotfix: removed `Max Fetch Count` field from Query trigger, as it does not work
 
 ## 1.3.3 (May 8, 2020)
@@ -9,11 +13,11 @@
 * Fix bug with 1,000 objects limit in actions:
   - Query
   - Lookup Object
-  - Lookup Objects 
-  
+  - Lookup Objects
+
   and trigger:
-  - Get New and Updated Objects Polling. 
-  
+  - Get New and Updated Objects Polling.
+
 New configuration field `Max Fetch Count` added to configure the limit. Please see the README.md for the details
 
 ## 1.3.2 (March 26, 2020)
