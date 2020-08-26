@@ -1,8 +1,9 @@
 
 ## 1.3.5 (August 21, 2020)
 
-* Fix issue "404 - "File's metadata is not found" with bulk cud action
-* Add `Bulk Upsert` feature
+* Updated `Bulk Create/Update/Delete` action:
+   - now it supports `Bulk Upsert` feature
+   - fixed bug `404 - File's metadata is not found`
 
 ## 1.3.4 (May 8, 2020)
 
