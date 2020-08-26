@@ -1,9 +1,9 @@
 
 ## 1.3.5 (August 21, 2020)
 
-* Updated `Bulk Create/Update/Delete` action:
+* Update `Bulk Create/Update/Delete` action:
    - now it supports `Bulk Upsert` feature
-   - fixed bug `404 - File's metadata is not found`
+   - fix bug `404 - File's metadata is not found`
 
 ## 1.3.4 (May 8, 2020)
 
