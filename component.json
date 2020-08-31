@@ -4,15 +4,53 @@
   "docsUrl": "https://github.com/elasticio/salesforce-component",
   "url": "http://www.salesforce.com/",
   "buildType": "docker",
-  "authClientTypes": ["oauth2"],
+  "authClientTypes": ["oauth2", "basic", "api_key", "noauth"],
+  "envVars": {
+    "OAUTH_CLIENT_ID": {
+      "required": true,
+      "description": "Your Salesforce OAuth client key"
+    },
+    "OAUTH_CLIENT_SECRET": {
+      "required": true,
+      "description": "Your Salesforce OAuth client secret"
+    },
+    "SALESFORCE_API_VERSION": {
+      "required": true,
+      "description": "Salesforce API version to use for non deprecated methods. Default 46.0"
+    },
+    "HASH_LIMIT_TIME": {
+      "required": false,
+      "description": "Hash expiration time in milis"
+    },
+    "HASH_LIMIT_ELEMENTS": {
+      "required": false,
+      "description": "Hash size number limit"
+    }
+  },
   "useOAuthClient": true,
   "credentials": {
     "fields": {
+      "prodEnv": {
+        "label": "Environment",
+        "viewClass": "SelectView",
+        "required": true,
+        "model": {
+          "test": "Sandbox",
+          "login": "Production"
+        },
+        "prompt": "Select environment"
+      },
       "oauth": {
         "label": "Authentication",
         "viewClass": "HTTPAuthView",
         "required": true
       }
+    },
+    "oauth2": {
+      "client_id": "{{OAUTH_CLIENT_ID}}",
+      "client_secret": "{{OAUTH_CLIENT_SECRET}}",
+      "auth_uri": "https://{{prodEnv}}.salesforce.com/services/oauth2/authorize",
+      "token_uri": "https://{{prodEnv}}.salesforce.com/services/oauth2/token"
     }
   },
   "triggers": {
@@ -329,7 +367,7 @@
           "model": "getLinkedObjectsModel",
           "order": 5,
           "prompt": "Please select the related objects you want included in your lookup"
-      },
+        },
         "allowCriteriaToBeOmitted": {
           "viewClass": "CheckBoxView",
           "label": "Allow criteria to be omitted",
