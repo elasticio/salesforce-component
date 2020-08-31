@@ -4,7 +4,7 @@
   "docsUrl": "https://github.com/elasticio/salesforce-component",
   "url": "http://www.salesforce.com/",
   "buildType": "docker",
-  "authClientTypes": ["oauth2", "basic", "api_key", "noauth"],
+  "authClientTypes": ["oauth2"],
   "envVars": {
     "OAUTH_CLIENT_ID": {
       "required": true,
