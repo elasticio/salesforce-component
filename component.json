@@ -27,7 +27,6 @@
       "description": "Hash size number limit"
     }
   },
-  "useOAuthClient": true,
   "credentials": {
     "fields": {
       "prodEnv": {
