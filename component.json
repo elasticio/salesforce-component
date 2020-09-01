@@ -41,7 +41,7 @@
       },
       "oauth": {
         "label": "Authentication",
-        "viewClass": "HTTPAuthView",
+        "viewClass": "OAuthFieldView",
         "required": true
       }
     },
@@ -164,22 +164,6 @@
           "prompt": "Please select a Event object"
         }
       }
-    },
-    "newCase": {
-      "deprecated": true,
-      "title": "New Case",
-      "main": "./lib/triggers/case.js",
-      "type": "polling",
-      "description": "Trigger is deprecated. You can use Get New and Updated Objects Polling action instead.",
-      "dynamicMetadata": true
-    },
-    "newLead": {
-      "deprecated": true,
-      "title": "New Lead",
-      "main": "./lib/triggers/lead.js",
-      "type": "polling",
-      "description": "Trigger is deprecated. You can use Get New and Updated Objects Polling action instead.",
-      "dynamicMetadata": true
     },
     "newContact": {
       "deprecated": true,
