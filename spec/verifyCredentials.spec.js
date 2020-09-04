@@ -15,22 +15,12 @@ const oauth = {
 let cfg;
 
 describe('Verify Credentials', () => {
-  before(() => {
-    if (!process.env.OAUTH_CLIENT_ID) {
-      process.env.OAUTH_CLIENT_ID = 'some';
-    }
-
-    if (!process.env.OAUTH_CLIENT_SECRET) {
-      process.env.OAUTH_CLIENT_SECRET = 'some';
-    }
-  });
-
   it('should return verified false without credentials in cfg', () => {
     cfg = {};
-    verify.call({ logger }, cfg, (err, data) => {
-      expect(err).to.equal(null);
-      expect(data).to.deep.equal({ verified: false });
-    });
+    verify.call({ logger }, cfg)
+      .then((data) => {
+        expect(data).to.deep.equal({ verified: false });
+      });
   });
 
   it('should return verified false for 401 answer', (done) => {
