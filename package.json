@@ -42,6 +42,7 @@
   "devDependencies": {
     "@elastic.io/component-logger": "0.0.1",
     "chai": "4.2.0",
+    "chai-as-promised": "7.1.1",
     "eslint": "5.16.0",
     "eslint-config-airbnb-base": "13.1.0",
     "eslint-plugin-import": "2.18.0",

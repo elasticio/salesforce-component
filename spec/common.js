@@ -2,8 +2,13 @@ require('elasticio-rest-node');
 
 process.env.OAUTH_CLIENT_ID = 'asd';
 process.env.OAUTH_CLIENT_SECRET = 'sdc';
+process.env.ELASTICIO_API_URI = 'https://app.example.io';
+process.env.ELASTICIO_API_USERNAME = 'user';
+process.env.ELASTICIO_API_KEY = 'apiKey';
+process.env.ELASTICIO_WORKSPACE_ID = 'workspaceId';
 
 const EXT_FILE_STORAGE = 'http://file.storage.server/file';
+const instanceUrl = 'https://test.salesforce.com';
 
 require.cache[require.resolve('elasticio-rest-node')] = {
   exports: () => ({
@@ -20,17 +25,18 @@ require.cache[require.resolve('elasticio-rest-node')] = {
 
 module.exports = {
   configuration: {
-    prodEnv: 'login',
-    oauth: {
-      access_token: 'the unthinkable top secret access token',
-      refresh_token: 'the not less important also unthinkable top secret refresh token',
-      signature: 'one of that posh signatures that is far from your cross',
-      scope: 'refresh_token full',
-      id_token: 'yqwdovsdfuf34fmvsdargbnr43a23egc14em8hdfy4tpe8ovq8rvshexdtartdthis',
-      instance_url: 'https://test.salesforce.com',
-      id: 'https://login.salesforce.com/id/000ZqVZEA0/0052o000ekAAA',
-      token_type: 'Bearer',
-      issued_at: '1566325368430',
+    secretId: 'secretId',
+  },
+  secretId: 'secretId',
+  instanceUrl,
+  secret: {
+    data: {
+      attributes: {
+        credentials: {
+          access_token: 'accessToken',
+          instance_url: instanceUrl,
+        },
+      },
     },
   },
   refresh_token: {

@@ -1,5 +1,3 @@
-
-
 const chai = require('chai');
 const nock = require('nock');
 const sinon = require('sinon');
@@ -39,6 +37,11 @@ describe('Query module: processAction', () => {
     ],
   };
 
+  nock(process.env.ELASTICIO_API_URI)
+    .get(`/v2/workspaces/${process.env.ELASTICIO_WORKSPACE_ID}/secrets/${testCommon.secretId}`)
+    .times(5)
+    .reply(200, testCommon.secret);
+
   afterEach(() => {
     context.emit.resetHistory();
   });
@@ -55,7 +58,7 @@ describe('Query module: processAction', () => {
 
     const expectedQuery = 'select%20name%2C%20id%20from%20account%20where%20name%20%3D%20%27testtest%27';
 
-    const scope = nock(testCommon.configuration.oauth.instance_url, { encodedQueryParams: true })
+    const scope = nock(testCommon.instanceUrl, { encodedQueryParams: true })
       .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/query?q=${expectedQuery}`)
       .reply(200, { done: true, totalSize: testReply.result.length, records: testReply.result });
 
@@ -76,7 +79,7 @@ describe('Query module: processAction', () => {
 
     const expectedQuery = 'select%20name%2C%20id%20from%20account%20where%20name%20%3D%20%27testtest%27';
 
-    const scope = nock(testCommon.configuration.oauth.instance_url, { encodedQueryParams: true })
+    const scope = nock(testCommon.instanceUrl, { encodedQueryParams: true })
       .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/queryAll?q=${expectedQuery}`)
       .reply(200, { done: true, totalSize: testReply.result.length, records: testReply.result });
 
@@ -97,7 +100,7 @@ describe('Query module: processAction', () => {
     };
     const expectedQuery = 'select%20name%2C%20id%20from%20account%20where%20name%20%3D%20%27testtest%27';
 
-    const scope = nock(testCommon.configuration.oauth.instance_url, { encodedQueryParams: true })
+    const scope = nock(testCommon.instanceUrl, { encodedQueryParams: true })
       .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/queryAll?q=${expectedQuery}`)
       .reply(200, { done: true, totalSize: testReply.result.length, records: testReply.result });
 
@@ -117,7 +120,7 @@ describe('Query module: processAction', () => {
       },
     };
     const expectedQuery = 'select%20name%2C%20id%20from%20account%20where%20name%20%3D%20%27testtest%27';
-    const scope = nock(testCommon.configuration.oauth.instance_url, { encodedQueryParams: true })
+    const scope = nock(testCommon.instanceUrl, { encodedQueryParams: true })
       .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/queryAll?q=${expectedQuery}`)
       .reply(200, { done: true, totalSize: testReply.result.length, records: testReply.result });
 
@@ -137,7 +140,7 @@ describe('Query module: processAction', () => {
       },
     };
     const expectedQuery = 'select%20name%2C%20id%20from%20account%20where%20name%20%3D%20%27testtest%27';
-    const scope = nock(testCommon.configuration.oauth.instance_url, { encodedQueryParams: true })
+    const scope = nock(testCommon.instanceUrl, { encodedQueryParams: true })
       .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/queryAll?q=${expectedQuery}`)
       .reply(200, { done: true, totalSize: testReply.result.length, records: testReply.result });
 
