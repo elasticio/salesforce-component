@@ -13,10 +13,14 @@ const upsertObject = require('../../lib/actions/upsert.js');
 
 // Disable real HTTP requests
 nock.disableNetConnect();
+nock(process.env.ELASTICIO_API_URI)
+  .get(`/v2/workspaces/${process.env.ELASTICIO_WORKSPACE_ID}/secrets/${testCommon.secretId}`)
+  .times(10)
+  .reply(200, testCommon.secret);
 
 describe('Upsert Object module: objectTypes', () => {
   it('Retrieves the list of createable/updateable sobjects', async () => {
-    const scope = nock(testCommon.configuration.oauth.instance_url)
+    const scope = nock(testCommon.instanceUrl)
       .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects`)
       .reply(200, objectTypesReply);
 
@@ -34,13 +38,9 @@ describe('Upsert Object module: objectTypes', () => {
 
 describe('Upsert Object module: getMetaModel', () => {
   function testMetaData(object, getMetaModelReply) {
-    const sfScope = nock(testCommon.configuration.oauth.instance_url)
+    const sfScope = nock(testCommon.instanceUrl)
       .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects/${object}/describe`)
       .reply(200, getMetaModelReply);
-
-    nock(testCommon.refresh_token.url)
-      .post('')
-      .reply(200, testCommon.refresh_token.response);
 
     const expectedResult = {
       in: {
@@ -120,7 +120,7 @@ describe('Upsert Object module: upsertObject', () => {
     const resultRequestBody = _.cloneDeep(message.body);
     delete resultRequestBody.Id;
 
-    const scope = nock(testCommon.configuration.oauth.instance_url, { encodedQueryParams: true })
+    const scope = nock(testCommon.instanceUrl, { encodedQueryParams: true })
       .patch(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects/Document/${message.body.Id}`, resultRequestBody)
       .reply(204)
       .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects/Document/describe`)
@@ -167,7 +167,7 @@ describe('Upsert Object module: upsertObject', () => {
     resultRequestBody.Body = Buffer.from(JSON.stringify(message)).toString('base64'); // Take the message as binary data
     resultRequestBody.ContentType = message.attachments.theFile['content-type'];
 
-    const scope = nock(testCommon.configuration.oauth.instance_url, { encodedQueryParams: true })
+    const scope = nock(testCommon.instanceUrl, { encodedQueryParams: true })
       .patch(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects/Document/${message.body.Id}`, resultRequestBody)
       .reply(204)
       .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects/Document/describe`)
