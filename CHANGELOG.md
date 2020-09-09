@@ -1,3 +1,8 @@
+## 2.0.0 (September 11, 2020)
+
+* Component uses new `Auth-client` functionality
+* All deprecated triggers and actions are deleted
+* Code is refactored
 
 ## 1.3.5 (August 21, 2020)
 
