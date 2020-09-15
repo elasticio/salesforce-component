@@ -36,60 +36,88 @@ describe('Delete Object (at most 1) action', () => {
         },
         out: {
           type: 'object',
-          properties: {},
+          properties: {
+            response: {
+              type: 'object',
+              properties: {
+                id: {
+                  title: 'id',
+                  type: 'string',
+                },
+                success: {
+                  title: 'success',
+                  type: 'boolean',
+                },
+                errors: {
+                  title: 'errors',
+                  type: 'array',
+                },
+              },
+            },
+          },
         },
       };
 
-      getMetaModelReply.fields.forEach((field) => {
-        const fieldDescriptor = {
-          title: field.label,
-          default: field.defaultValue,
-          type: (() => {
-            switch (field.soapType) {
-              case 'xsd:boolean':
-                return 'boolean';
-              case 'xsd:double':
-                return 'number';
-              case 'xsd:int':
-                return 'number';
-              case 'urn:address':
-                return 'object';
-              default:
-                return 'string';
-            }
-          })(),
-          required: !field.nillable && !field.defaultedOnCreate,
-        };
-
-        if (field.soapType === 'urn:address') {
-          fieldDescriptor.properties = {
-            city: { type: 'string' },
-            country: { type: 'string' },
-            postalCode: { type: 'string' },
-            state: { type: 'string' },
-            street: { type: 'string' },
+      if (configuration.lookupField) {
+        getMetaModelReply.fields.forEach((field) => {
+          const fieldDescriptor = {
+            title: field.label,
+            default: field.defaultValue,
+            type: (() => {
+              switch (field.soapType) {
+                case 'xsd:boolean':
+                  return 'boolean';
+                case 'xsd:double':
+                  return 'number';
+                case 'xsd:int':
+                  return 'number';
+                case 'urn:address':
+                  return 'object';
+                default:
+                  return 'string';
+              }
+            })(),
+            required: !field.nillable && !field.defaultedOnCreate,
           };
-        }
 
-        if (field.type === 'textarea') fieldDescriptor.maxLength = 1000;
+          if (field.soapType === 'urn:address') {
+            fieldDescriptor.properties = {
+              city: { type: 'string' },
+              country: { type: 'string' },
+              postalCode: { type: 'string' },
+              state: { type: 'string' },
+              street: { type: 'string' },
+            };
+          }
 
-        if (field.picklistValues !== undefined && field.picklistValues.length !== 0) {
-          fieldDescriptor.enum = [];
-          field.picklistValues.forEach((pick) => {
-            fieldDescriptor.enum.push(pick.value);
-          });
-        }
+          if (field.type === 'textarea') fieldDescriptor.maxLength = 1000;
 
-        if (configuration.lookupField === field.name) {
-          expectedResult.in.properties[field.name] = { ...fieldDescriptor, required: true };
-        }
+          if (field.picklistValues !== undefined && field.picklistValues.length !== 0) {
+            fieldDescriptor.enum = [];
+            field.picklistValues.forEach((pick) => {
+              fieldDescriptor.enum.push(pick.value);
+            });
+          }
 
-        expectedResult.out.properties[field.name] = fieldDescriptor;
-      });
+          if (configuration.lookupField === field.name) {
+            expectedResult.in.properties[field.name] = { ...fieldDescriptor, required: true };
+          }
+        });
+      } else {
+        expectedResult.in.properties = {
+          id: {
+            title: 'Object ID',
+            type: 'string',
+            required: true,
+          },
+        };
+      }
 
       const data = await deleteObjectAction.getMetaModel.call(testCommon, configuration);
       expect(data).to.deep.equal(expectedResult);
-      sfScope.done();
+      if (configuration.lookupField) {
+        sfScope.done();
+      }
     }
 
     it('Retrieves metadata for Document object', async () => {
@@ -101,11 +129,10 @@ describe('Delete Object (at most 1) action', () => {
       metaModelDocumentReply);
     });
 
-    it('Retrieves metadata for Account object', async () => {
-      testMetaData({
+    it('Retrieves metadata for Account object without lookupField', async () => {
+      await testMetaData({
         ...testCommon.configuration,
         sobject: 'Account',
-        lookupField: 'Id',
       },
       metaModelAccountReply);
     });
