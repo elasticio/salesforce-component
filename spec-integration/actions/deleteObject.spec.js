@@ -1,34 +1,68 @@
 /* eslint-disable no-return-assign,no-unused-expressions */
-
+const fs = require('fs');
 const sinon = require('sinon');
 const chai = require('chai');
+const nock = require('nock');
 const logger = require('@elastic.io/component-logger')();
 const deleteObject = require('../../lib/actions/deleteObject');
-const { testDataFactory } = require('../../lib/helpers/deleteObjectHelpers.js');
+// const { testDataFactory } = require('../../lib/helpers/deleteObjectHelpers.js');
 
 const { expect } = chai;
 
 describe('Delete Object Integration Functionality', () => {
   let emitter;
   let testObjLst;
+  const secretId = 'secretId';
+  let configuration;
+  let secret;
 
   before(async () => {
-    // eslint-disable-next-line global-require
-    require('dotenv').config({ path: `${__dirname}/.env` });
-
     emitter = {
       emit: sinon.spy(),
       logger,
     };
-
-    testObjLst = await testDataFactory.call(emitter);
-    if (!(testObjLst)) {
-      throw Error('Test data was not successfully created');
+    if (fs.existsSync('.env')) {
+      // eslint-disable-next-line global-require
+      require('dotenv').config();
     }
+    process.env.ELASTICIO_API_URI = 'https://app.example.io';
+    process.env.ELASTICIO_API_USERNAME = 'user';
+    process.env.ELASTICIO_API_KEY = 'apiKey';
+    process.env.ELASTICIO_WORKSPACE_ID = 'workspaceId';
+    secret = {
+      data: {
+        attributes: {
+          credentials: {
+            access_token: process.env.ACCESS_TOKEN,
+            instance_url: process.env.INSTANCE_URL,
+          },
+        },
+      },
+    };
+
+    configuration = {
+      secretId,
+      sobject: 'Contact',
+    };
+
+    nock(process.env.ELASTICIO_API_URI)
+      .get(`/v2/workspaces/${process.env.ELASTICIO_WORKSPACE_ID}/secrets/${secretId}`)
+      .times(10)
+      .reply(200, secret);
   });
 
   beforeEach(() => {
     emitter.emit.resetHistory();
+  });
+
+  it('Delete object by Id my config', async () => {
+    const message = {
+      body: {
+        Id: '0032R00002AHsqLQAT',
+      },
+    };
+    const result = await deleteObject.process.call(emitter, message, { ...configuration, lookupField: 'Id' });
+    expect(result.body.id).to.be.eq('id');
   });
 
   it('Correctly identifies a lack of response on a non-existent Contact', async () => {
