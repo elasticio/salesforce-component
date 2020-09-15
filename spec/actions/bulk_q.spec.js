@@ -11,9 +11,9 @@ nock.disableNetConnect();
 
 describe('Salesforce bulk query', () => {
   beforeEach(async () => {
-    nock(testCommon.refresh_token.url)
-      .post('')
-      .reply(200, testCommon.refresh_token.response);
+    nock(process.env.ELASTICIO_API_URI)
+      .get(`/v2/workspaces/${process.env.ELASTICIO_WORKSPACE_ID}/secrets/${testCommon.secretId}`)
+      .reply(200, testCommon.secret);
   });
 
 

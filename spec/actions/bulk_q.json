@@ -42,7 +42,7 @@
       "http://file.storage.server": {
         "/file": {
           "method": "PUT",
-          "response": "OK"
+          "response": "OKs"
         }
       }
     }
