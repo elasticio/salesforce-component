@@ -4,7 +4,6 @@ const logger = require('@elastic.io/component-logger')();
 const { expect } = require('chai');
 const verify = require('../verifyCredentials');
 
-
 describe('verifyCredentials', async () => {
   let configuration;
 
