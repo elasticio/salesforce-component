@@ -157,7 +157,6 @@ describe('Delete Object (at most 1) action', () => {
         .delete(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects/Document/testObjId`)
         .reply(200, { id: 'deletedId' });
 
-
       const result = await deleteObjectAction.process.call(testCommon, _.cloneDeep(message), testCommon.configuration);
       expect(result.body).to.deep.equal({ response: { id: 'deletedId' } });
       scope.done();
@@ -187,7 +186,7 @@ describe('Delete Object (at most 1) action', () => {
         .delete(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects/Document/testObjId`)
         .reply(200, { id: 'deletedId' });
 
-      nock(testCommon.EXT_FILE_STORAGE).put('', JSON.stringify(message)).reply(200);
+      nock(testCommon.EXT_FILE_STORAGE).put('/', JSON.stringify(message)).reply(200);
 
       const result = await deleteObjectAction.process.call(testCommon, _.cloneDeep(message), testCommon.configuration);
       expect(result.body).to.deep.equal({ response: { id: 'deletedId' } });

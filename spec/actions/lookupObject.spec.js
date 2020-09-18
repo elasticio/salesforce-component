@@ -46,7 +46,7 @@ describe('Lookup Object (at most 1) test', () => {
         .reply(200, getMetaModelReply);
 
       nock(testCommon.refresh_token.url)
-        .post('')
+        .post('/')
         .reply(200, testCommon.refresh_token.response);
 
       const expectedResult = {};
@@ -74,7 +74,7 @@ describe('Lookup Object (at most 1) test', () => {
         .reply(200, getMetaModelReply);
 
       nock(testCommon.refresh_token.url)
-        .post('')
+        .post('/')
         .reply(200, testCommon.refresh_token.response);
 
       const expectedResult = {
@@ -105,7 +105,7 @@ describe('Lookup Object (at most 1) test', () => {
         .reply(200, getMetaModelReply);
 
       nock(testCommon.refresh_token.url)
-        .post('')
+        .post('/')
         .reply(200, testCommon.refresh_token.response);
 
       const expectedResult = {
@@ -211,7 +211,6 @@ describe('Lookup Object (at most 1) test', () => {
         .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/query?q=${testCommon.buildSOQL(metaModelDocumentReply, { Id: message.body.Id })}%20ORDER%20BY%20LastModifiedDate%20ASC`)
         .reply(200, { done: true, totalSize: 1, records: [message.body] });
 
-
       const getResult = new Promise((resolve) => {
         testCommon.emitCallback = (what, msg) => {
           if (what === 'data') resolve(msg);
@@ -253,7 +252,7 @@ describe('Lookup Object (at most 1) test', () => {
         .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/query?q=${testCommon.buildSOQL(metaModelDocumentReply, { Id: message.body.Id })}%20ORDER%20BY%20LastModifiedDate%20ASC`)
         .reply(200, { done: true, totalSize: 1, records: [message.body] });
 
-      nock(testCommon.EXT_FILE_STORAGE).put('', JSON.stringify(message)).reply(200);
+      nock(testCommon.EXT_FILE_STORAGE).put('/', JSON.stringify(message)).reply(200);
 
       const getResult = new Promise((resolve) => {
         testCommon.emitCallback = (what, msg) => {

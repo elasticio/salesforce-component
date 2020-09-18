@@ -85,7 +85,7 @@ describe('attachment helper', () => {
       const result = await getAttachment(configuration, objectContent, { logger });
       expect(result).to.eql({
         attachment: {
-          url: 'http://file.storage.server/file',
+          url: 'http://file.storage.server',
         },
       });
     });
