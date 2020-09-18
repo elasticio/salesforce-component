@@ -8,6 +8,7 @@ module.exports = {
     'airbnb-base',
   ],
   rules: {
+    'no-await-in-loop': 0,
     'max-len': ['error', { code: 150 }],
   },
 };

@@ -4,8 +4,8 @@
   "description": "elastic.io component that connects to Salesforce API (node.js)",
   "main": "index.js",
   "scripts": {
-    "pretest": "eslint spec spec-integration lib verifyCredentials.js --fix",
-    "test": "mocha ./spec --recursive"
+    "test": "mocha spec NODE_ENV=test --recursive --timeout 50000",
+    "integration-test": "mocha spec-integration --recursive --timeout 50000"
   },
   "repository": {
     "type": "git",
