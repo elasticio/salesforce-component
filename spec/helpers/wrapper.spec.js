@@ -6,6 +6,9 @@ const testCommon = require('../common.js');
 const { callJSForceMethod } = require('../../lib/helpers/wrapper');
 
 describe('wrapper helper', () => {
+  afterEach(() => {
+    nock.cleanAll();
+  });
   it('should succeed call describe method', async () => {
     const cfg = {
       secretId: testCommon.secretId,

@@ -4,17 +4,14 @@ const _ = require('lodash');
 
 const common = require('../../lib/common.js');
 const testCommon = require('../common.js');
-const objectTypesReply = require('../sfObjects.json');
-const metaModelDocumentReply = require('../sfDocumentMetadata.json');
-const metaModelAccountReply = require('../sfAccountMetadata.json');
+const objectTypesReply = require('../testData/sfObjects.json');
+const metaModelDocumentReply = require('../testData/sfDocumentMetadata.json');
+const metaModelAccountReply = require('../testData/sfAccountMetadata.json');
 
 process.env.HASH_LIMIT_TIME = 1000;
 const lookupObjects = require('../../lib/actions/lookupObjects.js');
 
 const COMPARISON_OPERATORS = ['=', '!=', '<', '<=', '>', '>=', 'LIKE', 'IN', 'NOT IN', 'INCLUDES', 'EXCLUDES'];
-
-// Disable real HTTP requests
-nock.disableNetConnect();
 
 describe('Lookup Objects action test', () => {
   beforeEach(async () => {
@@ -22,6 +19,9 @@ describe('Lookup Objects action test', () => {
       .get(`/v2/workspaces/${process.env.ELASTICIO_WORKSPACE_ID}/secrets/${testCommon.secretId}`)
       .times(10)
       .reply(200, testCommon.secret);
+  });
+  afterEach(() => {
+    nock.cleanAll();
   });
   describe('Lookup Objects module: objectTypes', () => {
     it('Retrieves the list of queryable sobjects', async () => {
