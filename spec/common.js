@@ -34,7 +34,9 @@ module.exports = {
       attributes: {
         credentials: {
           access_token: 'accessToken',
-          instance_url: instanceUrl,
+          undefined_params: {
+            instance_url: instanceUrl,
+          },
         },
       },
     },

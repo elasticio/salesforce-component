@@ -29,7 +29,9 @@ describe('wrapper helper', () => {
       sobject: 'Contact',
       oauth: {
         access_token: 'access_token',
-        instance_url: testCommon.instanceUrl,
+        undefined_params: {
+          instance_url: testCommon.instanceUrl,
+        },
       },
     };
     nock(testCommon.instanceUrl, { encodedQueryParams: true })
@@ -47,7 +49,9 @@ describe('wrapper helper', () => {
           attributes: {
             credentials: {
               access_token: 'oldAccessToken',
-              instance_url: testCommon.instanceUrl,
+              undefined_params: {
+                instance_url: testCommon.instanceUrl,
+              },
             },
           },
         },

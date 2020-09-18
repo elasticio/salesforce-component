@@ -15,7 +15,9 @@ describe('verifyCredentials', async () => {
 
     configuration = {
       oauth: {
-        instance_url: process.env.INSTANCE_URL,
+        undefined_params: {
+          instance_url: process.env.INSTANCE_URL,
+        },
         refresh_token: process.env.REFRESH_TOKEN,
         access_token: process.env.ACCESS_TOKEN,
       },
