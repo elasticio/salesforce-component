@@ -7,7 +7,7 @@ process.env.ELASTICIO_API_USERNAME = 'user';
 process.env.ELASTICIO_API_KEY = 'apiKey';
 process.env.ELASTICIO_WORKSPACE_ID = 'workspaceId';
 
-const EXT_FILE_STORAGE = 'http://file.storage.server/file';
+const EXT_FILE_STORAGE = 'http://file.storage.server';
 const instanceUrl = 'https://test.salesforce.com';
 
 require.cache[require.resolve('elasticio-rest-node')] = {
@@ -34,7 +34,9 @@ module.exports = {
       attributes: {
         credentials: {
           access_token: 'accessToken',
-          instance_url: instanceUrl,
+          undefined_params: {
+            instance_url: instanceUrl,
+          },
         },
       },
     },
@@ -77,7 +79,7 @@ module.exports = {
       // eslint-disable-next-line guard-for-in,no-restricted-syntax
       for (const key in where) {
         soql += `${key}%20%3D%20`;
-        const field = objectMeta.fields.find(f => f.name === key);
+        const field = objectMeta.fields.find((f) => f.name === key);
         if (!field) {
           throw new Error(`There is not ${key} field in ${objectMeta.name} object`);
         }

@@ -143,11 +143,6 @@
     }
   },
   "actions": {
-    "raw": {
-      "title": "Raw",
-      "main": "./lib/actions/raw.js",
-      "description": "Raw"
-    },
     "queryAction": {
       "title": "Query",
       "main": "./lib/actions/query.js",

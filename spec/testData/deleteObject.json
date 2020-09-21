@@ -1,0 +1,40 @@
+{
+  "cases": [
+    {
+      "id":"136f209f-ab46-4856-8fa8-96a116f91115",
+      "attachments": {},
+      "body": {
+        "request": {
+          "sobject":"Account"
+        },
+        "response": { "id": "5002o00002E8F3NAAV", "success": true, "errors": [] }
+      },
+      "headers": {},
+      "metadata": {}
+    }, 
+    {
+      "id":"4f0b9859-1269-4133-a4bd-a55db66aee8d",
+      "attachments": {},
+      "body": { 
+        "request": {
+          "sobject":"Case"
+        },
+        "response": { "id": "0014400001teZzRAAU", "success": true, "errors": [] }
+      },
+      "headers": {},
+      "metadata": {}
+    },
+    {
+      "id":"ca94b45b-fc17-4509-a714-fb3d7f3b7cc4",
+      "attachments": {},
+      "body": {
+        "request": {
+          "sobject":"dsfs__Recipient__c"
+        },
+        "response": { "id": "a0E2R00000N2W4A", "success": true, "errors": [] }
+      },
+      "headers": {},
+      "metadata": {}
+    }
+  ]
+}
