@@ -1,14 +1,14 @@
 module.exports = {
   env: {
-    browser: true,
     commonjs: true,
     es6: true,
-    mocha: true
+    mocha: true,
   },
   extends: [
     'airbnb-base',
   ],
   rules: {
-    'max-len': ["error", { "code": 150 }]
-  }
+    'no-await-in-loop': 0,
+    'max-len': ['error', { code: 150 }],
+  },
 };

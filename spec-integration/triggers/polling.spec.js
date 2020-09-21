@@ -53,7 +53,6 @@ describe('polling', () => {
       .process.call(emitter, message, configuration, snapshot);
   });
 
-
   it('Account polling with not empty snapshot', async () => {
     snapshot = '2018-11-12T13:06:01.179Z';
     await polling
