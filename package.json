@@ -4,7 +4,9 @@
   "description": "elastic.io component that connects to Salesforce API (node.js)",
   "main": "index.js",
   "scripts": {
-    "test": "exit 0"
+    "pretest": "eslint lib spec spec-integration verifyCredentials.js --fix",
+    "test": "mocha spec NODE_ENV=test --recursive --timeout 50000",
+    "integration-test": "mocha spec-integration --recursive --timeout 50000"
   },
   "repository": {
     "type": "git",
@@ -22,32 +24,30 @@
   },
   "homepage": "https://github.com/elasticio/salesforce-component#readme",
   "engines": {
-    "node": "12.3.0"
+    "node": "12.18.2"
   },
   "dependencies": {
-    "axios": "0.19.2",
-    "dotenv": "8.0.0",
+    "axios": "0.20.0",
     "elasticio-node": "0.0.9",
-    "elasticio-rest-node": "1.2.3",
-    "elasticio-sailor-nodejs": "2.6.2",
-    "hbs": "3.1.1",
-    "jsforce": "1.9.1",
-    "lodash": "4.17.13",
-    "mime-types": "2.1.24",
-    "node-uuid": "1.4.8",
-    "q": "1.5.1",
-    "request": "2.88.0",
-    "request-promise": "4.2.4"
+    "elasticio-rest-node": "1.2.6",
+    "elasticio-sailor-nodejs": "2.6.14",
+    "jsforce": "1.10.0",
+    "mime-types": "2.1.27",
+    "request": "2.88.2",
+    "request-promise": "4.2.6"
   },
   "devDependencies": {
     "@elastic.io/component-logger": "0.0.1",
     "chai": "4.2.0",
     "chai-as-promised": "7.1.1",
-    "eslint": "5.16.0",
-    "eslint-config-airbnb-base": "13.1.0",
-    "eslint-plugin-import": "2.18.0",
-    "mocha": "6.2.2",
-    "nock": "10.0.6",
-    "sinon": "7.3.2"
+    "dotenv": "8.2.0",
+    "eslint": "7.9.0",
+    "eslint-config-airbnb": "18.2.0",
+    "eslint-config-airbnb-base": "14.2.0",
+    "eslint-plugin-import": "2.22.0",
+    "lodash": "4.17.20",
+    "mocha": "6.2.3",
+    "nock": "13.0.4",
+    "sinon": "9.0.3"
   }
 }

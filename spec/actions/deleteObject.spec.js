@@ -1,28 +1,22 @@
-/* eslint-disable no-restricted-syntax,guard-for-in,func-names */
-
 const _ = require('lodash');
 const chai = require('chai');
 const nock = require('nock');
-const sinon = require('sinon');
-
-const common = require('../../lib/common.js');
-const testCommon = require('../common.js');
-const testDeleteData = require('./deleteObject.json');
-const deleteObjectAction = require('../../lib/actions/deleteObject.js');
-const helpers = require('../../lib/helpers/deleteObjectHelpers.js');
-
-const metaModelDocumentReply = require('../sfDocumentMetadata.json');
-const metaModelAccountReply = require('../sfAccountMetadata.json');
-
-nock.disableNetConnect();
 
 const { expect } = chai;
-nock(process.env.ELASTICIO_API_URI)
-  .get(`/v2/workspaces/${process.env.ELASTICIO_WORKSPACE_ID}/secrets/${testCommon.secretId}`)
-  .times(10)
-  .reply(200, testCommon.secret);
+const common = require('../../lib/common.js');
+const testCommon = require('../common.js');
+
+const deleteObjectAction = require('../../lib/actions/deleteObject.js');
+const metaModelDocumentReply = require('../testData/sfDocumentMetadata.json');
+const metaModelAccountReply = require('../testData/sfAccountMetadata.json');
 
 describe('Delete Object (at most 1) action', () => {
+  before(() => {
+    nock(process.env.ELASTICIO_API_URI)
+      .get(`/v2/workspaces/${process.env.ELASTICIO_WORKSPACE_ID}/secrets/${testCommon.secretId}`)
+      .times(10)
+      .reply(200, testCommon.secret);
+  });
   describe('Delete Object (at most 1) module: getMetaModel', () => {
     async function testMetaData(configuration, getMetaModelReply) {
       const sfScope = nock(testCommon.instanceUrl)
@@ -163,7 +157,6 @@ describe('Delete Object (at most 1) action', () => {
         .delete(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects/Document/testObjId`)
         .reply(200, { id: 'deletedId' });
 
-
       const result = await deleteObjectAction.process.call(testCommon, _.cloneDeep(message), testCommon.configuration);
       expect(result.body).to.deep.equal({ response: { id: 'deletedId' } });
       scope.done();
@@ -193,7 +186,7 @@ describe('Delete Object (at most 1) action', () => {
         .delete(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects/Document/testObjId`)
         .reply(200, { id: 'deletedId' });
 
-      nock(testCommon.EXT_FILE_STORAGE).put('', JSON.stringify(message)).reply(200);
+      nock(testCommon.EXT_FILE_STORAGE).put('/', JSON.stringify(message)).reply(200);
 
       const result = await deleteObjectAction.process.call(testCommon, _.cloneDeep(message), testCommon.configuration);
       expect(result.body).to.deep.equal({ response: { id: 'deletedId' } });
@@ -225,54 +218,6 @@ describe('Delete Object (at most 1) action', () => {
 
     it('Retrieves the list of unique fields of specified sobject', async () => {
       await testUniqueFields.bind(null, 'Document', metaModelDocumentReply);
-    });
-  });
-
-  describe('Delete Object (at most 1) module: deleteObjById', () => {
-    async function testDeleteDataFunc(id, objType, expectedRes) {
-      const method = () => new Promise((resolve) => {
-        resolve(expectedRes);
-      });
-      const sfConnSpy = sinon.spy(method);
-      const sfConn = {
-        sobject: () => ({
-          delete: sfConnSpy,
-        }),
-      };
-
-      const getResult = new Promise((resolve) => {
-        testCommon.emitCallback = function (what, msg) {
-          if (what === 'data') resolve(msg);
-        };
-      });
-
-      await helpers.deleteObjById.call(testCommon, sfConn, id, objType);
-      const actualRes = await getResult;
-
-      expect(actualRes).to.have.all.keys(expectedRes);
-      expect(sfConnSpy.calledOnceWithExactly(id)).to.equal(true);
-    }
-
-    it('properly deletes an object and emits the correct data based on a Case obj', async () => {
-      await testDeleteDataFunc(
-        testDeleteData.cases[0].body.response.id,
-        testDeleteData.cases[0].body.request.sobject,
-        testDeleteData.cases[0],
-      );
-    });
-    it('properly deletes an object and emits the correct data based on an Account obj', async () => {
-      await testDeleteDataFunc(
-        testDeleteData.cases[1].body.response.id,
-        testDeleteData.cases[1].body.request.sobject,
-        testDeleteData.cases[1],
-      );
-    });
-    it('properly deletes an object and emits the correct data based on a Custom SalesForce sObject', async () => {
-      await testDeleteDataFunc(
-        testDeleteData.cases[2].body.response.id,
-        testDeleteData.cases[2].body.request.sobject,
-        testDeleteData.cases[2],
-      );
     });
   });
 });
