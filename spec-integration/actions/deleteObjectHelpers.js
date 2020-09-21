@@ -2,7 +2,7 @@
 
 const { messages } = require('elasticio-node');
 const createObj = require('../../lib/actions/createObject.js');
-const deleteObjectData = require('../../spec-integration/actions/deleteObject.json');
+const deleteObjectData = require('./deleteObject.json');
 
 /**
  * Des:

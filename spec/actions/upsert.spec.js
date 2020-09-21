@@ -5,19 +5,21 @@ const _ = require('lodash');
 
 const common = require('../../lib/common.js');
 const testCommon = require('../common.js');
-const objectTypesReply = require('../sfObjects.json');
-const metaModelDocumentReply = require('../sfDocumentMetadata.json');
-const metaModelAccountReply = require('../sfAccountMetadata.json');
+const objectTypesReply = require('../testData/sfObjects.json');
+const metaModelDocumentReply = require('../testData/sfDocumentMetadata.json');
+const metaModelAccountReply = require('../testData/sfAccountMetadata.json');
 const upsertObject = require('../../lib/actions/upsert.js');
 
-// Disable real HTTP requests
-nock.disableNetConnect();
-nock(process.env.ELASTICIO_API_URI)
-  .get(`/v2/workspaces/${process.env.ELASTICIO_WORKSPACE_ID}/secrets/${testCommon.secretId}`)
-  .times(10)
-  .reply(200, testCommon.secret);
-
 describe('Upsert Object test', () => {
+  beforeEach(() => {
+    nock(process.env.ELASTICIO_API_URI)
+      .get(`/v2/workspaces/${process.env.ELASTICIO_WORKSPACE_ID}/secrets/${testCommon.secretId}`)
+      .times(3)
+      .reply(200, testCommon.secret);
+  });
+  afterEach(() => {
+    nock.cleanAll();
+  });
   describe('Upsert Object module: objectTypes', () => {
     it('Retrieves the list of createable/updateable sobjects', async () => {
       const scope = nock(testCommon.instanceUrl)
@@ -171,7 +173,6 @@ describe('Upsert Object test', () => {
         .patch(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects/Document/${message.body.Id}`, resultRequestBody)
         .reply(204)
         .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects/Document/describe`)
-        .times(2)
         .reply(200, metaModelDocumentReply)
         .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/query?q=${testCommon.buildSOQL(metaModelDocumentReply, { Id: message.body.Id })}`)
         .reply(200, { done: true, totalSize: 1, records: [message.body] });

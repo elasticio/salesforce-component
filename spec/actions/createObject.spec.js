@@ -4,19 +4,21 @@ const _ = require('lodash');
 
 const common = require('../../lib/common.js');
 const testCommon = require('../common.js');
-const objectTypesReply = require('../sfObjects.json');
-const metaModelDocumentReply = require('../sfDocumentMetadata.json');
-const metaModelAccountReply = require('../sfAccountMetadata.json');
+const objectTypesReply = require('../testData/sfObjects.json');
+const metaModelDocumentReply = require('../testData/sfDocumentMetadata.json');
+const metaModelAccountReply = require('../testData/sfAccountMetadata.json');
 const createObject = require('../../lib/actions/createObject.js');
 
-// Disable real HTTP requests
-nock.disableNetConnect();
-nock(process.env.ELASTICIO_API_URI)
-  .get(`/v2/workspaces/${process.env.ELASTICIO_WORKSPACE_ID}/secrets/${testCommon.secretId}`)
-  .times(10)
-  .reply(200, testCommon.secret);
-
 describe('Create Object action test', () => {
+  beforeEach(() => {
+    nock(process.env.ELASTICIO_API_URI)
+      .get(`/v2/workspaces/${process.env.ELASTICIO_WORKSPACE_ID}/secrets/${testCommon.secretId}`)
+      .times(2)
+      .reply(200, testCommon.secret);
+  });
+  afterEach(() => {
+    nock.cleanAll();
+  });
   describe('Create Object module: objectTypes', () => {
     it('Retrieves the list of createable sobjects', async () => {
       const scope = nock(testCommon.instanceUrl)

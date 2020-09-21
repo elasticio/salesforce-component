@@ -38,7 +38,9 @@ describe('Verify Credentials', () => {
     cfg = {
       oauth: {
         access_token: 'accessToken',
-        instance_url: testCommon.instanceUrl,
+        undefined_params: {
+          instance_url: testCommon.instanceUrl,
+        },
       },
     };
     nock(testCommon.instanceUrl, { encodedQueryParams: true })
@@ -52,7 +54,9 @@ describe('Verify Credentials', () => {
     cfg = {
       oauth: {
         access_token: 'accessToken',
-        instance_url: testCommon.instanceUrl,
+        undefined_params: {
+          instance_url: testCommon.instanceUrl,
+        },
       },
     };
     nock(testCommon.instanceUrl, { encodedQueryParams: true })

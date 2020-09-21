@@ -40,9 +40,9 @@
         }
       },
       "http://file.storage.server": {
-        "/file": {
+        "/": {
           "method": "PUT",
-          "response": "OKs"
+          "response": "OK"
         }
       }
     }

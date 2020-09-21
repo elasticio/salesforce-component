@@ -4,21 +4,23 @@ const _ = require('lodash');
 
 const common = require('../../lib/common.js');
 const testCommon = require('../common.js');
-const objectTypesReply = require('../sfObjects.json');
-const metaModelDocumentReply = require('../sfDocumentMetadata.json');
-const metaModelAccountReply = require('../sfAccountMetadata.json');
+const objectTypesReply = require('../testData/sfObjects.json');
+const metaModelDocumentReply = require('../testData/sfDocumentMetadata.json');
+const metaModelAccountReply = require('../testData/sfAccountMetadata.json');
 
 process.env.HASH_LIMIT_TIME = 1000;
 const lookupObject = require('../../lib/actions/lookupObject.js');
 
-// Disable real HTTP requests
-nock.disableNetConnect();
-nock(process.env.ELASTICIO_API_URI)
-  .get(`/v2/workspaces/${process.env.ELASTICIO_WORKSPACE_ID}/secrets/${testCommon.secretId}`)
-  .times(11)
-  .reply(200, testCommon.secret);
-
 describe('Lookup Object (at most 1) test', () => {
+  beforeEach(() => {
+    nock(process.env.ELASTICIO_API_URI)
+      .get(`/v2/workspaces/${process.env.ELASTICIO_WORKSPACE_ID}/secrets/${testCommon.secretId}`)
+      .times(4)
+      .reply(200, testCommon.secret);
+  });
+  afterEach(() => {
+    nock.cleanAll();
+  });
   describe('Lookup Object (at most 1) module: objectTypes', () => {
     it('Retrieves the list of queryable sobjects', async () => {
       const scope = nock(testCommon.instanceUrl)
@@ -44,7 +46,7 @@ describe('Lookup Object (at most 1) test', () => {
         .reply(200, getMetaModelReply);
 
       nock(testCommon.refresh_token.url)
-        .post('')
+        .post('/')
         .reply(200, testCommon.refresh_token.response);
 
       const expectedResult = {};
@@ -72,7 +74,7 @@ describe('Lookup Object (at most 1) test', () => {
         .reply(200, getMetaModelReply);
 
       nock(testCommon.refresh_token.url)
-        .post('')
+        .post('/')
         .reply(200, testCommon.refresh_token.response);
 
       const expectedResult = {
@@ -103,7 +105,7 @@ describe('Lookup Object (at most 1) test', () => {
         .reply(200, getMetaModelReply);
 
       nock(testCommon.refresh_token.url)
-        .post('')
+        .post('/')
         .reply(200, testCommon.refresh_token.response);
 
       const expectedResult = {
@@ -209,7 +211,6 @@ describe('Lookup Object (at most 1) test', () => {
         .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/query?q=${testCommon.buildSOQL(metaModelDocumentReply, { Id: message.body.Id })}%20ORDER%20BY%20LastModifiedDate%20ASC`)
         .reply(200, { done: true, totalSize: 1, records: [message.body] });
 
-
       const getResult = new Promise((resolve) => {
         testCommon.emitCallback = (what, msg) => {
           if (what === 'data') resolve(msg);
@@ -241,7 +242,6 @@ describe('Lookup Object (at most 1) test', () => {
           ContentType: 'image/jpeg',
         },
       };
-
       const scope = nock(testCommon.instanceUrl, { encodedQueryParams: true })
         .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects/Document/describe`)
         .times(2)
@@ -252,7 +252,7 @@ describe('Lookup Object (at most 1) test', () => {
         .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/query?q=${testCommon.buildSOQL(metaModelDocumentReply, { Id: message.body.Id })}%20ORDER%20BY%20LastModifiedDate%20ASC`)
         .reply(200, { done: true, totalSize: 1, records: [message.body] });
 
-      nock(testCommon.EXT_FILE_STORAGE).put('', JSON.stringify(message)).reply(200);
+      nock(testCommon.EXT_FILE_STORAGE).put('/', JSON.stringify(message)).reply(200);
 
       const getResult = new Promise((resolve) => {
         testCommon.emitCallback = (what, msg) => {

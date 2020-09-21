@@ -3,11 +3,8 @@ const chai = require('chai');
 const nock = require('nock');
 
 const testCommon = require('../common.js');
-const testData = require('./bulk_q.json');
+const testData = require('../testData/bulk_q.json');
 const bulk = require('../../lib/actions/bulk_q.js');
-
-nock.disableNetConnect();
-
 
 describe('Salesforce bulk query', () => {
   beforeEach(async () => {
@@ -16,6 +13,9 @@ describe('Salesforce bulk query', () => {
       .reply(200, testCommon.secret);
   });
 
+  afterEach(() => {
+    nock.cleanAll();
+  });
 
   it('action query', async () => {
     const data = testData.bulkQuery;
