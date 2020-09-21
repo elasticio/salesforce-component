@@ -20,6 +20,7 @@
    * [Lookup Object (at most 1)](#lookup-object-at-most-1)
    * [Lookup Objects](#lookup-objects)
    * [Query Action](#query-action)
+   * [Upsert Object](#upsert-object)
 * [Known Limitations](#known-limitations)
 
 ## General information
@@ -28,6 +29,7 @@
 
 ### Completeness Matrix
 ![Salesforse-component Completeness Matrix](https://user-images.githubusercontent.com/16806832/93742890-972ca200-fbf7-11ea-9b7c-4a0aeff1c0fb.png)
+
 [Salesforse-component Completeness Matrix](https://docs.google.com/spreadsheets/d/1_4vvDLdQeXqs3c8OxFYE80CvpeSC8e3Wmwl1dcEGO2Q/edit?usp=sharing)
 
 ### API version
@@ -87,6 +89,7 @@ For you purpose you need to specify following fields:
    * Start Time: `2019-01-01T00:00:00.000Z`
    * Size of Polling Page: `100`
    * Process single page per execution: `yes` (or leave this empty)
+   
 ![image](https://user-images.githubusercontent.com/16806832/93762053-8ab84180-fc17-11ea-92da-0fb9669b44f9.png)
 
 As a result, all contacts will be fetched in three calls of the trigger: two of them by 100 items, and the last one by 13.
