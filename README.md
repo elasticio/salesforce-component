@@ -120,11 +120,6 @@ This trigger will subscribe for any platform Event using Salesforce streaming AP
 ![Screenshot from 2019-03-11 11-51-10](https://user-images.githubusercontent.com/13310949/54114889-1088e900-43f4-11e9-8b49-3a8113b6577d.png)
 
 You can find more detail information in the [Platform Events Intro Documentation](https://developer.salesforce.com/docs/atlas.en-us.platform_events.meta/platform_events/platform_events_intro.htm).
-#### Environment Variables
-
-1. `SALESFORCE_API_VERSION` - API version for not deprecated actions and triggers e.g(46.0), default value 45.0
-
-2. `LOG_LEVEL` - `trace` | `debug` | `info` | `warning` | `error` controls logger level
 
 #### Limitations:
 At the moment this trigger can be used only for **"Realtime"** flows.
