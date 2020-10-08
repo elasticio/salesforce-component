@@ -1,101 +1,67 @@
-/* eslint-disable consistent-return */
+const chaiAsPromised = require('chai-as-promised');
 const chai = require('chai');
+
+chai.use(chaiAsPromised);
+const { expect } = chai;
+
 const nock = require('nock');
 const logger = require('@elastic.io/component-logger')();
 
+const common = require('../lib/common.js');
+const testCommon = require('./common');
 const verify = require('../verifyCredentials');
 
-const { expect } = chai;
-const BASE_URL = 'https://someselasforcenode.com';
-const path = '/services/data/v32.0/sobjects';
-const oauth = {
-  access_token: 'some-access-id',
-  instance_url: 'https://someselasforcenode.com',
-};
 let cfg;
+const testReply = {
+  result: [
+    {
+      Id: 'testObjId',
+      FolderId: 'xxxyyyzzz',
+      Name: 'NotVeryImportantDoc',
+      IsPublic: false,
+      Body: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Everest_kalapatthar.jpg/800px-Everest_kalapatthar.jpg',
+      ContentType: 'imagine/noHeaven',
+    },
+    {
+      Id: 'testObjId',
+      FolderId: '123yyyzzz',
+      Name: 'VeryImportantDoc',
+      IsPublic: true,
+      Body: 'wikipedia.org',
+      ContentType: 'imagine/noHell',
+    },
+  ],
+};
 
 describe('Verify Credentials', () => {
-  before(() => {
-    if (!process.env.OAUTH_CLIENT_ID) {
-      process.env.OAUTH_CLIENT_ID = 'some';
-    }
-
-    if (!process.env.OAUTH_CLIENT_SECRET) {
-      process.env.OAUTH_CLIENT_SECRET = 'some';
-    }
+  it('should return verified true for 200 answer', async () => {
+    cfg = {
+      oauth: {
+        access_token: 'accessToken',
+        undefined_params: {
+          instance_url: testCommon.instanceUrl,
+        },
+      },
+    };
+    nock(testCommon.instanceUrl, { encodedQueryParams: true })
+      .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects`)
+      .reply(200, { done: true, totalSize: testReply.result.length, sobjects: testReply.result });
+    const result = await verify.call({ logger }, cfg);
+    expect(result).to.deep.equal({ verified: true });
   });
 
-  it('should return verified false without credentials in cfg', () => {
-    cfg = {};
-    verify.call({ logger }, cfg, (err, data) => {
-      expect(err).to.equal(null);
-      expect(data).to.deep.equal({ verified: false });
-    });
-  });
-
-  it('should return verified false for 401 answer', (done) => {
-    cfg = { oauth };
-    nock(BASE_URL)
-      .get(path)
-      .reply(401, '');
-    verify.call({ logger }, cfg, (err, data) => {
-      if (err) return done(err);
-
-      expect(err).to.equal(null);
-      expect(data).to.deep.equal({ verified: false });
-      done();
-    });
-  });
-
-  it('should return verified false for 403 answer', (done) => {
-    cfg = { oauth };
-    nock(BASE_URL)
-      .get(path)
-      .reply(403, '');
-    verify.call({ logger }, cfg, (err, data) => {
-      if (err) return done(err);
-
-      expect(err).to.equal(null);
-      expect(data.verified).to.deep.equal(false);
-      done();
-    });
-  });
-
-  it('should return verified true for 200 answer', (done) => {
-    cfg = { oauth };
-    nock(BASE_URL)
-      .get(path)
-      .reply(200, '');
-    verify.call({ logger }, cfg, (err, data) => {
-      if (err) return done(err);
-      expect(err).to.equal(null);
-      expect(data).to.deep.equal({ verified: true });
-      done();
-    });
-  });
-
-  it('should return error for 500 cases', (done) => {
-    cfg = { oauth };
-    nock(BASE_URL)
-      .get(path)
-      .reply(500, 'Super Error');
-    verify.call({ logger }, cfg, (err) => {
-      expect(err.message).to.equal('Salesforce respond with 500');
-      done();
-    });
-  });
-
-  it('should throwError', (done) => {
-    cfg = { oauth };
-    nock(BASE_URL)
-      .get(path)
-      .replyWithError({
-        message: 'something awful happened',
-        code: 'AWFUL_ERROR',
-      });
-    verify.call({ logger }, cfg, (err) => {
-      expect(err.message).to.equal('something awful happened');
-      done();
-    });
+  it('should throwError', async () => {
+    cfg = {
+      oauth: {
+        access_token: 'accessToken',
+        undefined_params: {
+          instance_url: testCommon.instanceUrl,
+        },
+      },
+    };
+    nock(testCommon.instanceUrl, { encodedQueryParams: true })
+      .get(`/services/data/v${common.globalConsts.SALESFORCE_API_VERSION}/sobjects`)
+      .reply(500);
+    await expect(verify.call({ logger }, cfg)).be.rejected;
   });
 });

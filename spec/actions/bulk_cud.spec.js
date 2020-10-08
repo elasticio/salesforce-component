@@ -3,20 +3,19 @@ const chai = require('chai');
 const nock = require('nock');
 
 const testCommon = require('../common.js');
-const testData = require('./bulk_cud.json');
+const testData = require('../testData/bulk_cud.json');
 const bulk = require('../../lib/actions/bulk_cud.js');
-
-nock.disableNetConnect();
-
 
 describe('Salesforce bulk', () => {
   beforeEach(async () => {
-    nock(testCommon.refresh_token.url)
-      .post('')
-      .reply(200, testCommon.refresh_token.response);
+    nock(process.env.ELASTICIO_API_URI)
+      .get(`/v2/workspaces/${process.env.ELASTICIO_WORKSPACE_ID}/secrets/${testCommon.secretId}`)
+      .reply(200, testCommon.secret);
   });
 
-
+  afterEach(() => {
+    nock.cleanAll();
+  });
   it('action create', async () => {
     const data = testData.bulkInsertCase;
     data.configuration = { ...testCommon.configuration, ...data.configuration };
@@ -47,7 +46,6 @@ describe('Salesforce bulk', () => {
     }
   });
 
-
   it('action update', async () => {
     const data = testData.bulkUpdateCase;
     data.configuration = { ...testCommon.configuration, ...data.configuration };
@@ -71,7 +69,6 @@ describe('Salesforce bulk', () => {
       scopes[i].done();
     }
   });
-
 
   it('action delete', async () => {
     const data = testData.bulkDeleteCase;

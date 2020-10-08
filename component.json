@@ -4,18 +4,11 @@
   "docsUrl": "https://github.com/elasticio/salesforce-component",
   "url": "http://www.salesforce.com/",
   "buildType": "docker",
+  "authClientTypes": ["oauth2"],
   "envVars": {
-    "OAUTH_CLIENT_ID": {
-      "required": true,
-      "description": "Your Salesforce OAuth client key"
-    },
-    "OAUTH_CLIENT_SECRET": {
-      "required": true,
-      "description": "Your Salesforce OAuth client secret"
-    },
     "SALESFORCE_API_VERSION": {
       "required": true,
-      "description": "Salesforce API version to use for non deprecated methods. Default 46.0"
+      "description": "Salesforce API version. Default 46.0"
     },
     "HASH_LIMIT_TIME": {
       "required": false,
@@ -26,65 +19,26 @@
       "description": "Hash size number limit"
     }
   },
-  "useOAuthClient": true,
   "credentials": {
     "fields": {
-      "prodEnv": {
-        "label": "Environment",
-        "viewClass": "SelectView",
-        "required": true,
-        "model": {
-          "test": "Sandbox",
-          "login": "Production"
-        },
-        "prompt": "Select environment"
-      },
       "oauth": {
         "label": "Authentication",
         "viewClass": "OAuthFieldView",
         "required": true
       }
-    },
-    "oauth2": {
-      "client_id": "{{OAUTH_CLIENT_ID}}",
-      "client_secret": "{{OAUTH_CLIENT_SECRET}}",
-      "auth_uri": "https://{{prodEnv}}.salesforce.com/services/oauth2/authorize",
-      "token_uri": "https://{{prodEnv}}.salesforce.com/services/oauth2/token"
     }
   },
   "triggers": {
-    "queryTrigger": {
-      "title": "Query",
-      "main": "./lib/triggers/query.js",
-      "type": "polling",
-      "description": "Will continuously run the same SOQL Query and emit results one-by-one",
-      "metadata": {
-        "out": {}
-      },
-      "fields": {
-        "query": {
-          "label": "SOQL Query",
-          "required": true,
-          "viewClass": "TextAreaView"
-        },
-        "outputMethod": {
-          "viewClass": "SelectView",
-          "label": "Output method",
-          "required": false,
-          "model": {
-            "emitAll": "Emit all",
-            "emitIndividually": "Emit individually"
-          },
-          "prompt": "Please select an output method. Defaults to: Emit individually"
-        }
-      }
-    },
     "entry": {
       "title": "Get New and Updated Objects Polling",
       "main": "./lib/entry.js",
+      "order": 99,
+      "help" : {
+        "description": "Will poll for existing and updated objects where you can select any custom or build-in object for your Salesforce instance",
+        "link": "/components/salesforce/triggers#get-new-and-updated-objects-polling-trigger"
+      },
       "type": "polling",
       "dynamicMetadata": true,
-      "description": "Will poll for existing and updated objects where you can select any custom or build-in object for your Salesforce instance",
       "fields": {
         "object": {
           "viewClass": "SelectView",
@@ -150,9 +104,43 @@
         }
       }
     },
+    "queryTrigger": {
+      "title": "Query",
+      "main": "./lib/triggers/query.js",
+      "type": "polling",
+      "order": 98,
+      "help" : {
+        "description": "Will continuously run the same SOQL Query and emit results",
+        "link": "/components/salesforce/triggers#query-trigger"
+      },
+      "metadata": {
+        "out": {}
+      },
+      "fields": {
+        "query": {
+          "label": "SOQL Query",
+          "required": true,
+          "viewClass": "TextAreaView"
+        },
+        "outputMethod": {
+          "viewClass": "SelectView",
+          "label": "Output method",
+          "required": false,
+          "model": {
+            "emitAll": "Emit all",
+            "emitIndividually": "Emit individually"
+          },
+          "prompt": "Please select an output method. Defaults to: Emit individually"
+        }
+      }
+    },
     "streamPlatformEvents": {
       "title": "Subscribe to platform events (REALTIME FLOWS ONLY)",
-      "description": "Can be used for subscription to the specified in the configuration Platform Event object. Can be used only for Realtime flows",
+      "order": 97,
+      "help" : {
+        "description": "Can be used for subscription to the specified in the configuration Platform Event object. Can be used only for Realtime flows",
+        "link": "/components/salesforce/triggers#subscribe-to-platform-events-trigger"
+      },
       "main": "./lib/triggers/streamPlatformEvents.js",
       "type": "polling",
       "fields": {
@@ -164,122 +152,69 @@
           "prompt": "Please select a Event object"
         }
       }
-    },
-    "newCase": {
-      "deprecated": true,
-      "title": "New Case",
-      "main": "./lib/triggers/case.js",
-      "type": "polling",
-      "description": "Trigger is deprecated. You can use Get New and Updated Objects Polling action instead.",
-      "dynamicMetadata": true
-    },
-    "newLead": {
-      "deprecated": true,
-      "title": "New Lead",
-      "main": "./lib/triggers/lead.js",
-      "type": "polling",
-      "description": "Trigger is deprecated. You can use Get New and Updated Objects Polling action instead.",
-      "dynamicMetadata": true
-    },
-    "newContact": {
-      "deprecated": true,
-      "title": "New Contact",
-      "main": "./lib/triggers/contact.js",
-      "type": "polling",
-      "description": "Trigger is deprecated. You can use Get New and Updated Objects Polling action instead.",
-      "dynamicMetadata": true
-    },
-    "newAccount": {
-      "deprecated": true,
-      "title": "New Account",
-      "main": "./lib/triggers/account.js",
-      "type": "polling",
-      "description": "Trigger is deprecated. You can use Get New and Updated Objects Polling action instead.",
-      "dynamicMetadata": true
-    },
-    "newTask": {
-      "deprecated": true,
-      "title": "New Task",
-      "main": "./lib/triggers/task.js",
-      "type": "polling",
-      "description": "Trigger is deprecated. You can use Get New and Updated Objects Polling action instead.",
-      "dynamicMetadata": true
     }
   },
   "actions": {
-    "queryAction": {
-      "title": "Query",
-      "main": "./lib/actions/query.js",
-      "description": "Executing an SOQL Query that may return many objects. Each resulting object is emitted one-by-one",
-      "fields": {
-        "batchSize": {
-          "viewClass": "TextFieldView",
-          "label": "Optional batch size",
-          "required": false,
-          "note": "A positive integer specifying batch size. If no batch size is specified then results of the query will be emitted one-by-one, otherwise query results will be emitted in array of maximum batch size.",
-          "placeholder": "0"
-        },
-        "allowResultAsSet": {
-          "label": "Allow all results to be returned in a set (overwrites 'Optional batch size feature')",
-          "viewClass": "CheckBoxView"
-        },
-        "includeDeleted": {
-          "viewClass": "CheckBoxView",
-          "label": "Include deleted"
-        },
-        "maxFetch": {
-          "label": "Max Fetch Count",
-          "required": false,
-          "viewClass": "TextFieldView",
-          "placeholder": "1000",
-          "note": "Limit for a number of messages that can be fetched, 1,000 by default, up to 2000"
-        }
+    "bulk_cud": {
+      "title": "Bulk Create/Update/Delete/Upsert",
+      "main": "./lib/actions/bulk_cud.js",
+      "order": 99,
+      "help" : {
+        "description": "Bulk operations on objects in CSV file",
+        "link": "/components/salesforce/actions#bulk-createupdatedeleteupsert-action"
       },
-      "metadata": {
-        "in": {
-          "type": "object",
-          "properties": {
-            "query": {
-              "maxLength": 20000,
-              "title": "SOQL Query",
-              "type": "string",
-              "required": true
-            }
-          }
-        },
-        "out": {}
-      }
-    },
-    "upsert": {
-      "title": "Upsert Object",
-      "main": "./lib/actions/upsert.js",
-      "description": "Create or Update Selected Object",
-      "dynamicMetadata": true,
       "fields": {
+        "operation": {
+          "viewClass": "SelectView",
+          "label": "Operation",
+          "required": true,
+          "model":  {
+            "insert": "Create",
+            "update": "Update",
+            "delete": "Delete",
+            "upsert": "Upsert"
+          },
+          "prompt": "Please select an operation"
+        },
         "sobject": {
           "viewClass": "SelectView",
           "label": "Object",
           "required": true,
+          "require": ["operation"],
           "model": "objectTypes",
           "prompt": "Please select a Salesforce Object"
         },
-        "extIdField": {
+        "timeout": {
           "viewClass": "TextFieldView",
-          "label": "Optional Upsert field",
-          "required": false,
-          "note": "Please make sure selected SObject has this field and it is marked as 'External ID'",
-          "placeholder": "extID__c"
-        },
-        "utilizeAttachment": {
-          "viewClass": "CheckBoxView",
-          "label": "Utilize data attachment from previous step (for objects with a binary field)"
+          "label": "Timeout for operation (sec)",
+          "required": true,
+          "note": "A positive integer specifying timeout in seconds. Maximum Salesforce's server timeout for the bulk operations is 10 min (600 sec).",
+          "placeholder": "600"
         }
+      },
+      "dynamicMetadata": true
+    },
+    "bulk_q": {
+      "title": "Bulk Query",
+      "main": "./lib/actions/bulk_q.js",
+      "order": 98,
+      "help" : {
+        "description": "Bulk query with the results in CSV file",
+        "link": "/components/salesforce/actions#bulk-query-action"
+      },
+      "metadata": {
+        "in": "./lib/schemas/bulk_q.in.json",
+        "out": "./lib/schemas/bulk_q.out.json"
       }
     },
     "create": {
       "title": "Create Object",
       "main": "./lib/actions/createObject.js",
-      "description": "Creates new Selected Object",
+      "order": 97,
+      "help" : {
+        "description": "Creates new Selected Object",
+        "link": "/components/salesforce/actions#create-object-action"
+      },
       "dynamicMetadata": true,
       "fields": {
         "sobject": {
@@ -298,7 +233,11 @@
     "delete": {
       "title": "Delete Object (at most 1)",
       "main": "./lib/actions/deleteObject.js",
-      "description": "Delete Selected Object",
+      "order": 96,
+      "help" : {
+        "description": "Delete Selected Object",
+        "link": "/components/salesforce/actions#delete-object-action-at-most-1"
+      },
       "dynamicMetadata": true,
       "fields": {
         "sobject": {
@@ -330,7 +269,11 @@
     "lookupObject": {
       "title": "Lookup Object (at most 1)",
       "main": "./lib/actions/lookupObject.js",
-      "description": "Lookup object (at most 1) by selected field",
+      "order": 95,
+      "help" : {
+        "description": "Lookup object (at most 1) by selected field",
+        "link": "/components/salesforce/actions#lookup-object-action-at-most-1"
+      },
       "dynamicMetadata": true,
       "fields": {
         "sobject": {
@@ -366,7 +309,7 @@
           "model": "getLinkedObjectsModel",
           "order": 5,
           "prompt": "Please select the related objects you want included in your lookup"
-      },
+        },
         "allowCriteriaToBeOmitted": {
           "viewClass": "CheckBoxView",
           "label": "Allow criteria to be omitted",
@@ -392,7 +335,11 @@
     "lookupObjects": {
       "title": "Lookup Objects",
       "main": "./lib/actions/lookupObjects.js",
-      "description": "Look for objects satisfying specified criteria",
+      "order": 94,
+      "help" : {
+        "description": "Look for objects satisfying specified criteria",
+        "link": "/components/salesforce/actions#lookup-objects-action"
+      },
       "dynamicMetadata": true,
       "fields": {
         "sobject": {
@@ -437,60 +384,61 @@
         }
       }
     },
-    "account": {
-      "deprecated": true,
-      "title": "New Account",
-      "main": "./lib/actions/account.js",
-      "description": "Action is deprecated. You can use Create Object action instead.",
-      "dynamicMetadata": true
+    "queryAction": {
+      "title": "Query",
+      "main": "./lib/actions/query.js",
+      "order": 93,
+      "help" : {
+        "description": "Executing an SOQL Query that may return many objects. Each resulting object is emitted one-by-one",
+        "link": "/components/salesforce/actions#query-action"
+      },
+      "fields": {
+        "batchSize": {
+          "viewClass": "TextFieldView",
+          "label": "Optional batch size",
+          "required": false,
+          "note": "A positive integer specifying batch size. If no batch size is specified then results of the query will be emitted one-by-one, otherwise query results will be emitted in array of maximum batch size.",
+          "placeholder": "0"
+        },
+        "allowResultAsSet": {
+          "label": "Allow all results to be returned in a set (overwrites 'Optional batch size feature')",
+          "viewClass": "CheckBoxView"
+        },
+        "includeDeleted": {
+          "viewClass": "CheckBoxView",
+          "label": "Include deleted"
+        },
+        "maxFetch": {
+          "label": "Max Fetch Count",
+          "required": false,
+          "viewClass": "TextFieldView",
+          "placeholder": "1000",
+          "note": "Limit for a number of messages that can be fetched, 1,000 by default, up to 2000"
+        }
+      },
+      "metadata": {
+        "in": {
+          "type": "object",
+          "properties": {
+            "query": {
+              "maxLength": 20000,
+              "title": "SOQL Query",
+              "type": "string",
+              "required": true
+            }
+          }
+        },
+        "out": {}
+      }
     },
-    "case": {
-      "deprecated": true,
-      "title": "New Case",
-      "main": "./lib/actions/case.js",
-      "description": "Action is deprecated. You can use Create Object action instead.",
-      "dynamicMetadata": true
-    },
-    "contact": {
-      "deprecated": true,
-      "title": "New Contact",
-      "main": "./lib/actions/contact.js",
-      "description": "Action is deprecated. You can use Create Object action instead.",
-      "dynamicMetadata": true
-    },
-    "event": {
-      "deprecated": true,
-      "title": "New Event",
-      "main": "./lib/actions/event.js",
-      "description": "Action is deprecated. You can use Create Object action instead.",
-      "dynamicMetadata": true
-    },
-    "lead": {
-      "deprecated": true,
-      "title": "New Lead",
-      "main": "./lib/actions/lead.js",
-      "description": "Action is deprecated. You can use Create Object action instead.",
-      "dynamicMetadata": true
-    },
-    "note": {
-      "deprecated": true,
-      "title": "New Note",
-      "main": "./lib/actions/note.js",
-      "description": "Action is deprecated. You can use Create Object action instead.",
-      "dynamicMetadata": true
-    },
-    "task": {
-      "deprecated": true,
-      "title": "New Task",
-      "main": "./lib/actions/task.js",
-      "description": "Action is deprecated. You can use Create Object action instead.",
-      "dynamicMetadata": true
-    },
-    "lookup": {
-      "deprecated": true,
-      "title": "Lookup Object",
-      "main": "./lib/actions/lookup.js",
-      "description": "Lookup object by selected field",
+    "upsert": {
+      "title": "Upsert Object",
+      "main": "./lib/actions/upsert.js",
+      "order": 92,
+      "help" : {
+        "description": "Create or Update Selected Object",
+        "link": "/components/salesforce/actions#upsert-object-action"
+      },
       "dynamicMetadata": true,
       "fields": {
         "sobject": {
@@ -500,71 +448,17 @@
           "model": "objectTypes",
           "prompt": "Please select a Salesforce Object"
         },
-        "lookupField": {
-          "viewClass": "SelectView",
-          "label": "Lookup by field",
-          "required": true,
-          "model": "getLookupFieldsModel",
-          "note": "Please select the field which you want to use for lookup"
-        },
-        "batchSize": {
+        "extIdField": {
           "viewClass": "TextFieldView",
-          "label": "Optional batch size",
+          "label": "Optional Upsert field",
           "required": false,
-          "note": "A positive integer specifying batch size. If no batch size is specified then results of the query will be emitted one-by-one, otherwise query results will be emitted in array of maximum batch size.",
-          "placeholder": "0"
+          "note": "Please make sure selected SObject has this field and it is marked as 'External ID'",
+          "placeholder": "extID__c"
         },
-        "maxFetch": {
-          "label": "Max Fetch Count",
-          "required": false,
-          "viewClass": "TextFieldView",
-          "placeholder": "1000",
-          "note": "Limit for a number of messages that can be fetched, 1,000 by default"
+        "utilizeAttachment": {
+          "viewClass": "CheckBoxView",
+          "label": "Utilize data attachment from previous step (for objects with a binary field)"
         }
-      }
-    },
-    "bulk_cud": {
-      "title": "Bulk Create/Update/Delete/Upsert",
-      "main": "./lib/actions/bulk_cud.js",
-      "description": "Bulk operations on objects in CSV file",
-      "fields": {
-        "operation": {
-          "viewClass": "SelectView",
-          "label": "Operation",
-          "required": true,
-          "model":  {
-            "insert": "Create",
-            "update": "Update",
-            "delete": "Delete",
-            "upsert": "Upsert"
-          },
-          "prompt": "Please select an operation"
-        },
-        "sobject": {
-          "viewClass": "SelectView",
-          "label": "Object",
-          "required": true,
-          "require": ["operation"],
-          "model": "objectTypes",
-          "prompt": "Please select a Salesforce Object"
-        },
-        "timeout": {
-          "viewClass": "TextFieldView",
-          "label": "Timeout for operation (sec)",
-          "required": true,
-          "note": "A positive integer specifying timeout in seconds. Maximum Salesforce's server timeout for the bulk operations is 10 min (600 sec).",
-          "placeholder": "600"
-        }
-      },
-      "dynamicMetadata": true
-    },
-    "bulk_q": {
-      "title": "Bulk Query",
-      "main": "./lib/actions/bulk_q.js",
-      "description": "Bulk query with the results in CSV file",
-      "metadata": {
-        "in": "./lib/schemas/bulk_q.in.json",
-        "out": "./lib/schemas/bulk_q.out.json"
       }
     }
   }
