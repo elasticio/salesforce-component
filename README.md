@@ -1,5 +1,7 @@
 # salesforce-component
 
+# DEPRECATED COMPONENT. USE https://github.com/elasticio/salesforce-component-v2 INSTEAD
+
 ## Description
 [elastic.io](http://www.elastic.io;) iPaaS component that connects to Salesforce API
 
