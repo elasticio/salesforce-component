@@ -15,11 +15,11 @@ module.exports = function verify(credentials, cb) {
   // eslint-disable-next-line no-use-before-define
   checkOauth2EnvarsPresence();
 
-  function checkResponse(err, response, body) {
+  function checkResponse(err, response) {
     if (err) {
       return cb(err);
     }
-    self.logger.info('Salesforce response was: %s %j', response.statusCode, body);
+    self.logger.info('Salesforce response status: %s', response.statusCode);
     if (response.statusCode === 401) {
       return cb(null, { verified: false });
     }
@@ -31,14 +31,13 @@ module.exports = function verify(credentials, cb) {
     }
     return cb(null, { verified: true });
   }
-  self.logger.debug(credentials);
   if (!credentials.oauth || credentials.oauth.error) {
     return cb(null, { verified: false });
   }
   const token = credentials.oauth.access_token;
   const url = `${credentials.oauth.instance_url}/services/data/${VERSION}/sobjects`;
 
-  self.logger.info('To verify credentials send request to %s', url);
+  self.logger.info('Sending verify credentials request...');
 
   const options = {
     url,
