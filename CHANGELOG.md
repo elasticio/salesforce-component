@@ -1,3 +1,7 @@
+## 1.3.8 (November 10, 2020)
+
+Change logo to grayscale.
+
 ## 1.3.7 (October 30, 2020)
 
 Upgrade to sailor 2.6.18
