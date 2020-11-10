@@ -77,12 +77,12 @@ This action will automatically retrieve all existing fields of chosen object typ
 When **Utilize data attachment from previous step (for objects with a binary field)** is checked and this action is used with Local Agent error would be thrown: 'getaddrinfo ENOTFOUND steward-service.platform.svc.cluster.local steward-service.platform.svc.cluster.local:8200'
 
 ### Delete Object (at most 1)
-Deletes an object by a selected field. One can filter by either unique fields or all fields of that sobject. Input metadata is fetched dynamically from your Salesforce account. 
+Deletes an object by a selected field. One can filter by either unique fields or all fields of that sobject. Input metadata is fetched dynamically from your Salesforce account.
 
 #### Input field description
 * **Object** - dropdown list where you should choose the object type, which you want to find. E.g. `Account`.
 * **Type Of Search** -  dropdown list with two values: `Unique Fields` and `All Fields`.
-* **Lookup by field** - dropdown list with all fields on the selected object, if on *Type Of Search* is chosen `All Fields`, or with all fields on the selected object where `type` is `id` or `unique` is `true` , if on *Type Of Search* is chosen `Unique Fields` then all searchable fields both custom and standard will be available for selection. 
+* **Lookup by field** - dropdown list with all fields on the selected object, if on *Type Of Search* is chosen `All Fields`, or with all fields on the selected object where `type` is `id` or `unique` is `true` , if on *Type Of Search* is chosen `Unique Fields` then all searchable fields both custom and standard will be available for selection.
 
 Result is an object with 3 fields.
 * **id** - `string`, salesforce object id
