@@ -1,3 +1,8 @@
+## 1.3.9 (November 26, 2021)
+
+* Upgrade sailor version to 2.6.26
+* Reduced the size of component icon file
+
 ## 1.3.8 (November 10, 2020)
 
 Change logo to grayscale.
