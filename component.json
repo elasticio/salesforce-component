@@ -1,9 +1,9 @@
 {
   "title": "Salesforce",
+  "version": "1.3.9",
   "description": "Customer relationship management (CRM) software & cloud computing from the leader in CRM solutions for businesses large & small.",
   "docsUrl": "https://github.com/elasticio/salesforce-component",
   "url": "http://www.salesforce.com/",
-  "buildType": "docker",
   "deprecated": true,
   "envVars": {
     "OAUTH_CLIENT_ID": {
@@ -367,7 +367,7 @@
           "model": "getLinkedObjectsModel",
           "order": 5,
           "prompt": "Please select the related objects you want included in your lookup"
-      },
+        },
         "allowCriteriaToBeOmitted": {
           "viewClass": "CheckBoxView",
           "label": "Allow criteria to be omitted",
@@ -533,7 +533,7 @@
           "viewClass": "SelectView",
           "label": "Operation",
           "required": true,
-          "model":  {
+          "model": {
             "insert": "Create",
             "update": "Update",
             "delete": "Delete",
@@ -545,7 +545,9 @@
           "viewClass": "SelectView",
           "label": "Object",
           "required": true,
-          "require": ["operation"],
+          "require": [
+            "operation"
+          ],
           "model": "objectTypes",
           "prompt": "Please select a Salesforce Object"
         },

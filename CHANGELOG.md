@@ -1,3 +1,9 @@
+## 1.3.9 (April 08, 2022)
+
+* Update Sailor version to 2.6.27
+* Get rid of vulnerabilities in dependencies
+* Add component pusher job to Circle.ci config
+
 ## 1.3.8 (November 10, 2020)
 
 Change logo to grayscale.
