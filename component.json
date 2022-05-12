@@ -1,5 +1,6 @@
 {
   "title": "Salesforce",
+  "version": "1.3.9",
   "description": "Customer relationship management (CRM) software & cloud computing from the leader in CRM solutions for businesses large & small.",
   "docsUrl": "https://github.com/elasticio/salesforce-component",
   "url": "http://www.salesforce.com/",
