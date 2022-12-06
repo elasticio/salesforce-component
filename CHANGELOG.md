@@ -1,6 +1,10 @@
+## 1.3.8 (December 9, 2022)
+
+* Update Sailor version to 2.7.1
+
 ## 1.3.7 (October 30, 2020)
 
-Upgrade to sailor 2.6.18
+* Upgrade to sailor 2.6.18
 
 ## 1.3.6 (October 8, 2020)
 
