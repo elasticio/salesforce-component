@@ -30,7 +30,7 @@
     "dotenv": "8.0.0",
     "elasticio-node": "0.0.9",
     "elasticio-rest-node": "1.2.7",
-    "elasticio-sailor-nodejs": "2.6.27",
+    "elasticio-sailor-nodejs": "2.7.1",
     "hbs": "4.2.0",
     "jsforce": "1.11.0",
     "lodash": "4.17.21",
